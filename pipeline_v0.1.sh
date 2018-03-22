@@ -3,4 +3,4 @@ xqsub -V -A pr_46704 -W group_list=pr_46704 -d `pwd` -e MetaFunk.err -o MetaFunk
 
 cat MetaFunk.err
 cat test_20180322/test1/run.log
-li test_20180322b/test3/
+li test_20180322/test/
