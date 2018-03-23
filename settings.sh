@@ -63,6 +63,8 @@ genemapping="yes"
 ##### Coverage/Hit table normalisation
 tss="no"
 css="no"
+normalisationscale="1000000" # range of values in nucleotide hits (e.g. 0-1, 0-100, 0-10000, etc.)
+normalisatdecimals="2" #increase for smaller scales (e.g. 0-1)
 
 ##### Functional annotation
 kegg="no"

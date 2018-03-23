@@ -67,7 +67,7 @@ perl ${metafunkdirectory}/scripts/collatecoverages.pl ${workingdirectory}/${proj
 #Generate hit table
 echo "$now | Generating hit table" >> ${workingdirectory}/${project}/run.log
 export WORKDIR="${workingdirectory}/${project}"
-Rscript ${workdir}/scripts/createhittable.r --no-save
+Rscript ${workingdirectory}/scripts/createhittable.r --no-save
 filesize=$(ls -l ${workingdirectory}/${project}/HitTable.csv | awk '{print $5}')
 now=$(date +"%Y-%d-%m %H:%M:%S")
 if [[ $filesize > 0 ]]; then
