@@ -19,6 +19,7 @@ module load prinseq-lite/0.20.4
 module load samtools/1.4
 module load bwa/0.7.15
 module load pigz/2.3.4
+module load seqtk/1.0-r82-dirty
 module load fastx_toolkit/0.0.14
 module load megahit/1.1.1
 module load prodigal/2.6.3
@@ -39,10 +40,15 @@ copydata="no"
 removelowcomplexity="no"
 dustvalue="7"
 
-##### Host DNA settings
+##### Host DNA removal settings
 removehostdna="yes"
 hostgenome="/home/projects/pr_46704/people/antalb/databases/L.Dalen_14_wolf.scf.noHets.fasta" #absolute path to fasta file
 indexedhostgenome="no"
+
+##### Human DNA removal settings
+removehumandna="no"
+humangenome="/home/projects/pr_46704/people/antalb/databases/Homo_sapiens.fasta" #absolute path to fasta file
+indexedhumangenome="no"
 
 ##### Coassembly settings
 coassembly="yes"
@@ -57,3 +63,7 @@ genemapping="yes"
 ##### Coverage/Hit table normalisation
 tss="yes"
 css="yes"
+
+##### Functional annotation
+kegg="yes"
+eggnog="yes"

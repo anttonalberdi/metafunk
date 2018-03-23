@@ -130,3 +130,15 @@ if [[ $tss == "yes" | $css == "yes" ]]; then
   else
   echo "$now | Hit and coverage tables will not be normalised" >> ${projectdirectory}/run.log
 fi
+
+#########
+# Perform functional annotation
+#########
+now=$(date +"%Y-%d-%m %H:%M:%S")
+if [[ $kegg == "yes" | $eggnog == "yes" ]]; then
+  echo "$now | Starting functional annotation" >> ${projectdirectory}/run.log
+  export metafunkdirectory
+  sh ${metafunkdirectory}/scripts/functionalannotation.sh
+  else
+  echo "$now | Functional annotation will not be performed" >> ${projectdirectory}/run.log
+fi
