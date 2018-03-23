@@ -24,10 +24,13 @@ echo "$now | Converting FASTQ files to FASTA" >> ${workingdirectory}/${project}/
 	fastq_to_fasta -i ${inputfile} -o ${workingdirectory}/${project}/CoAssembly/${samplefile}.fasta
 	done < ${metafunkdirectory}/sample.data.txt
 
+#### MESSAGE TO MYSELF: Add paired read checking for PE reads
+
 #Interleave samples
 if [[ $seqtype == "PE" ]]; then
 now=$(date +"%Y-%d-%m %H:%M:%S")
 echo "$now | Interleaving samples" >> ${workingdirectory}/${project}/run.log
+
 #Iterate through samples
 while read samplefile; do
 seqtk mergepe ${workingdirectory}/${project}/CoAssembly/${samplefile}_1.fasta ${workingdirectory}/${project}/CoAssembly/${samplefile}_2.fasta > ${workingdirectory}/${project}/CoAssembly/${samplefile}.fasta

@@ -16,6 +16,7 @@ metafunkdirectory="/home/projects/pr_46704/people/antalb/metafunk"
 #######################################
 
 module load pigz/2.3.4
+module load adapterremoval/2.2.2
 module load seqkit/0.7.1
 module load prinseq-lite/0.20.4
 module load samtools/1.4
@@ -39,8 +40,11 @@ seqtype="SR" #either SR or PE
 ##### Data transfer settings
 copydata="no"
 
-##### Remove library PCR duplicates
-removeduplicates="yes"
+##### Quality filtering
+qualityfiltering="yes"
+
+##### Remove duplicate sequences
+removeduplicates="no"
 
 ##### Low complexity settings
 removelowcomplexity="no"

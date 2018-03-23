@@ -52,6 +52,20 @@ echo "$now | Data will not be copied and uncompressed" >> ${projectdirectory}/ru
 fi
 
 #########
+# Quality filtering
+#########
+
+now=$(date +"%Y-%d-%m %H:%M:%S")
+if [[ $qualityfiltering == "yes" ]]; then
+echo "$now | Performing quality filtering" >> ${projectdirectory}/run.log
+export metafunkdirectory
+sh ${metafunkdirectory}/scripts/qualityfiltering.sh
+else
+echo "$now | Quality filtering will not be performed" >> ${projectdirectory}/run.log
+fi
+
+
+#########
 # Remove duplicates
 #########
 
