@@ -38,6 +38,9 @@ seqtype="SR" #either SR or PE
 ##### Data transfer settings
 copydata="no"
 
+##### Remove library PCR duplicates
+removeduplicates="yes"
+
 ##### Low complexity settings
 removelowcomplexity="no"
 dustvalue="7"
@@ -60,13 +63,13 @@ overridecoassembly="yes" #override if the coassembly directory exists
 geneprediction="no"
 
 ##### Gene mapping settings
-genemapping="yes"
+genemapping="no"
 
 ##### Coverage/Hit table normalisation
 tss="no"
 css="no"
 normalisationscale="1000000" # range of values in nucleotide hits (e.g. 0-1, 0-100, 0-10000, etc.)
-normalisatdecimals="2" #increase for smaller scales (e.g. 0-1)
+normalisationdecimals="2" #increase for smaller scales (e.g. 0-1)
 
 ##### Functional annotation KEGG
 kegg="no"

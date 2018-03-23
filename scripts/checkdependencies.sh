@@ -111,5 +111,4 @@ test=$(command -v diamond)
     fi
 fi
 
-
 echo "" >> ${workingdirectory}/${project}/run.log

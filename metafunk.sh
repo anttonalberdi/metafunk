@@ -52,6 +52,21 @@ echo "$now | Data will not be copied and uncompressed" >> ${projectdirectory}/ru
 fi
 
 #########
+# Remove duplicates
+#########
+
+if [[ $removeduplicates == "yes" ]]; then
+now=$(date +"%Y-%d-%m %H:%M:%S")
+echo "$now | Removing duplicates" >> ${projectdirectory}/run.log
+export metafunkdirectory
+sh ${metafunkdirectory}/scripts/removeduplicates.sh
+else
+now=$(date +"%Y-%d-%m %H:%M:%S")
+echo "$now | Duplicates will not be removed" >> ${projectdirectory}/run.log
+fi
+
+
+#########
 # Remove low complexity reads
 #########
 
