@@ -15,8 +15,11 @@ metafunkdirectory="/home/projects/pr_46704/people/antalb/metafunk"
 ######## Software dependencies ########
 #######################################
 
+#Pigz (https://github.com/madler/pigz)
 module load pigz/2.3.4
+#AdapterRemoval (https://github.com/MikkelSchubert/adapterremoval)
 module load adapterremoval/2.2.2
+#SeqKit (https://github.com/shenwei356/seqkit)
 module load seqkit/0.7.1
 module load prinseq-lite/0.20.4
 module load samtools/1.4
@@ -30,6 +33,9 @@ module load anaconda2/4.0.0
 module load R/3.2.1
 module load diamond/0.9.13
 
+#######################################
+############## Settings ###############
+#######################################
 
 threads="16"
 
