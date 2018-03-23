@@ -45,6 +45,13 @@ if [[ $overridecoassembly == "yes" ]]; then
 rm -r ${workingdirectory}/${project}/CoAssembly/Megahit
 fi
 
+#Kill process if concatenated file does not exists
+if [[ ! -f ${workingdirectory}/${project}/CoAssembly/Allsamples.fasta ]]; then
+now=$(date +"%Y-%d-%m %H:%M:%S")
+echo "$now | ERROR: The concatenated file required for running the co-assembly does not exist" >> ${workingdirectory}/${project}/run.log
+exit
+fi
+
 #Co-assembly
 now=$(date +"%Y-%d-%m %H:%M:%S")
 echo "$now | Co-assembling all reads" >> ${workingdirectory}/${project}/run.log
