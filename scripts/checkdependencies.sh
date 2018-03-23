@@ -1,13 +1,15 @@
 #Source dependencies
 source "$metafunkdirectory/settings.sh"
 
+echo "  Checking dependencies..." >> ${workingdirectory}/${project}/run.log
+
 #Check software needed for transferring and uncompressing data
 if [[ $copydata == "yes" ]]; then
 test=$(command -v pigz)
     if [[ ${#test} > 0 ]]; then
-    echo "  Pigz is installed" >> ${workingdirectory}/${project}/run.log
+    echo "    Pigz is installed" >> ${workingdirectory}/${project}/run.log
     else
-    echo "  ERROR: Pigz is NOT installed" >> ${workingdirectory}/${project}/run.log
+    echo "    ERROR: Pigz is NOT installed" >> ${workingdirectory}/${project}/run.log
     fi
 fi
 
@@ -15,9 +17,9 @@ fi
 if [[ $removelowcomplexity == "yes" ]]; then
 test=$(command -v prinseq-lite.pl)
     if [[ ${#test} > 0 ]]; then
-    echo "  Prinseq is installed" >> ${workingdirectory}/${project}/run.log
+    echo "    Prinseq is installed" >> ${workingdirectory}/${project}/run.log
     else
-    echo "  ERROR: Prinseq is NOT installed" >> ${workingdirectory}/${project}/run.log
+    echo "    ERROR: Prinseq is NOT installed" >> ${workingdirectory}/${project}/run.log
     fi
 fi
 
@@ -25,15 +27,15 @@ fi
 if [[ $removehostdna == "yes" || $removehumandna == "yes" || $genemapping == "yes" ]]; then
 test=$(command -v samtools)
     if [[ ${#test} > 0 ]]; then
-    echo "  Samtools is installed" >> ${workingdirectory}/${project}/run.log
+    echo "    Samtools is installed" >> ${workingdirectory}/${project}/run.log
     else
-    echo "  ERROR: Samtools is NOT installed" >> ${workingdirectory}/${project}/run.log
+    echo "    ERROR: Samtools is NOT installed" >> ${workingdirectory}/${project}/run.log
     fi
 test=$(command -v bwa)
     if [[ ${#test} > 0 ]]; then
-    echo "  Bwa is installed" >> ${workingdirectory}/${project}/run.log
+    echo "    Bwa is installed" >> ${workingdirectory}/${project}/run.log
     else
-    echo "  ERROR: Bwa is NOT installed" >> ${workingdirectory}/${project}/run.log
+    echo "    ERROR: Bwa is NOT installed" >> ${workingdirectory}/${project}/run.log
     fi
 fi
 
@@ -42,22 +44,22 @@ if [[ $coassembly == "yes" ]]; then
   if [[ $seqtype == "PE" ]]; then
     test=$(command -v seqtk)
         if [[ ${#test} > 0 ]]; then
-        echo "  Seqtk is installed" >> ${workingdirectory}/${project}/run.log
+        echo "    Seqtk is installed" >> ${workingdirectory}/${project}/run.log
         else
-        echo "  ERROR: Seqtk is NOT installed" >> ${workingdirectory}/${project}/run.log
+        echo "    ERROR: Seqtk is NOT installed" >> ${workingdirectory}/${project}/run.log
         fi
   fi
 test=$(command -v fastx_toolkit)
     if [[ ${#test} > 0 ]]; then
-    echo "  Fastx-toolkit is installed" >> ${workingdirectory}/${project}/run.log
+    echo "    Fastx-toolkit is installed" >> ${workingdirectory}/${project}/run.log
     else
-    echo "  ERROR: Fastx-toolkit is NOT installed" >> ${workingdirectory}/${project}/run.log
+    echo "    ERROR: Fastx-toolkit is NOT installed" >> ${workingdirectory}/${project}/run.log
     fi
 test=$(command -v megahit)
     if [[ ${#test} > 0 ]]; then
-    echo "  Megahit is installed" >> ${workingdirectory}/${project}/run.log
+    echo "    Megahit is installed" >> ${workingdirectory}/${project}/run.log
     else
-    echo "  ERROR: Megahit is NOT installed" >> ${workingdirectory}/${project}/run.log
+    echo "    ERROR: Megahit is NOT installed" >> ${workingdirectory}/${project}/run.log
     fi
 
 fi
@@ -66,9 +68,9 @@ fi
 if [[ $geneprediction == "yes" ]]; then
 test=$(command -v prodigal)
     if [[ ${#test} > 0 ]]; then
-    echo "  Prodigal is installed" >> ${workingdirectory}/${project}/run.log
+    echo "    Prodigal is installed" >> ${workingdirectory}/${project}/run.log
     else
-    echo "  ERROR: Prodigal is NOT installed" >> ${workingdirectory}/${project}/run.log
+    echo "    ERROR: Prodigal is NOT installed" >> ${workingdirectory}/${project}/run.log
     fi
 fi
 
@@ -76,16 +78,16 @@ fi
 if [[ $genemapping == "yes" ]]; then
     test=$(command -v bedtools)
     if [[ ${#test} > 0 ]]; then
-    echo "  Bedtools is installed" >> ${workingdirectory}/${project}/run.log
+    echo "    Bedtools is installed" >> ${workingdirectory}/${project}/run.log
     else
-    echo "  ERROR: Bedtools is NOT installed" >> ${workingdirectory}/${project}/run.log
+    echo "    ERROR: Bedtools is NOT installed" >> ${workingdirectory}/${project}/run.log
     fi
 
     test=$(command -v anaconda)
     if [[ ${#test} > 0 ]]; then
-    echo "  Anaconda is installed" >> ${workingdirectory}/${project}/run.log
+    echo "    Anaconda is installed" >> ${workingdirectory}/${project}/run.log
     else
-    echo "  ERROR: Anaconda is NOT installed" >> ${workingdirectory}/${project}/run.log
+    echo "    ERROR: Anaconda is NOT installed" >> ${workingdirectory}/${project}/run.log
     fi
 fi
 
@@ -93,8 +95,9 @@ fi
 if [[ $normalisation == "yes" ]]; then
 test=$(command -v R)
     if [[ ${#test} > 0 ]]; then
-    echo "  R is installed" >> ${workingdirectory}/${project}/run.log
+    echo "    R is installed" >> ${workingdirectory}/${project}/run.log
     else
-    echo "  ERROR: R is NOT installed" >> ${workingdirectory}/${project}/run.log
+    echo "    ERROR: R is NOT installed" >> ${workingdirectory}/${project}/run.log
     fi
 fi
+echo "" >> ${workingdirectory}/${project}/run.log

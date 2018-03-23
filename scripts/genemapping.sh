@@ -42,9 +42,14 @@ echo "$now |      Mapping sample $samplefile" >> ${workingdirectory}/${project}/
 		bwa mem -t ${threads} -R '@RG\tID:Project\tCN:User\tDS:Mappingt\tPL:Illumina1.9\tSM:Sample' ${workingdirectory}/${project}/GenePrediction/assembly.genes.fna ${inputfile} | samtools view -b -F0x4 - > ${workingdirectory}/${project}/GeneMapping/${samplefile}.bam
 		samtools sort -T ${workingdirectory}/${project}/GeneMapping/${samplefile}.tmp.bam -o ${workingdirectory}/${project}/GeneMapping/${samplefile}.sorted.bam ${workingdirectory}/${project}/GeneMapping/${samplefile}.bam
 		samtools flagstat ${workingdirectory}/${project}/GeneMapping/${samplefile}.bam > ${workingdirectory}/${project}/GeneMapping/${samplefile}.flagstat
+
+		now=$(date +"%Y-%d-%m %H:%M:%S")
+		echo "$now |      Sample $samplefile successfully mapped" >> ${workingdirectory}/${project}/run.log
+		echo "$now |      Calculating coverage for $samplefile" >> ${workingdirectory}/${project}/run.log
 		bedtools genomecov -ibam ${workingdirectory}/${project}/GeneMapping/${samplefile}.sorted.bam -g ${1}/9.0-GenePrediction/assembly.lengths > ${workingdirectory}/${project}/GeneMapping/${samplefile}.cov
 		awk -F"\t" '{l[$1]=l[$1]+($2 *$3);r[$1]=$4} END {for (i in l){print i","(l[i]/r[i])}}' ${workingdirectory}/${project}/GeneMapping/${samplefile}.cov > ${workingdirectory}/${project}/GeneMapping/${samplefile}.cov.csv
-echo "$now |      Sample $samplefile successfully mapped" >> ${workingdirectory}/${project}/run.log
+		now=$(date +"%Y-%d-%m %H:%M:%S")
+		echo "$now |      Coverage of $samplefile successfully calculated" >> ${workingdirectory}/${project}/run.log
 	done < ${metafunkdirectory}/sample.data.txt
 
 elif [[ $seqtype == "PE" ]]; then
