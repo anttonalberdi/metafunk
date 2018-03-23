@@ -41,7 +41,7 @@ removelowcomplexity="no"
 dustvalue="7"
 
 ##### Host DNA removal settings
-removehostdna="yes"
+removehostdna="no"
 hostgenome="/home/projects/pr_46704/people/antalb/databases/L.Dalen_14_wolf.scf.noHets.fasta" #absolute path to fasta file
 indexedhostgenome="no"
 
