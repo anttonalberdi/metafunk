@@ -15,7 +15,7 @@ after1=$(cat ${workingdirectory}/${project}/RemoveDuplicates/${samplefile}.fastq
 after2=$((after1 / 4))
 percentage=$((after2 * 100 / before2 ))
 now=$(date +"%Y-%d-%m %H:%M:%S")
-echo "$now | 		$after2 duplicated reads ($percentage) were removed from sample $samplefile" >> ${workingdirectory}/${project}/run.log
+echo "$now | 		$after2 duplicated reads ($percentage %) were removed from sample $samplefile" >> ${workingdirectory}/${project}/run.log
 done < ${metafunkdirectory}/sample.data.txt
 
 if [[ $seqtype == "PE" ]]; then
