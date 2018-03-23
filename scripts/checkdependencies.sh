@@ -13,6 +13,16 @@ test=$(command -v pigz)
     fi
 fi
 
+#Check software needed for removind duplicate sequences
+if [[ $removeduplicates == "yes" ]]; then
+test=$(command -v seqkit)
+    if [[ ${#test} > 0 ]]; then
+    echo "    Seqkit is installed" >> ${workingdirectory}/${project}/run.log
+    else
+    echo "    ERROR: Seqkit is NOT installed" >> ${workingdirectory}/${project}/run.log
+    fi
+fi
+
 #Check software needed for removing low complexity reads
 if [[ $removelowcomplexity == "yes" ]]; then
 test=$(command -v prinseq-lite.pl)

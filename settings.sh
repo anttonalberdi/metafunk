@@ -15,10 +15,11 @@ metafunkdirectory="/home/projects/pr_46704/people/antalb/metafunk"
 ######## Software dependencies ########
 #######################################
 
+module load pigz/2.3.4
+module load seqkit/0.7.1
 module load prinseq-lite/0.20.4
 module load samtools/1.4
 module load bwa/0.7.15
-module load pigz/2.3.4
 module load seqtk/1.0-r82-dirty
 module load fastx_toolkit/0.0.14
 module load megahit/1.1.1

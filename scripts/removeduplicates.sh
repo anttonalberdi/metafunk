@@ -13,7 +13,11 @@ before1=$(cat ${workingdirectory}/${project}/RawData/${samplefile}.fastq | wc -l
 before2=$((before1 / 4))
 after1=$(cat ${workingdirectory}/${project}/RemoveDuplicates/${samplefile}.fastq | wc -l)
 after2=$((after1 / 4))
-percentage=$((after2 / before2 * 100))
+percentage=$((after2 * 100 / before2 ))
 now=$(date +"%Y-%d-%m %H:%M:%S")
 echo "$now | 		$after2 duplicated reads ($percentage) were removed from sample $samplefile" >> ${workingdirectory}/${project}/run.log
 done < ${metafunkdirectory}/sample.data.txt
+
+if [[ $seqtype == "PE" ]]; then
+#add script to merge PE reads
+fi
