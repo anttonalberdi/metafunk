@@ -22,7 +22,7 @@ test=$(command -v prinseq-lite.pl)
 fi
 
 #Check software needed for removing host DNA
-if [[ $removehostdna == "yes" || $genemapping == "yes" ]]; then
+if [[ $removehostdna == "yes" || $removehumandna == "yes" || $genemapping == "yes" ]]; then
 test=$(command -v samtools)
     if [[ ${#test} > 0 ]]; then
     echo "  Samtools is installed" >> ${workingdirectory}/${project}/run.log

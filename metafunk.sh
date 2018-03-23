@@ -123,7 +123,7 @@ fi
 # Normalise Coverage and Hit tables
 #########
 now=$(date +"%Y-%d-%m %H:%M:%S")
-if [[ $tss == "yes" | $css == "yes" ]]; then
+if [[ $tss == "yes" || $css == "yes" ]]; then
   echo "$now | Normalising hit and coverage tables" >> ${projectdirectory}/run.log
   export metafunkdirectory
   sh ${metafunkdirectory}/scripts/normalisetables.sh
@@ -135,7 +135,7 @@ fi
 # Perform functional annotation
 #########
 now=$(date +"%Y-%d-%m %H:%M:%S")
-if [[ $kegg == "yes" | $eggnog == "yes" ]]; then
+if [[ $kegg == "yes" || $eggnog == "yes" ]]; then
   echo "$now | Starting functional annotation" >> ${projectdirectory}/run.log
   export metafunkdirectory
   sh ${metafunkdirectory}/scripts/functionalannotation.sh

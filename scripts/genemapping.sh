@@ -63,7 +63,7 @@ perl ${metafunkdirectory}/scripts/collatecoverages.pl ${workingdirectory}/${proj
 echo "$now | Generating hit table" >> ${workingdirectory}/${project}/run.log
 export WORKDIR="${workingdirectory}/${project}"
 Rscript ${workdir}/scripts/createhittable.r --no-save
-filesize=%(ls -l ${workingdirectory}/${project}/HitTable.csv | awk '{print $5}')
+filesize=$(ls -l ${workingdirectory}/${project}/HitTable.csv | awk '{print $5}')
 now=$(date +"%Y-%d-%m %H:%M:%S")
 if [[ $filesize > 0 ]]; then
 echo "$now |        Hit table was successfully created" >> ${workingdirectory}/${project}/run.log

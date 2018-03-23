@@ -4,6 +4,13 @@ source "$metafunkdirectory/settings.sh"
 #Create Gene Prediction directory
 mkdir -p ${workingdirectory}/${project}/GenePrediction
 
+#Check if assembly file exists
+if [ ! -f "${workingdirectory}/${project}/CoAssembly/Megahit/final.contigs.fa" ]
+then
+  now=$(date +"%Y-%d-%m %H:%M:%S")
+  echo "$now | ERROR: Assembly file does not exist." >> ${workingdirectory}/${project}/run.log
+fi
+
 #Predict genes
 now=$(date +"%Y-%d-%m %H:%M:%S")
 echo "$now | Predicting genes in the assembly" >> ${workingdirectory}/${project}/run.log
