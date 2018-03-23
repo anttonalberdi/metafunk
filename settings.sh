@@ -26,6 +26,8 @@ module load prodigal/2.6.3
 module load bedtools/2.26.0
 module load anaconda2/4.0.0
 module load R/3.2.1
+module load diamond/0.9.13
+
 
 threads="16"
 
@@ -66,6 +68,10 @@ css="no"
 normalisationscale="1000000" # range of values in nucleotide hits (e.g. 0-1, 0-100, 0-10000, etc.)
 normalisatdecimals="2" #increase for smaller scales (e.g. 0-1)
 
-##### Functional annotation
+##### Functional annotation KEGG
 kegg="no"
+keggdatabase="/home/projects/pr_46704/people/antalb/databases/KEGG_species_prokaryotes.dmnd" #absolute path to diamond (.dmnd) file
+keggevalue="0.0000000001"
+
+##### Functional annotation EggNog
 eggnog="no"

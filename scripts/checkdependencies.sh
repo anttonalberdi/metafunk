@@ -100,4 +100,16 @@ test=$(command -v R)
     echo "    ERROR: R is NOT installed" >> ${workingdirectory}/${project}/run.log
     fi
 fi
+
+#Check software needed for functional annotation
+if [[ $kegg == "yes" || $eggnog == "yes" ]]; then
+test=$(command -v diamond)
+    if [[ ${#test} > 0 ]]; then
+    echo "    Diamond is installed" >> ${workingdirectory}/${project}/run.log
+    else
+    echo "    ERROR: Diamond is NOT installed" >> ${workingdirectory}/${project}/run.log
+    fi
+fi
+
+
 echo "" >> ${workingdirectory}/${project}/run.log

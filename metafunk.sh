@@ -135,10 +135,19 @@ fi
 # Perform functional annotation
 #########
 now=$(date +"%Y-%d-%m %H:%M:%S")
-if [[ $kegg == "yes" || $eggnog == "yes" ]]; then
-  echo "$now | Starting functional annotation" >> ${projectdirectory}/run.log
+if [[ $kegg == "yes" ]]; then
+  echo "$now | Starting KEGG functional annotation" >> ${projectdirectory}/run.log
   export metafunkdirectory
-  sh ${metafunkdirectory}/scripts/functionalannotation.sh
+  sh ${metafunkdirectory}/scripts/functionalannotation_kegg.sh
   else
-  echo "$now | Functional annotation will not be performed" >> ${projectdirectory}/run.log
+  echo "$now | KEGG functional annotation will not be performed" >> ${projectdirectory}/run.log
+fi
+
+now=$(date +"%Y-%d-%m %H:%M:%S")
+if [[ $eggnog == "yes" ]]; then
+  echo "$now | Starting EggNog functional annotation" >> ${projectdirectory}/run.log
+  export metafunkdirectory
+  sh ${metafunkdirectory}/scripts/functionalannotation_eggnog.sh
+  else
+  echo "$now | EggNog functional annotation will not be performed" >> ${projectdirectory}/run.log
 fi
