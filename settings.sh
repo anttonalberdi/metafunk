@@ -33,7 +33,7 @@ readlength="80"
 seqtype="SR" #either SR or PE
 
 ##### Data transfer settings
-copydata="yes"
+copydata="no"
 
 ##### Low complexity settings
 removelowcomplexity="yes"
