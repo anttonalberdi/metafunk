@@ -19,7 +19,8 @@ echo "##### SETTINGS ####" > ${projectdirectory}/run.log
 echo "Number of threads: $threads" >> ${projectdirectory}/run.log
 echo "Sequencing read type: $seqtype" >> ${projectdirectory}/run.log
 echo "Sequencing read length: $readlength" >> ${projectdirectory}/run.log
-echo '###################/n' >> ${projectdirectory}/run.log
+echo "###################" >> ${projectdirectory}/run.log
+echo "" >> ${projectdirectory}/run.log
 
 #########
 # Check dependencies
