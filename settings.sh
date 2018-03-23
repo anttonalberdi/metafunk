@@ -36,13 +36,13 @@ seqtype="SR" #either SR or PE
 copydata="no"
 
 ##### Low complexity settings
-removelowcomplexity="yes"
+removelowcomplexity="no"
 dustvalue="7"
 
 ##### Host DNA settings
 removehostdna="yes"
 hostgenome="/home/projects/pr_46704/people/antalb/databases/L.Dalen_14_wolf.scf.noHets.fasta" #absolute path to fasta file
-indexedhostgenome="yes"
+indexedhostgenome="no"
 
 ##### Coassembly settings
 coassembly="yes"

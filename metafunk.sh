@@ -2,7 +2,7 @@
 source "${1}/settings.sh"
 
 #########
-# Create and set working directory 
+# Create and set working directory
 #########
 
 mkdir -p ${workingdirectory}
@@ -33,11 +33,11 @@ sh ${metafunkdirectory}/scripts/checkdependencies.sh
 # Copy data to project directory
 #########
 
-if [[ $copydata == "yes" ]]; then  
+if [[ $copydata == "yes" ]]; then
 mkdir ${projectdirectory}/RawData
 now=$(date +"%Y-%d-%m %H:%M:%S")
 echo "$now | Copying and uncompressing data files" >> ${projectdirectory}/run.log
-while read samplefile; do 
+while read samplefile; do
 cp ${datadirectory}/${samplefile}.fastq.gz ${projectdirectory}/RawData/
 #Uncompress files
 pigz -d -p ${threads} ${projectdirectory}/RawData/${samplefile}.fastq.gz
@@ -55,7 +55,7 @@ fi
 # Remove low complexity reads
 #########
 
-if [[ $removelowcomplexity == "yes" ]]; then  
+if [[ $removelowcomplexity == "yes" ]]; then
 now=$(date +"%Y-%d-%m %H:%M:%S")
 echo "$now | Running low complexity filter" >> ${projectdirectory}/run.log
 export metafunkdirectory
@@ -69,7 +69,7 @@ fi
 # Remove host DNA
 #########
 
-if [[ $removehostdna == "yes" ]]; then  
+if [[ $removehostdna == "yes" ]]; then
 now=$(date +"%Y-%d-%m %H:%M:%S")
 echo "$now | Removing host DNA" >> ${projectdirectory}/run.log
 export metafunkdirectory
@@ -83,7 +83,7 @@ fi
 # Perform co-assembly
 #########
 
-if [[ $coassembly == "yes" ]]; then  
+if [[ $coassembly == "yes" ]]; then
 now=$(date +"%Y-%d-%m %H:%M:%S")
 echo "$now | Co-assembling reads" >> ${projectdirectory}/run.log
 export metafunkdirectory
@@ -97,7 +97,7 @@ fi
 # Predict genes
 #########
 
-if [[ $geneprediction == "yes" ]]; then  
+if [[ $geneprediction == "yes" ]]; then
 now=$(date +"%Y-%d-%m %H:%M:%S")
 echo "$now | Predicting genes" >> ${projectdirectory}/run.log
 export metafunkdirectory
@@ -108,17 +108,25 @@ echo "$now | Gene prediction will not be performed" >> ${projectdirectory}/run.l
 fi
 
 #########
-# Map reads back to the genes
+# Map reads back to the genes and generate Coverage and Hit tables
 #########
-
-if [[ $genemapping == "yes" ]]; then  
 now=$(date +"%Y-%d-%m %H:%M:%S")
+if [[ $genemapping == "yes" ]]; then
 echo "$now | Mapping reads back to genes" >> ${projectdirectory}/run.log
 export metafunkdirectory
 sh ${metafunkdirectory}/scripts/genemapping.sh
 else
-now=$(date +"%Y-%d-%m %H:%M:%S")
 echo "$now | Gene mapping will not be performed" >> ${projectdirectory}/run.log
 fi
 
-
+#########
+# Normalise Coverage and Hit tables
+#########
+now=$(date +"%Y-%d-%m %H:%M:%S")
+if [[ $tss == "yes" | $css == "yes" ]]; then
+  echo "$now | Normalising hit and coverage tables" >> ${projectdirectory}/run.log
+  export metafunkdirectory
+  sh ${metafunkdirectory}/scripts/normalisetables.sh
+  else
+  echo "$now | Hit and coverage tables will not be normalised" >> ${projectdirectory}/run.log
+fi

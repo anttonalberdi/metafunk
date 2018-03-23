@@ -13,9 +13,9 @@ echo "$now |        Gene catalogue indexed" >> ${workingdirectory}/${project}/ru
 now=$(date +"%Y-%d-%m %H:%M:%S")
 echo "$now |        Calculating gene lengths" >> ${workingdirectory}/${project}/run.log
 python ${metafunkdirectory}/scripts/contiglengths.py -i ${workingdirectory}/${project}/GenePrediction/assembly.genes.fna > ${workingdirectory}/${project}/GenePrediction/assembly.genes.lengths
-filesize=%(ls -l GenePrediction/assembly.genes.lengths | awk '{print $5}')
+filesize=%(ls -l ${workingdirectory}/${project}/GenePrediction/assembly.genes.lengths | awk '{print $5}')
 now=$(date +"%Y-%d-%m %H:%M:%S")
-if [[ $filesize > 0 ]]; then 
+if [[ $filesize > 0 ]]; then
 echo "$now |        Gene length file was successfully created" >> ${workingdirectory}/${project}/run.log
 else
 echo "$now |        There was an error while generating the gene length file" >> ${workingdirectory}/${project}/run.log
@@ -24,15 +24,15 @@ fi
 mkdir -p ${workingdirectory}/${project}/GeneMapping
 
 #Map reads back to genes
-if [[ $seqtype == "SR" ]]; then 
+if [[ $seqtype == "SR" ]]; then
 now=$(date +"%Y-%d-%m %H:%M:%S")
 echo "$now | Mapping SR reads to the gene catalogue" >> ${workingdirectory}/${project}/run.log
 	#Iterate through samples
-	while read samplefile; do 
+	while read samplefile; do
 now=$(date +"%Y-%d-%m %H:%M:%S")
 echo "$now |      Mapping sample $samplefile" >> ${workingdirectory}/${project}/run.log
 		#Select LowComplex or Original data file
-		if [[ $removelowcomplexity == "yes" ]]; then  
+		if [[ $removelowcomplexity == "yes" ]]; then
 		inputfile=${workingdirectory}/${project}/LowComplexFiltered/${samplefile}.fastq
 		else
 		inputfile=${workingdirectory}/${project}/RawData/${samplefile}.fastq
@@ -45,7 +45,7 @@ echo "$now |      Mapping sample $samplefile" >> ${workingdirectory}/${project}/
 echo "$now |      Sample $samplefile successfully mapped" >> ${workingdirectory}/${project}/run.log
 	done < ${metafunkdirectory}/sample.data.txt
 
-elif [[ $seqtype == "PE" ]]; then 
+elif [[ $seqtype == "PE" ]]; then
 now=$(date +"%Y-%d-%m %H:%M:%S")
 echo "$now | Removing host DNA from PE data" >> ${workingdirectory}/${project}/run.log
 
@@ -58,5 +58,13 @@ fi
 perl ${metafunkdirectory}/scripts/collatecoverages.pl ${workingdirectory}/${project}/GeneMapping/ > ${workingdirectory}/${project}/GeneCoverageTable.csv
 
 #Generate hit table
-
-${workingdirectory}/${project}/GeneCoverageTable.csv
+echo "$now | Generating hit table" >> ${workingdirectory}/${project}/run.log
+export WORKDIR="${workingdirectory}/${project}"
+Rscript ${workdir}/scripts/createhittable.r --no-save
+filesize=%(ls -l ${workingdirectory}/${project}/HitTable.csv | awk '{print $5}')
+now=$(date +"%Y-%d-%m %H:%M:%S")
+if [[ $filesize > 0 ]]; then
+echo "$now |        Hit table was successfully created" >> ${workingdirectory}/${project}/run.log
+else
+echo "$now |        There was an error while generating the hit table" >> ${workingdirectory}/${project}/run.log
+fi
