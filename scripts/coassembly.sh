@@ -29,7 +29,12 @@ now=$(date +"%Y-%d-%m %H:%M:%S")
 echo "$now | Concatenating all samples" >> ${workingdirectory}/${project}/run.log
 cat ${workingdirectory}/${project}/CoAssembly/*.fasta > ${workingdirectory}/${project}/CoAssembly/Allsamples.fasta
 
-##Co-assembly
+#Remove co-assembly directory if exists
+if [[ $overridecoassembly == "yes" ]]; then 
+rm -r ${workingdirectory}/${project}/CoAssembly/Megahit
+fi
+    
+#Co-assembly
 now=$(date +"%Y-%d-%m %H:%M:%S")
 echo "$now | Co-assembling all reads" >> ${workingdirectory}/${project}/run.log
 megahit -t ${threads} -r ${workingdirectory}/${project}/CoAssembly/Allsamples.fasta -o ${workingdirectory}/${project}/CoAssembly/Megahit

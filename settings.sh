@@ -24,6 +24,7 @@ module load megahit/1.1.1
 module load prodigal/2.6.3
 module load bedtools/2.26.0
 module load anaconda2/4.0.0
+module load R/3.2.1
 
 threads="16"
 
@@ -45,6 +46,7 @@ indexedhostgenome="yes"
 
 ##### Coassembly settings
 coassembly="yes"
+overridecoassembly="yes" #override if the coassembly directory exists
 
 ##### Gene prediction settings
 geneprediction="yes"
@@ -52,3 +54,6 @@ geneprediction="yes"
 ##### Gene mapping settings
 genemapping="yes"
 
+##### Coverage/Hit table normalisation
+tss="yes"
+css="yes"

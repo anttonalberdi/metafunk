@@ -22,6 +22,13 @@ echo "Sequencing read length: $readlength" >> ${projectdirectory}/run.log
 echo '###################/n' >> ${projectdirectory}/run.log
 
 #########
+# Check dependencies
+#########
+
+export metafunkdirectory
+sh ${metafunkdirectory}/scripts/checkdependencies.sh
+
+#########
 # Copy data to project directory
 #########
 
@@ -112,4 +119,5 @@ else
 now=$(date +"%Y-%d-%m %H:%M:%S")
 echo "$now | Gene mapping will not be performed" >> ${projectdirectory}/run.log
 fi
+
 
