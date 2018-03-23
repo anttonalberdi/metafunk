@@ -1,6 +1,8 @@
 #Source dependencies
 source "$metafunkdirectory/settings.sh"
 
+mkdir -p ${workingdirectory}/${project}/GeneMapping
+
 #Index genes
 now=$(date +"%Y-%d-%m %H:%M:%S")
 echo "$now |        Indexing gene catalogue" >> ${workingdirectory}/${project}/run.log
