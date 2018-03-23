@@ -13,7 +13,7 @@ echo "$now |        Gene catalogue indexed" >> ${workingdirectory}/${project}/ru
 now=$(date +"%Y-%d-%m %H:%M:%S")
 echo "$now |        Calculating gene lengths" >> ${workingdirectory}/${project}/run.log
 python ${metafunkdirectory}/scripts/contiglengths.py -i ${workingdirectory}/${project}/GenePrediction/assembly.genes.fna > ${workingdirectory}/${project}/GenePrediction/assembly.genes.lengths
-filesize=%(ls -l ${workingdirectory}/${project}/GenePrediction/assembly.genes.lengths | awk '{print $5}')
+filesize=$(ls -l ${workingdirectory}/${project}/GenePrediction/assembly.genes.lengths | awk '{print $5}')
 now=$(date +"%Y-%d-%m %H:%M:%S")
 if [[ $filesize > 0 ]]; then
 echo "$now |        Gene length file was successfully created" >> ${workingdirectory}/${project}/run.log
