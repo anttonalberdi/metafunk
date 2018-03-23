@@ -51,19 +51,19 @@ humangenome="/home/projects/pr_46704/people/antalb/databases/Homo_sapiens.fasta"
 indexedhumangenome="no"
 
 ##### Coassembly settings
-coassembly="yes"
+coassembly="no"
 overridecoassembly="yes" #override if the coassembly directory exists
 
 ##### Gene prediction settings
-geneprediction="yes"
+geneprediction="no"
 
 ##### Gene mapping settings
 genemapping="yes"
 
 ##### Coverage/Hit table normalisation
-tss="yes"
-css="yes"
+tss="no"
+css="no"
 
 ##### Functional annotation
-kegg="yes"
-eggnog="yes"
+kegg="no"
+eggnog="no"
