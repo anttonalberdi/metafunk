@@ -3,16 +3,23 @@ source "$metafunkdirectory/settings.sh"
 
 #Index genes
 now=$(date +"%Y-%d-%m %H:%M:%S")
-echo "$now | Indexing gene catalogue" >> ${workingdirectory}/${project}/run.log
+echo "$now |        Indexing gene catalogue" >> ${workingdirectory}/${project}/run.log
 samtools faidx ${workingdirectory}/${project}/GenePrediction/assembly.genes.fna
 bwa index ${workingdirectory}/${project}/GenePrediction/assembly.genes.fna
 now=$(date +"%Y-%d-%m %H:%M:%S")
-echo "$now | Gene catalogue indexed" >> ${workingdirectory}/${project}/run.log
+echo "$now |        Gene catalogue indexed" >> ${workingdirectory}/${project}/run.log
 
 #Get gene lengths
 now=$(date +"%Y-%d-%m %H:%M:%S")
-echo "$now | Calculating gene lengths" >> ${workingdirectory}/${project}/run.log
+echo "$now |        Calculating gene lengths" >> ${workingdirectory}/${project}/run.log
 python ${metafunkdirectory}/scripts/contiglengths.py -i ${workingdirectory}/${project}/GenePrediction/assembly.genes.fna > ${workingdirectory}/${project}/GenePrediction/assembly.genes.lengths
+filesize=%(ls -l GenePrediction/assembly.genes.lengths | awk '{print $5}')
+now=$(date +"%Y-%d-%m %H:%M:%S")
+if [[ $filesize > 0 ]]; then 
+echo "$now |        Gene length file was successfully created" >> ${workingdirectory}/${project}/run.log
+else
+echo "$now |        There was an error while generating the gene length file" >> ${workingdirectory}/${project}/run.log
+fi
 
 mkdir -p ${workingdirectory}/${project}/GeneMapping
 
@@ -49,3 +56,7 @@ fi
 
 #Collate coverages
 perl ${metafunkdirectory}/scripts/collatecoverages.pl ${workingdirectory}/${project}/GeneMapping/ > ${workingdirectory}/${project}/GeneCoverageTable.csv
+
+#Generate hit table
+
+${workingdirectory}/${project}/GeneCoverageTable.csv

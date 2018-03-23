@@ -1,11 +1,20 @@
-echo "Settings file loaded!"
+echo "Settings file successfully loaded"
+
+#######################################
+######### Project information #########
+#######################################
+
+#You can use the same working directory for multiple projects (e.g. different settings)
 
 project="test1"
 datadirectory="/home/projects/pr_46704/people/antalb/metafunk_v0.1/testdata"
-workingdirectory="/home/projects/pr_46704/people/antalb/metafunk_v0.1/test_20180322"
-metafunkdirectory="/home/projects/pr_46704/people/antalb/metafunk_v0.1"
+workingdirectory="/home/projects/pr_46704/people/antalb/metafunk_v0.1/test_20180323"
+metafunkdirectory="/home/projects/pr_46704/people/antalb/metafunk"
 
-#### Software dependencies
+#######################################
+######## Software dependencies ########
+#######################################
+
 module load prinseq-lite/0.20.4
 module load samtools/1.4
 module load bwa/0.7.15
