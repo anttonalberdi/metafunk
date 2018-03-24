@@ -12,9 +12,8 @@ sourcefolder="QualityFiltered"
 else
 sourcefolder="RawData"
 fi
-
 now=$(date +"%Y-%d-%m %H:%M:%S")
-echo "$now | Removing low complexity reads from directory $sourcefolder" >> ${projectdirectory}/run.log
+echo "$now | Removing low complexity reads from directory ${sourcefolder}" >> ${projectdirectory}/run.log
 
 #Loop across samples specified in sample.data.txt
 while read sample; do
