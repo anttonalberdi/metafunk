@@ -44,12 +44,12 @@ readlength="80"
 seqtype="SR" #either SR or PE
 
 ##### Data transfer settings
-copydata="yes"
+copydata="no"
 extension="fastq"
 compression="gz"
 
 ##### Quality filtering
-qualityfiltering="no"
+qualityfiltering="yes"
 
 ##### Remove duplicate sequences
 removeduplicates="no"
