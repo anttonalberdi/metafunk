@@ -81,7 +81,7 @@ echo "$now | 		Removing host DNA from PE data from folder ${sourcefolder}" >> ${
 		samplename=$(echo $sample | cut -d ' ' -f1 )
 		genomepath=$(echo $sample | cut -d ' ' -f4)
 		genomefile=$(echo "$genomepath"  | sed 's/.*\///')
-
+echo "Zero"
 		#Avoid repeating operation when looping through the 2nd pair
 		if [ ! -f ${workingdirectory}/${project}/HostDNARemoved/${samplename}_1.fastq ]; then
 			echo "One"
