@@ -169,3 +169,9 @@ if [[ $eggnog == "yes" ]]; then
   else
   echo "$now | EggNog functional annotation will not be performed" >> ${projectdirectory}/run.log
 fi
+
+#########
+# Final message
+#########
+now=$(date +"%Y-%d-%m %H:%M:%S")
+echo "$now | Congratulations, the pipeline was succesfully run" >> ${projectdirectory}/run.log

@@ -45,11 +45,11 @@ seqtype="PE"
 #either SR or PE
 
 ##### Data transfer settings
-copydata="yes"
+copydata="no"
 compressed="yes"
 
 ##### Quality filtering
-qualityfiltering="no"
+qualityfiltering="yes"
 
 ##### Remove duplicate sequences
 removeduplicates="no"
