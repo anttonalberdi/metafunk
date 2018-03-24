@@ -46,7 +46,7 @@ seqtype="SR" #either SR or PE
 ##### Data transfer settings
 copydata="yes"
 extension="fastq"
-comp="gz" 
+compression="gz"
 
 ##### Quality filtering
 qualityfiltering="no"

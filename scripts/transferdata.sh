@@ -1,7 +1,7 @@
 source "$metafunkdirectory/settings.sh"
 
 mkdir -p ${workingdirectory}/${project}/RawData
-echo "Here is $comp"
+
 while read samplefile; do
 
 #If uncompressed files
@@ -15,11 +15,11 @@ fi
 
 #If compressed files
 if [[ $comp != "no" ]]; then
-  if [ ! -f "${datadirectory}/${samplefile}.${extension}.${comp}" ]; then
-    echo "File ${samplefile}.${extension}.${comp} was not found. Check the settings are correct."
+  if [ ! -f "${datadirectory}/${samplefile}.${extension}.${compression}" ]; then
+    echo "File ${samplefile}.${extension}.${compression} was not found. Check the settings are correct."
   fi
-cp ${datadirectory}/${samplefile}.${extension}.${comp} ${workingdirectory}/${project}/RawData/
-pigz -d -p ${threads} ${workingdirectory}/${project}/RawData/${samplefile}.${extension}.${comp}
+cp ${datadirectory}/${samplefile}.${extension}.${compression} ${workingdirectory}/${project}/RawData/
+pigz -d -p ${threads} ${workingdirectory}/${project}/RawData/${samplefile}.${extension}.${compression}
 mv ${workingdirectory}/${project}/RawData/${samplefile}.${extension} ${workingdirectory}/${project}/RawData/${samplefile}.fastq
 fi
 
