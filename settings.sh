@@ -55,10 +55,10 @@ copydata="no"
 compressed="yes"
 
 ##### Quality filtering
-qualityfiltering="yes"
+qualityfiltering="no"
 
 ##### Remove duplicate sequences
-removeduplicates="no"
+removeduplicates="yes"
 
 ##### Low complexity settings
 removelowcomplexity="no"
