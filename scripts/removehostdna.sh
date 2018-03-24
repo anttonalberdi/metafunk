@@ -7,7 +7,7 @@ mkdir -p ${workingdirectory}/${project}/HostDNARemoved/ReferenceGenomes
 
 #Copy host reference genome to project directory
 now=$(date +"%Y-%d-%m %H:%M:%S")
-echo "$now | 		Copying host genome" >>  ${workingdirectory}/${project}/run.log
+echo "$now | 		Copying host genome(s)" >>  ${workingdirectory}/${project}/run.log
 
 while read sample; do
 
@@ -15,7 +15,7 @@ while read sample; do
 	genomefile=$(echo "${genomepath}"  | sed 's/.*\///')
 	if [ ! -f ${workingdirectory}/${project}/HostDNARemoved/ReferenceGenomes/${genomefile} ]; then
 	cp ${genomepath}* ${workingdirectory}/${project}/HostDNARemoved/ReferenceGenomes
-	echo "				Genome file $genomefile was copied to the project directory" >> ${workingdirectory}/${project}/run.log
+	echo "$now |		Genome file $genomefile was copied to the project directory" >> ${workingdirectory}/${project}/run.log
 	fi
 
 done < ${metafunkdirectory}/sample.data.txt

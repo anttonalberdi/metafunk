@@ -5,11 +5,14 @@ echo "Settings file successfully loaded"
 #######################################
 
 #You can use the same working directory for multiple projects (e.g. different settings)
-
 project="test1"
 datadirectory="/home/projects/pr_46704/people/antalb/metafunk_v0.1/testdata"
 workingdirectory="/home/projects/pr_46704/people/antalb/metafunk_v0.1/test_20180324"
 metafunkdirectory="/home/projects/pr_46704/people/antalb/metafunk"
+
+#Data type - Read length (e.g. 80, 100, 150...) and read type (SR or PE)
+readlength="150"
+seqtype="PE"
 
 #######################################
 ######## Software dependencies ########
@@ -40,48 +43,58 @@ module load R/3.2.1
 module load diamond/0.9.13
 
 #######################################
+########## Module switcher ############
+#######################################
+
+#Select (yes / no) which modules you want to be ran.
+#Read the wiki to learn more about what each module does: https://github.com/anttonalberdi/metafunk/wiki
+
+copydata="no"
+qualityfiltering="no"
+removeduplicates="no"
+removelowcomplexity="no"
+removehostdna="yes"
+removehumandna="no"
+coassembly="no"
+geneprediction="no"
+genemapping="no"
+
+#######################################
 ############## Settings ###############
 #######################################
 
+
 threads="16"
 
-#Data type
-readlength="80"
-seqtype="PE"
+
 #either SR or PE
 
 ##### Data transfer settings
-copydata="no"
 compressed="yes"
 
-##### Quality filtering
-qualityfiltering="no"
+##### Quality filtering settings
+minavgquality="30"
+minseqlength="30"
+qualitymax="60"
 
 ##### Remove duplicate sequences
-removeduplicates="no"
 
 ##### Low complexity settings
-removelowcomplexity="no"
 dustvalue="7"
 
 ##### Host DNA removal settings
-removehostdna="yes"
 indexedhostgenome="yes"
 
 ##### Human DNA removal settings
-removehumandna="no"
 humangenome="/home/projects/pr_46704/people/antalb/databases/Homo_sapiens.fasta" #absolute path to fasta file
 indexedhumangenome="no"
 
 ##### Coassembly settings
-coassembly="no"
 overridecoassembly="yes" #override if the coassembly directory exists
 
 ##### Gene prediction settings
-geneprediction="no"
 
 ##### Gene mapping settings
-genemapping="no"
 
 ##### Coverage/Hit table normalisation
 tss="no"
