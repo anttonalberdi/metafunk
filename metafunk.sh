@@ -74,8 +74,6 @@ fi
 #########
 
 if [[ $removelowcomplexity == "yes" ]]; then
-now=$(date +"%Y-%d-%m %H:%M:%S")
-echo "$now | Running low complexity filter" >> ${projectdirectory}/run.log
 export metafunkdirectory
 sh ${metafunkdirectory}/scripts/lowcomplexity.sh
 else

@@ -5,13 +5,16 @@ source "$metafunkdirectory/settings.sh"
 mkdir -p ${workingdirectory}/${project}/LowComplexFiltered
 
 #Select source folder from which data will be retrieved
-if [[ $qualityfiltering == "yes" ]]; then
-sourcefolder="QualityFiltered"
-elif [[ $removeduplicates == "yes" ]]; then
+if [[ "$(ls -A ${workingdirectory}/${project}/DuplicatesRemoved/)" ]]; then
 sourcefolder="DuplicatesRemoved"
+elif [[ "$(ls -A ${workingdirectory}/${project}/QualityFiltered/)" ]]; then
+sourcefolder="QualityFiltered"
 else
 sourcefolder="RawData"
 fi
+
+now=$(date +"%Y-%d-%m %H:%M:%S")
+echo "$now | Removing low complexity reads from directory $sourcefolder" >> ${projectdirectory}/run.log
 
 #Loop across samples specified in sample.data.txt
 while read sample; do
@@ -28,7 +31,7 @@ while read sample; do
 
   #Perform the actual low complexity filtering
   now=$(date +"%Y-%d-%m %H:%M:%S")
-  echo "$now | 		Filtering sample ${samplefile}" >> ${workingdirectory}/${project}/run.log
+  echo "$now | 		Removing low complexity reads from sample ${samplefile}" >> ${workingdirectory}/${project}/run.log
   prinseq-lite.pl -lc_method "dust" -lc_threshold ${dustvalue} -fastq  ${workingdirectory}/${project}/${sourcefolder}/${samplefile}.fastq -out_good ${workingdirectory}/${project}/LowComplexFiltered/${samplefile}
   now=$(date +"%Y-%d-%m %H:%M:%S")
   echo "$now | 		${samplefile} was successfully filtered" >> ${workingdirectory}/${project}/run.log
