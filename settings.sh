@@ -44,7 +44,8 @@ readlength="80"
 seqtype="SR" #either SR or PE
 
 ##### Data transfer settings
-copydata="yes" #Assumes the fastq files have either extension fastq or fq
+copydata="yes"
+extension="fq"
 compression="gz" #Set the compression extension. If the data are not compressed, then compression="no"
 
 ##### Quality filtering

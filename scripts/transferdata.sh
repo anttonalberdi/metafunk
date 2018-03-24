@@ -3,11 +3,20 @@ source "$metafunkdirectory/settings.sh"
 mkdir -p ${projectdirectory}/RawData
 
 while read samplefile; do
-cp ${datadirectory}/${samplefile}.f*q.${compression} ${projectdirectory}/RawData/
-#Uncompress files
-if [[ ! $compression == "no" ]]; then
-pigz -d -p ${threads} ${projectdirectory}/RawData/${samplefile}.${samplefile}.f*q.${compression}
+
+#If uncompressed files
+if [[ $compression == "no" ]]; then
+  cp ${datadirectory}/${samplefile}.${extension} ${projectdirectory}/RawData/
+  mv ${projectdirectory}/RawData/${samplefile}.${extension} ${projectdirectory}/RawData/${samplefile}.fastq
 fi
+
+#If compressed files
+if [[ ! $compression == "no" ]]; then
+cp ${datadirectory}/${samplefile}.${extension}.${compression} ${projectdirectory}/RawData/
+pigz -d -p ${threads} ${projectdirectory}/RawData/${samplefile}.${samplefile}.${extension}.${compression}
+mv ${projectdirectory}/RawData/${samplefile}.${extension} ${projectdirectory}/RawData/${samplefile}.fastq
+fi
+
 done < ${metafunkdirectory}/sample.data.txt
 #Print stats
 filenumber=$(ls ${projectdirectory}/RawData/| wc -l)
