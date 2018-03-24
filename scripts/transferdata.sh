@@ -5,7 +5,7 @@ mkdir -p ${workingdirectory}/${project}/RawData
 while read samplefile; do
 
 #If uncompressed files
-if [[ $compression == "no" ]]; then
+if [[ $comp == "no" ]]; then
   if [ ! -f "${datadirectory}/${samplefile}.${extension}" ]; then
     echo "File ${samplefile} was not found. Check the settings are correct."
   fi
@@ -14,12 +14,12 @@ if [[ $compression == "no" ]]; then
 fi
 
 #If compressed files
-if [[ $compression != "no" ]]; then
-  if [ ! -f "${datadirectory}/${samplefile}.${extension}.${compression}" ]; then
-    echo "File ${samplefile}.${extension}.${compression} was not found. Check the settings are correct."
+if [[ $comp != "no" ]]; then
+  if [ ! -f "${datadirectory}/${samplefile}.${extension}.${comp}" ]; then
+    echo "File ${samplefile}.${extension}.${comp} was not found. Check the settings are correct."
   fi
-cp ${datadirectory}/${samplefile}.${extension}.${compression} ${workingdirectory}/${project}/RawData/
-pigz -d -p ${threads} ${workingdirectory}/${project}/RawData/${samplefile}.${extension}.${compression}
+cp ${datadirectory}/${samplefile}.${extension}.${comp} ${workingdirectory}/${project}/RawData/
+pigz -d -p ${threads} ${workingdirectory}/${project}/RawData/${samplefile}.${extension}.${comp}
 mv ${workingdirectory}/${project}/RawData/${samplefile}.${extension} ${workingdirectory}/${project}/RawData/${samplefile}.fastq
 fi
 
