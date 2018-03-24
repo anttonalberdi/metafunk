@@ -41,10 +41,12 @@ threads="16"
 
 #Data type
 readlength="80"
-seqtype="SR" #either SR or PE
+seqtype="SR"
+#either SR or PE
 
 ##### Data transfer settings
 copydata="yes"
+compressed="yes"
 
 ##### Quality filtering
 qualityfiltering="no"
