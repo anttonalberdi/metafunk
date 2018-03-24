@@ -32,22 +32,12 @@ sh ${metafunkdirectory}/scripts/checkdependencies.sh
 #########
 # Copy data to project directory
 #########
-
+now=$(date +"%Y-%d-%m %H:%M:%S")
 if [[ $copydata == "yes" ]]; then
-mkdir ${projectdirectory}/RawData
-now=$(date +"%Y-%d-%m %H:%M:%S")
 echo "$now | Copying and uncompressing data files" >> ${projectdirectory}/run.log
-while read samplefile; do
-cp ${datadirectory}/${samplefile}.fastq.gz ${projectdirectory}/RawData/
-#Uncompress files
-pigz -d -p ${threads} ${projectdirectory}/RawData/${samplefile}.fastq.gz
-done < ${metafunkdirectory}/sample.data.txt
-#Print stats
-filenumber=$(ls ${projectdirectory}/RawData/| wc -l)
-now=$(date +"%Y-%d-%m %H:%M:%S")
-echo "$now | $filenumber files were copied and uncompressed" >> ${projectdirectory}/run.log
+export metafunkdirectory
+sh ${metafunkdirectory}/scripts/transferdata.sh
 else
-now=$(date +"%Y-%d-%m %H:%M:%S")
 echo "$now | Data will not be copied and uncompressed" >> ${projectdirectory}/run.log
 fi
 

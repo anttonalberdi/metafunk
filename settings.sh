@@ -44,10 +44,11 @@ readlength="80"
 seqtype="SR" #either SR or PE
 
 ##### Data transfer settings
-copydata="no"
+copydata="yes" #Assumes the fastq files have either extension fastq or fq
+compression="gz" #Set the compression extension. If the data are not compressed, then compression="no"
 
 ##### Quality filtering
-qualityfiltering="yes"
+qualityfiltering="no"
 
 ##### Remove duplicate sequences
 removeduplicates="no"
