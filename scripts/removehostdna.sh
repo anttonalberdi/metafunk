@@ -28,12 +28,13 @@ if [[ $indexedhostgenome == "yes" ]]; then
 		genomepath=$(echo $sample | cut -d ' ' -f4)
 		genomefile=$(echo "${genomepath}"  | sed 's/.*\///')
 		now=$(date +"%Y-%d-%m %H:%M:%S")
+		if [ ! -f ${workingdirectory}/${project}/HostDNARemoved/ReferenceGenomes/${genomefile}.fai ]; then
 		echo "$now | 		Indexing ${genomefile} genome" >> ${workingdirectory}/${project}/run.log
 		samtools faidx ${workingdirectory}/${project}/HostDNARemoved/ReferenceGenomes/${genomefile}
 		bwa index ${workingdirectory}/${project}/HostDNARemoved/ReferenceGenomes/${genomefile}
 		now=$(date +"%Y-%d-%m %H:%M:%S")
 		echo "$now | 		Genome ${genomefile} was succesfully indexed" >> ${workingdirectory}/${project}/run.log
-
+		fi
 	done < ${metafunkdirectory}/sample.data.txt
 
 fi

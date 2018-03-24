@@ -14,6 +14,9 @@ metafunkdirectory="/home/projects/pr_46704/people/antalb/metafunk"
 readlength="150"
 seqtype="PE"
 
+#Computational information
+threads="16"
+
 #######################################
 ######## Software dependencies ########
 #######################################
@@ -62,12 +65,6 @@ genemapping="no"
 #######################################
 ############## Settings ###############
 #######################################
-
-
-threads="16"
-
-
-#either SR or PE
 
 ##### Data transfer settings
 compressed="yes"
