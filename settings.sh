@@ -58,15 +58,14 @@ compressed="yes"
 qualityfiltering="no"
 
 ##### Remove duplicate sequences
-removeduplicates="yes"
+removeduplicates="no"
 
 ##### Low complexity settings
-removelowcomplexity="no"
+removelowcomplexity="yes"
 dustvalue="7"
 
 ##### Host DNA removal settings
 removehostdna="no"
-hostgenome="/home/projects/pr_46704/people/antalb/databases/L.Dalen_14_wolf.scf.noHets.fasta" #absolute path to fasta file
 indexedhostgenome="no"
 
 ##### Human DNA removal settings
