@@ -21,10 +21,10 @@ if [[ $compressed == "no" && $seqtype == "PE" ]]; then
   if [ ! -f "${datadirectory}/${samplefile}" ]; then
     echo "File ${samplefile} was not found. Check the settings are correct."
   fi
-  if [[ $sampleread == 1 ]], then
+  if [[ $sampleread == 1 ]]; then
   cp ${datadirectory}/${samplefile} ${workingdirectory}/${project}/RawData/${samplename}_1.fastq
   fi
-  if [[ $sampleread == 2 ]], then
+  if [[ $sampleread == 2 ]]; then
   cp ${datadirectory}/${samplefile} ${workingdirectory}/${project}/RawData/${samplename}_2.fastq
   fi
 fi
@@ -44,12 +44,12 @@ if [[ $compressed == "yes" && $seqtype == "SR" ]]; then
     echo "File ${samplefile} was not found. Check the settings are correct."
   fi
   #Process if read 1
-  if [[ $sampleread == 1 ]], then
+  if [[ $sampleread == 1 ]]; then
   cp ${datadirectory}/${samplefile} ${workingdirectory}/${project}/RawData/${samplename}_1.fastq.gz
   pigz -d -p ${threads} ${workingdirectory}/${project}/RawData/${samplename}_1.fastq.gz
   fi
   #Process if read 2
-  if [[ $sampleread == 2 ]], then
+  if [[ $sampleread == 2 ]]; then
   cp ${datadirectory}/${samplefile} ${workingdirectory}/${project}/RawData/${samplename}_2.fastq.gz
   pigz -d -p ${threads} ${workingdirectory}/${project}/RawData/${samplename}_2.fastq.gz
   fi
