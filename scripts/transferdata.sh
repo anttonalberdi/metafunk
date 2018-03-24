@@ -14,9 +14,9 @@ if [[ $compression == "no" ]]; then
 fi
 
 #If compressed files
-if [[ ! $compression == "yes" ]]; then
+if [[ ! $compression == "no" ]]; then
   if [ ! -f "${datadirectory}/${samplefile}.${extension}.${compression}" ]; then
-    echo "File ${samplefile} was not found. Check the settings are correct."
+    echo "File ${samplefile}.${extension}.${compression} was not found. Check the settings are correct."
   fi
 cp ${datadirectory}/${samplefile}.${extension}.${compression} ${workingdirectory}/${project}/RawData/
 pigz -d -p ${threads} ${workingdirectory}/${project}/RawData/${samplefile}.${extension}.${compression}
