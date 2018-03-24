@@ -77,18 +77,25 @@ echo "$now | 		Removing host DNA from PE data from folder ${sourcefolder}" >> ${
 	#Loop across samples specified in sample.data.txt
 	while read sample; do
 
-
 		#Obtain data from sample.data.txt columns and get file name
 		samplename=$(echo $sample | cut -d ' ' -f1 )
+		genomepath=$(echo $sample | cut -d ' ' -f4)
+		genomefile=$(echo "${genomepath}"  | sed 's/.*\///')
 
-		#Map reads against the reference genome and retrieve unmapped reads
+		#Avoid repeating operation when looping through the 2nd pair
 		if [ ! -f ${workingdirectory}/${project}/HostDNARemoved/${samplename}_1.fastq ]; then
 		#Remove unpaired reads
+		now=$(date +"%Y-%d-%m %H:%M:%S")
+		echo "$now | 			Repairing sample ${samplename}" >> ${workingdirectory}/${project}/run.log
 		repair.sh in=${workingdirectory}/${project}/${sourcefolder}/${samplename}_1.fastq in2=${workingdirectory}/${project}/${sourcefolder}/${samplename}_2.fastq out=${workingdirectory}/${project}/HostDNARemoved/${samplename}_1.fastq out2=${workingdirectory}/${project}/HostDNARemoved/${samplename}_2.fastq
-		echo "				Removing host DNA from sample $samplename" >> ${workingdirectory}/${project}/run.log
+		#Map reads against the reference genome and retrieve unmapped reads
+		now=$(date +"%Y-%d-%m %H:%M:%S")
+		echo "$now | 			Removing host DNA from sample $samplename" >> ${workingdirectory}/${project}/run.log
 		bwa mem -t ${threads} -R '@RG\tID:ProjectName\tCN:AuthorName\tDS:Mappingt\tPL:Illumina1.9\tSM:Sample' ${workingdirectory}/${project}/HostDNARemoved/ReferenceGenomes/${genomefile} ${workingdirectory}/${project}/${sourcefolder}/${samplename}_1.fastq ${workingdirectory}/${project}/${sourcefolder}/${samplename}_2.fastq | samtools view -b -f12 - > ${workingdirectory}/${project}/HostDNARemoved/${samplename}.bam
-		samtools fastq -1 ${workingdirectory}/${project}/HostDNARemoved/${samplename}_1.fastq -2 ${workingdirectory}/${project}/HostDNARemoved/${samplename}_1.fastq ${workingdirectory}/${project}/HostDNARemoved/${samplename}.bam
+		samtools fastq -1 ${workingdirectory}/${project}/HostDNARemoved/${samplename}_1.fastq -2 ${workingdirectory}/${project}/HostDNARemoved/${samplename}_2.fastq ${workingdirectory}/${project}/HostDNARemoved/${samplename}.bam
 		rm ${workingdirectory}/${project}/HostDNARemoved/${samplename}.bam
+		now=$(date +"%Y-%d-%m %H:%M:%S")
+		echo "$now | 			Host DNA succesfully removed from sample $samplename" >> ${workingdirectory}/${project}/run.log
 		fi
 	done < ${metafunkdirectory}/sample.data.txt
 
