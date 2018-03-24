@@ -1,7 +1,7 @@
-# metafunk
-Pipeline for functional metagenomics profiling
+# metafunk (alpha)
+Pipeline for functional metagenomics profiling. Beware this is still an alpha developmental version.
 
-MetaFunk incorporates the following steps:
+MetaFunk is suitable for Illumina and BGISeq single-read (SR) and paired-end (PE) sequencing data, and by March 2018, it incorporates the following steps:
 
 - Quality filtering
 - Duplicate removal
