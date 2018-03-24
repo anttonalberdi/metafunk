@@ -87,6 +87,7 @@ echo "$now | 		Removing host DNA from PE data from folder ${sourcefolder}" >> ${
 		bwa mem -t ${threads} -R '@RG\tID:ProjectName\tCN:AuthorName\tDS:Mappingt\tPL:Illumina1.9\tSM:Sample' ${workingdirectory}/${project}/HostDNARemoved/ReferenceGenomes/${genomefile} ${workingdirectory}/${project}/${sourcefolder}/${samplefile}_1.fastq ${workingdirectory}/${project}/${sourcefolder}/${samplefile}_2.fastq | samtools view -b -f12 - > ${workingdirectory}/${project}/HostDNARemoved/${samplefile}.bam
 		samtools fastq -1 ${workingdirectory}/${project}/HostDNARemoved/${samplefile}_1.fastq -2 ${workingdirectory}/${project}/HostDNARemoved/${samplefile}_1.fastq ${workingdirectory}/${project}/HostDNARemoved/${samplefile}.bam
 		rm ${workingdirectory}/${project}/HostDNARemoved/${samplefile}.bam
+	done < ${metafunkdirectory}/sample.data.txt
 
 else
 echo "$now | 		ERROR: Sequencing read type has not been specified. It needs to be either SR or PE" >> ${workingdirectory}/${project}/run.log
