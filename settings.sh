@@ -41,7 +41,7 @@ threads="16"
 
 #Data type
 readlength="80"
-seqtype="SR"
+seqtype="PE"
 #either SR or PE
 
 ##### Data transfer settings
