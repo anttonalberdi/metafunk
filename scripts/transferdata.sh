@@ -2,25 +2,27 @@ source "$metafunkdirectory/settings.sh"
 
 mkdir -p ${workingdirectory}/${project}/RawData
 
-while read samplefile; do
+while read sample; do
+samplename=$(echo $sample | cut -d ' ' -f1 )
+samplefile=$(echo $sample | cut -d ' ' -f2 )
 
 #If uncompressed files
 if [[ $comp == "no" ]]; then
-  if [ ! -f "${datadirectory}/${samplefile}.${extension}" ]; then
+  if [ ! -f "${datadirectory}/${samplefile}" ]; then
     echo "File ${samplefile} was not found. Check the settings are correct."
   fi
-  cp ${datadirectory}/${samplefile}.${extension} ${workingdirectory}/${project}/RawData/
-  mv ${workingdirectory}/${project}/RawData/${samplefile}.${extension} ${workingdirectory}/${project}/RawData/${samplefile}.fastq
+  cp ${datadirectory}/${samplefile} ${workingdirectory}/${project}/RawData/
+  mv ${workingdirectory}/${project}/RawData/${samplefile} ${workingdirectory}/${project}/RawData/${samplename}.fastq
 fi
 
 #If compressed files
 if [[ $comp != "no" ]]; then
-  if [ ! -f "${datadirectory}/${samplefile}.${extension}.${compression}" ]; then
-    echo "File ${samplefile}.${extension}.${compression} was not found. Check the settings are correct."
+  if [ ! -f "${datadirectory}/${samplefile}" ]; then
+    echo "File ${samplefile} was not found. Check the settings are correct."
   fi
-cp ${datadirectory}/${samplefile}.${extension}.${compression} ${workingdirectory}/${project}/RawData/
-pigz -d -p ${threads} ${workingdirectory}/${project}/RawData/${samplefile}.${extension}.${compression}
-mv ${workingdirectory}/${project}/RawData/${samplefile}.${extension} ${workingdirectory}/${project}/RawData/${samplefile}.fastq
+cp ${datadirectory}/${samplefile} ${workingdirectory}/${project}/RawData/
+pigz -d -p ${threads} ${workingdirectory}/${project}/RawData/${samplefile}
+mv ${workingdirectory}/${project}/RawData/${samplefile} ${workingdirectory}/${project}/RawData/${samplename}.fastq
 fi
 
 done < ${metafunkdirectory}/sample.data.txt

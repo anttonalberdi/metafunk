@@ -1,2 +1,2 @@
-DD3
-WG2
+DD3 DD3.fastq.gz
+WG2 WG2.fastq.gz
