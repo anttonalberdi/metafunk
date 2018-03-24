@@ -50,8 +50,7 @@ else
 sourcefolder="RawData"
 fi
 
-#Obtain data from sample.data.txt columns and get file name
-samplename=$(echo $sample | cut -d ' ' -f1 )
+
 
 now=$(date +"%Y-%d-%m %H:%M:%S")
 #Remove host genome
@@ -60,6 +59,9 @@ echo "$now | 		Removing host DNA from SR data from directory ${sourcefolder}" >>
 
 		#Loop across samples specified in sample.data.txt
 		while read sample; do
+
+			#Obtain data from sample.data.txt columns and get file name
+			samplename=$(echo $sample | cut -d ' ' -f1 )
 
 			#Map reads against the reference genome and retrieve unmapped reads
 			echo "				Removing host DNA from sample $sample" >> ${workingdirectory}/${project}/run.log
@@ -74,6 +76,9 @@ echo "$now | 		Removing host DNA from PE data from folder ${sourcefolder}" >> ${
 
 	#Loop across samples specified in sample.data.txt
 	while read sample; do
+
+		#Obtain data from sample.data.txt columns and get file name
+		samplename=$(echo $sample | cut -d ' ' -f1 )
 
 		#Map reads against the reference genome and retrieve unmapped reads
 		if [ ! -f ${workingdirectory}/${project}/HostDNARemoved/${samplename}_1.fastq ]; then
