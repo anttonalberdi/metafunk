@@ -48,7 +48,7 @@ while read sample; do
   fi
 
   #If compressed PE files
-  if [[ $compressed == "yes" && $seqtype == "SR" ]]; then
+  if [[ $compressed == "yes" && $seqtype == "PE" ]]; then
     if [ ! -f "${datadirectory}/${samplefile}" ]; then
       echo "File ${samplefile} was not found. Check the settings are correct."
     else
