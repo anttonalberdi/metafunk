@@ -50,6 +50,9 @@ else
 sourcefolder="RawData"
 fi
 
+#Obtain data from sample.data.txt columns and get file name
+samplename=$(echo $sample | cut -d ' ' -f1 )
+
 now=$(date +"%Y-%d-%m %H:%M:%S")
 #Remove host genome
 if [[ $seqtype == "SR" ]]; then
@@ -58,16 +61,11 @@ echo "$now | 		Removing host DNA from SR data from directory ${sourcefolder}" >>
 		#Loop across samples specified in sample.data.txt
 		while read sample; do
 
-		  #Obtain data from sample.data.txt columns and get file name
-		  samplename=$(echo $sample | cut -d ' ' -f1 )
-		  sampleread=$(echo $sample | cut -d ' ' -f2 )
-		  samplefile=${samplename}
-
 			#Map reads against the reference genome and retrieve unmapped reads
 			echo "				Removing host DNA from sample $sample" >> ${workingdirectory}/${project}/run.log
-			bwa mem -t ${threads} -R '@RG\tID:ProjectName\tCN:AuthorName\tDS:Mappingt\tPL:Illumina1.9\tSM:Sample' ${workingdirectory}/${project}/HostDNARemoved/ReferenceGenomes/${genomefile} ${workingdirectory}/${project}/${sourcefolder}/${samplefile}.fastq | samtools view -b -f4 - > ${workingdirectory}/${project}/HostDNARemoved/${samplefile}.bam
-			samtools fastq -0 ${workingdirectory}/${project}/HostDNARemoved/${samplefile}.fastq ${workingdirectory}/${project}/HostDNARemoved/${samplefile}.bam
-			rm ${workingdirectory}/${project}/HostDNARemoved/${samplefile}.bam
+			bwa mem -t ${threads} -R '@RG\tID:ProjectName\tCN:AuthorName\tDS:Mappingt\tPL:Illumina1.9\tSM:Sample' ${workingdirectory}/${project}/HostDNARemoved/ReferenceGenomes/${genomefile} ${workingdirectory}/${project}/${sourcefolder}/${samplename}.fastq | samtools view -b -f4 - > ${workingdirectory}/${project}/HostDNARemoved/${samplename}.bam
+			samtools fastq -0 ${workingdirectory}/${project}/HostDNARemoved/${samplename}.fastq ${workingdirectory}/${project}/HostDNARemoved/${samplename}.bam
+			rm ${workingdirectory}/${project}/HostDNARemoved/${samplename}.bam
 
 		done < ${metafunkdirectory}/sample.data.txt
 
@@ -77,15 +75,12 @@ echo "$now | 		Removing host DNA from PE data from folder ${sourcefolder}" >> ${
 	#Loop across samples specified in sample.data.txt
 	while read sample; do
 
-		#Obtain data from sample.data.txt columns and get file name
-		samplename=$(echo $sample | cut -d ' ' -f1 )
-
 		#Map reads against the reference genome and retrieve unmapped reads
 		if [ ! -f ${workingdirectory}/${project}/HostDNARemoved/${samplename}_1.fastq ]; then
 		echo "				Removing host DNA from sample $sample" >> ${workingdirectory}/${project}/run.log
-		bwa mem -t ${threads} -R '@RG\tID:ProjectName\tCN:AuthorName\tDS:Mappingt\tPL:Illumina1.9\tSM:Sample' ${workingdirectory}/${project}/HostDNARemoved/ReferenceGenomes/${genomefile} ${workingdirectory}/${project}/${sourcefolder}/${samplefile}_1.fastq ${workingdirectory}/${project}/${sourcefolder}/${samplefile}_2.fastq | samtools view -b -f12 - > ${workingdirectory}/${project}/HostDNARemoved/${samplefile}.bam
-		samtools fastq -1 ${workingdirectory}/${project}/HostDNARemoved/${samplefile}_1.fastq -2 ${workingdirectory}/${project}/HostDNARemoved/${samplefile}_1.fastq ${workingdirectory}/${project}/HostDNARemoved/${samplefile}.bam
-		rm ${workingdirectory}/${project}/HostDNARemoved/${samplefile}.bam
+		bwa mem -t ${threads} -R '@RG\tID:ProjectName\tCN:AuthorName\tDS:Mappingt\tPL:Illumina1.9\tSM:Sample' ${workingdirectory}/${project}/HostDNARemoved/ReferenceGenomes/${genomefile} ${workingdirectory}/${project}/${sourcefolder}/${samplename}_1.fastq ${workingdirectory}/${project}/${sourcefolder}/${samplename}_2.fastq | samtools view -b -f12 - > ${workingdirectory}/${project}/HostDNARemoved/${samplename}.bam
+		samtools fastq -1 ${workingdirectory}/${project}/HostDNARemoved/${samplename}_1.fastq -2 ${workingdirectory}/${project}/HostDNARemoved/${samplename}_1.fastq ${workingdirectory}/${project}/HostDNARemoved/${samplename}.bam
+		rm ${workingdirectory}/${project}/HostDNARemoved/${samplename}.bam
 		fi
 	done < ${metafunkdirectory}/sample.data.txt
 
