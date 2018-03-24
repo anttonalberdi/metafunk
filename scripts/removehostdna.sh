@@ -77,6 +77,9 @@ echo "$now | 		Removing host DNA from PE data from folder ${sourcefolder}" >> ${
 	#Loop across samples specified in sample.data.txt
 	while read sample; do
 
+		#Remove unpaired reads
+		repair.sh in=${workingdirectory}/${project}/${sourcefolder}/${samplename}_1.fastq in2=${workingdirectory}/${project}/${sourcefolder}/${samplename}_2.fastq out=${workingdirectory}/${project}/HostDNARemoved/${samplename}_1.fastq out=${workingdirectory}/${project}/HostDNARemoved/${samplename}_2.fastq
+
 		#Obtain data from sample.data.txt columns and get file name
 		samplename=$(echo $sample | cut -d ' ' -f1 )
 

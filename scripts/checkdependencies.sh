@@ -35,6 +35,12 @@ fi
 
 #Check software needed for removing host DNA
 if [[ $removehostdna == "yes" || $removehumandna == "yes" || $genemapping == "yes" ]]; then
+  test=$(command -v bbmap.sh)
+      if [[ ${#test} > 0 ]]; then
+      echo "    BBMap is installed" >> ${workingdirectory}/${project}/run.log
+      else
+      echo "    ERROR: BBMap is NOT installed" >> ${workingdirectory}/${project}/run.log
+      fi
 test=$(command -v samtools)
     if [[ ${#test} > 0 ]]; then
     echo "    Samtools is installed" >> ${workingdirectory}/${project}/run.log
