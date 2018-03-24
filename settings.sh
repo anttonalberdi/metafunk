@@ -8,7 +8,7 @@ echo "Settings file successfully loaded"
 
 project="test1"
 datadirectory="/home/projects/pr_46704/people/antalb/metafunk_v0.1/testdata"
-workingdirectory="/home/projects/pr_46704/people/antalb/metafunk_v0.1/test_20180323"
+workingdirectory="/home/projects/pr_46704/people/antalb/metafunk_v0.1/test_20180324"
 metafunkdirectory="/home/projects/pr_46704/people/antalb/metafunk"
 
 #######################################
