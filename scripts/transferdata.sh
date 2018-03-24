@@ -14,7 +14,7 @@ if [[ $compression == "no" ]]; then
 fi
 
 #If compressed files
-if [[ ! $compression == "no" ]]; then
+if [[ ! $compression == "yes" ]]; then
   if [ ! -f "${datadirectory}/${samplefile}.${extension}.${compression}" ]; then
     echo "File ${samplefile} was not found. Check the settings are correct."
   fi
@@ -27,7 +27,7 @@ done < ${metafunkdirectory}/sample.data.txt
 
 #Check if files were succesfully transferred
 if [ -z "$(ls -A ${workingdirectory}/${project})" ]; then
-  echo "ERROR: The data were not transderred."
+  echo "ERROR: The data were not transferred."
   exit
 else
   #Print stats
