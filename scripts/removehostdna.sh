@@ -39,11 +39,11 @@ if [[ $indexedhostgenome == "yes" ]]; then
 fi
 
 #Select source folder from which data will be retrieved
-if [[ $removelowcomplexity == "yes" ]]; then
+if [[ "$(ls -A ${workingdirectory}/${project}/LowComplexFiltered/)" ]]; then
 sourcefolder="LowComplexFiltered"
-elif [[ $removeduplicates == "yes" ]]; then
+elif [[ "$(ls -A ${workingdirectory}/${project}/DuplicatesRemoved/)" ]]; then
 sourcefolder="DuplicatesRemoved"
-elif [[ $qualityfiltering == "yes" ]]; then
+elif [[ "$(ls -A ${workingdirectory}/${project}/QualityFiltered/)" ]]; then
 sourcefolder="QualityFiltered"
 else
 sourcefolder="RawData"
@@ -52,7 +52,7 @@ fi
 now=$(date +"%Y-%d-%m %H:%M:%S")
 #Remove host genome
 if [[ $seqtype == "SR" ]]; then
-echo "$now | 		Removing host DNA from SR data from folder ${sourcefolder}" >> ${workingdirectory}/${project}/run.log
+echo "$now | 		Removing host DNA from SR data from directory ${sourcefolder}" >> ${workingdirectory}/${project}/run.log
 
 		#Loop across samples specified in sample.data.txt
 		while read sample; do

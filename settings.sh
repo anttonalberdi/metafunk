@@ -61,12 +61,12 @@ qualityfiltering="no"
 removeduplicates="no"
 
 ##### Low complexity settings
-removelowcomplexity="yes"
+removelowcomplexity="no"
 dustvalue="7"
 
 ##### Host DNA removal settings
-removehostdna="no"
-indexedhostgenome="no"
+removehostdna="yes"
+indexedhostgenome="yes"
 
 ##### Human DNA removal settings
 removehumandna="no"
