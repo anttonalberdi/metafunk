@@ -6,12 +6,18 @@ while read samplefile; do
 
 #If uncompressed files
 if [[ $compression == "no" ]]; then
+  if [ ! -f "${datadirectory}/${samplefile}.${extension}" ]; then
+    echo "File ${samplefile} was not found. Check the settings are correct."
+  fi
   cp ${datadirectory}/${samplefile}.${extension} ${workingdirectory}/${project}/RawData/
   mv ${workingdirectory}/${project}/RawData/${samplefile}.${extension} ${workingdirectory}/${project}/RawData/${samplefile}.fastq
 fi
 
 #If compressed files
 if [[ ! $compression == "no" ]]; then
+  if [ ! -f "${datadirectory}/${samplefile}.${extension}.${compression}" ]; then
+    echo "File ${samplefile} was not found. Check the settings are correct."
+  fi
 cp ${datadirectory}/${samplefile}.${extension}.${compression} ${workingdirectory}/${project}/RawData/
 pigz -d -p ${threads} ${workingdirectory}/${project}/RawData/${samplefile}.${extension}.${compression}
 mv ${workingdirectory}/${project}/RawData/${samplefile}.${extension} ${workingdirectory}/${project}/RawData/${samplefile}.fastq

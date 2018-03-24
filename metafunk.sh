@@ -54,7 +54,6 @@ else
 echo "$now | Quality filtering will not be performed" >> ${projectdirectory}/run.log
 fi
 
-
 #########
 # Remove duplicates
 #########
