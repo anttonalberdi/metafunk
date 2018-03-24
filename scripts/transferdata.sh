@@ -1,7 +1,7 @@
 source "$metafunkdirectory/settings.sh"
 
 mkdir -p ${workingdirectory}/${project}/RawData
-
+echo "Here is $comp"
 while read samplefile; do
 
 #If uncompressed files
