@@ -14,7 +14,7 @@ if [[ $compression == "no" ]]; then
 fi
 
 #If compressed files
-if [[ ! $compression == "no" ]]; then
+if [[ $compression != "no" ]]; then
   if [ ! -f "${datadirectory}/${samplefile}.${extension}.${compression}" ]; then
     echo "File ${samplefile}.${extension}.${compression} was not found. Check the settings are correct."
   fi
