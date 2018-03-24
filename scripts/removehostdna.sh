@@ -83,7 +83,7 @@ echo "$now | 		Removing host DNA from PE data from folder ${sourcefolder}" >> ${
 		genomefile=$(echo "$genomepath"  | sed 's/.*\///')
 echo "${workingdirectory}/${project}/HostDNARemoved/${samplename}_1.fastq"
 		#Avoid repeating operation when looping through the 2nd pair
-		if [ ! -f ${workingdirectory}/${project}/HostDNARemoved/${samplename}_1.fastq ]; then
+		if [[ ! -f ${workingdirectory}/${project}/HostDNARemoved/${samplename}_1.fastq ]]; then
 			echo "One"
 		#Remove unpaired reads
 		now=$(date +"%Y-%d-%m %H:%M:%S")
