@@ -106,7 +106,7 @@ echo "$now | 		Removing host DNA from PE data from folder ${sourcefolder}" >> ${
 		echo "$now | 			Removing host DNA from sample $samplename" >> ${workingdirectory}/${project}/run.log
 		bwa mem -t ${threads} -R '@RG\tID:ProjectName\tCN:AuthorName\tDS:Mappingt\tPL:Illumina1.9\tSM:Sample' ${workingdirectory}/${project}/HostDNARemoved/ReferenceGenomes/${genomefile} ${workingdirectory}/${project}/${sourcefolder}/${samplename}_1.fastq ${workingdirectory}/${project}/${sourcefolder}/${samplename}_2.fastq | samtools view -b -f12 - > ${workingdirectory}/${project}/HostDNARemoved/${samplename}.bam
 		now=$(date +"%Y-%d-%m %H:%M:%S")
-			if [[ -f ${workingdirectory}/${project}/HostDNARemoved/${samplename}.bam ]]; then
+			if [[ -s ${workingdirectory}/${project}/HostDNARemoved/${samplename}.bam ]]; then
 			samtools fastq -1 ${workingdirectory}/${project}/HostDNARemoved/${samplename}_1.fastq -2 ${workingdirectory}/${project}/HostDNARemoved/${samplename}_2.fastq ${workingdirectory}/${project}/HostDNARemoved/${samplename}.bam
 			rm ${workingdirectory}/${project}/HostDNARemoved/${samplename}.bam
 			echo "$now | 			Host DNA succesfully removed from sample $samplename" >> ${workingdirectory}/${project}/run.log
