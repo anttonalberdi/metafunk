@@ -49,6 +49,7 @@ while read sample; do
   #It is SR
   echo "Transferring SR sample $samplename"
   fi
+done
 
 #Check if files were succesfully transferred
 if [ -z "$(ls -A ${workingdirectory}/${project})" ]; then
@@ -59,5 +60,4 @@ else
   filenumber=$(ls ${workingdirectory}/${project}/RawData/| wc -l)
   now=$(date +"%Y-%d-%m %H:%M:%S")
   echo "$now | $filenumber files were processed" >> ${workingdirectory}/${project}/run.log
-
 fi
