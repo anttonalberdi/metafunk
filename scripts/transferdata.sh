@@ -45,7 +45,7 @@ while read sample; do
     #Merge all files
     cat ${workingdirectory}/${project}/RawData/${samplename}_2_* > ${workingdirectory}/${project}/RawData/${samplename}_2.fastq
     rm ${workingdirectory}/${project}/RawData/${samplename}_2_*
-    for
+  else
   #It is SR
   echo "Transferring SR sample $samplename"
   fi
