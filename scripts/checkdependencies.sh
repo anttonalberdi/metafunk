@@ -13,7 +13,7 @@ test=$(command -v pigz)
     fi
 fi
 
-#Check software needed for removind duplicate sequences
+#Check software needed for removing duplicate sequences
 if [[ $removeduplicates == "yes" ]]; then
 test=$(command -v seqkit)
     if [[ ${#test} > 0 ]]; then

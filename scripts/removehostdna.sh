@@ -50,8 +50,6 @@ else
 sourcefolder="RawData"
 fi
 
-
-
 now=$(date +"%Y-%d-%m %H:%M:%S")
 #Remove host genome
 if [[ $seqtype == "SR" ]]; then
@@ -74,6 +72,16 @@ echo "$now | 		Removing host DNA from SR data from directory ${sourcefolder}" >>
 elif [[ $seqtype == "PE" ]]; then
 echo "$now | 		Removing host DNA from PE data from folder ${sourcefolder}" >> ${workingdirectory}/${project}/run.log
 
+	#Repair unmatched paired reads
+	#samples=$(cut -d' ' -f1 metafunk/sample.data.txt | uniq)
+	#now=$(date +"%Y-%d-%m %H:%M:%S")
+	#echo "$now | 			Repairing samples:" >> ${workingdirectory}/${project}/run.log
+	#for sample in $samples; do
+	#((i=i%threads)); ((i++==0)) && wait
+	#echo "$now | 				$sample" >> ${workingdirectory}/${project}/run.log
+	#perl ${metafunkdirectory}/scripts/repairreads.pl -f1 ${workingdirectory}/${project}/${sourcefolder}/${samplename}_1.fastq -f2 ${workingdirectory}/${project}/${sourcefolder}/${samplename}_2.fastq -r '^@(\S+) [1|2](\S+)' -t -o ${workingdirectory}/${project}/HostDNARemoved/${samplename} &
+	#done
+
 	#Loop across samples specified in sample.data.txt
 	while read sample; do
 
@@ -87,17 +95,25 @@ echo "$now | 		Removing host DNA from PE data from folder ${sourcefolder}" >> ${
 		#Remove unpaired reads - Does not re-pair correctly!!! FIXX!!!
 		now=$(date +"%Y-%d-%m %H:%M:%S")
 		echo "$now | 			Repairing sample ${samplename}" >> ${workingdirectory}/${project}/run.log
-		perl ${metafunkdirectory}/scripts/repairreads.pl -f1 ${workingdirectory}/${project}/${sourcefolder}/${samplename}_1.fastq -f2 ${workingdirectory}/${project}/${sourcefolder}/${samplename}_2.fastq -r '^@(\S+) [1|2](\S+)' -t -o ${workingdirectory}/${project}/HostDNARemoved/${samplename}
+		#Rather slow option, but working - moved upwards for parallelizing
+		#perl ${metafunkdirectory}/scripts/repairreads.pl -f1 ${workingdirectory}/${project}/${sourcefolder}/${samplename}_1.fastq -f2 ${workingdirectory}/${project}/${sourcefolder}/${samplename}_2.fastq -r '^@(\S+) [1|2](\S+)' -t -o ${workingdirectory}/${project}/HostDNARemoved/${samplename}
 		#BBMap script below not repairing correctly
-			#repair.sh in=${workingdirectory}/${project}/${sourcefolder}/${samplename}_1.fastq in2=${workingdirectory}/${project}/${sourcefolder}/${samplename}_2.fastq out=${workingdirectory}/${project}/HostDNARemoved/${samplename}_1.fastq out2=${workingdirectory}/${project}/HostDNARemoved/${samplename}_2.fastq
+		repair.sh in=${workingdirectory}/${project}/${sourcefolder}/${samplename}_1.fastq in2=${workingdirectory}/${project}/${sourcefolder}/${samplename}_2.fastq out=${workingdirectory}/${project}/HostDNARemoved/${samplename}_1.tmp.fastq out2=${workingdirectory}/${project}/HostDNARemoved/${samplename}_2.tmp.fastq
+		repair.sh in=${workingdirectory}/${project}/HostDNARemoved/${samplename}_1.tmp.fastq in2=${workingdirectory}/${project}/HostDNARemoved/${samplename}_2.tmp.fastq out=${workingdirectory}/${project}/HostDNARemoved/${samplename}_1.fastq out2=${workingdirectory}/${project}/HostDNARemoved/${samplename}_2.fastq
 		#Map reads against the reference genome and retrieve unmapped reads
+
 		now=$(date +"%Y-%d-%m %H:%M:%S")
 		echo "$now | 			Removing host DNA from sample $samplename" >> ${workingdirectory}/${project}/run.log
 		bwa mem -t ${threads} -R '@RG\tID:ProjectName\tCN:AuthorName\tDS:Mappingt\tPL:Illumina1.9\tSM:Sample' ${workingdirectory}/${project}/HostDNARemoved/ReferenceGenomes/${genomefile} ${workingdirectory}/${project}/${sourcefolder}/${samplename}_1.fastq ${workingdirectory}/${project}/${sourcefolder}/${samplename}_2.fastq | samtools view -b -f12 - > ${workingdirectory}/${project}/HostDNARemoved/${samplename}.bam
-		samtools fastq -1 ${workingdirectory}/${project}/HostDNARemoved/${samplename}_1.fastq -2 ${workingdirectory}/${project}/HostDNARemoved/${samplename}_2.fastq ${workingdirectory}/${project}/HostDNARemoved/${samplename}.bam
-		rm ${workingdirectory}/${project}/HostDNARemoved/${samplename}.bam
 		now=$(date +"%Y-%d-%m %H:%M:%S")
-		echo "$now | 			Host DNA succesfully removed from sample $samplename" >> ${workingdirectory}/${project}/run.log
+			if [[ -f ${workingdirectory}/${project}/HostDNARemoved/${samplename}.bam ]]; then
+			samtools fastq -1 ${workingdirectory}/${project}/HostDNARemoved/${samplename}_1.fastq -2 ${workingdirectory}/${project}/HostDNARemoved/${samplename}_2.fastq ${workingdirectory}/${project}/HostDNARemoved/${samplename}.bam
+			rm ${workingdirectory}/${project}/HostDNARemoved/${samplename}.bam
+			echo "$now | 			Host DNA succesfully removed from sample $samplename" >> ${workingdirectory}/${project}/run.log
+			else
+			echo "$now | 			There was an error when mapping sample $samplename" >> ${workingdirectory}/${project}/run.log
+			exit
+			fi
 		fi
 	done < ${metafunkdirectory}/sample.data.txt
 
