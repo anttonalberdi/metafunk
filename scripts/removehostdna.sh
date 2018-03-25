@@ -95,7 +95,7 @@ echo "$now | 		Removing host DNA from PE data from folder ${sourcefolder}" >> ${
 		#Remove unpaired reads - Does not re-pair correctly!!! FIXX!!!
 		now=$(date +"%Y-%d-%m %H:%M:%S")
 		echo "$now | 			Repairing sample ${samplename}" >> ${workingdirectory}/${project}/run.log
-		python ${metafunkdirectory}(/scripts/repair.py ${workingdirectory}/${project}/${sourcefolder}/${samplename}_1.fastq ${workingdirectory}/${project}/${sourcefolder}/${samplename}_2.fastq
+		python ${metafunkdirectory}/scripts/repair.py ${workingdirectory}/${project}/${sourcefolder}/${samplename}_1.fastq ${workingdirectory}/${project}/${sourcefolder}/${samplename}_2.fastq
 		#BBMap script below not repairing correctly
 		#repair.sh in=${workingdirectory}/${project}/HostDNARemoved/${samplename}_1.tmp.fastq in2=${workingdirectory}/${project}/HostDNARemoved/${samplename}_2.tmp.fastq out=${workingdirectory}/${project}/HostDNARemoved/${samplename}_1.fastq out2=${workingdirectory}/${project}/HostDNARemoved/${samplename}_2.fastq
 		#Map reads against the reference genome and retrieve unmapped reads
