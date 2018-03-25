@@ -10,7 +10,7 @@ while read sample; do
   samplefile=$(echo $sample | cut -d ' ' -f2 )
 
   #Get samples if PE and/or multifile
-  if [[ $samplefile =~ ";" && ! $samplefile =~ "," ]]; then
+  if [[ $samplefile =~ "/" && ! $samplefile =~ ";" ]]; then
     #It is PE
     echo "Transferring PE sample $samplename"
     #Get file names
@@ -19,7 +19,7 @@ while read sample; do
     #Transfer both files
     cp ${datadirectory}/${samplefile1} ${workingdirectory}/${project}/RawData/${samplename}_1.fastq
     cp ${datadirectory}/${samplefile2} ${workingdirectory}/${project}/RawData/${samplename}_2.fastq
-  elif [[ $samplefile =~ ";" && $samplefile =~ "," ]]; then
+  elif [[ $samplefile =~ "/" && $samplefile =~ ";" ]]; then
     #It is PE multifile
     echo "Transferring PE multifile sample $samplename"
     #Get file names
