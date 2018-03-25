@@ -87,7 +87,7 @@ echo "$now | 		Removing host DNA from PE data from folder ${sourcefolder}" >> ${
 		#Remove unpaired reads - Does not re-pair correctly!!! FIXX!!!
 		now=$(date +"%Y-%d-%m %H:%M:%S")
 		echo "$now | 			Repairing sample ${samplename}" >> ${workingdirectory}/${project}/run.log
-		perl repairreads.pl -f1 ${workingdirectory}/${project}/${sourcefolder}/${samplename}_1.fastq -f2 ${workingdirectory}/${project}/${sourcefolder}/${samplename}_2.fastq -r  -t -o {workingdirectory}/${project}/HostDNARemoved/${samplename}
+		perl ${workingdirectory}/scripts/repairreads.pl -f1 ${workingdirectory}/${project}/${sourcefolder}/${samplename}_1.fastq -f2 ${workingdirectory}/${project}/${sourcefolder}/${samplename}_2.fastq -r '^@(\\S+):[1|2]\$' -t -o {workingdirectory}/${project}/HostDNARemoved/${samplename}
 		#repair.sh in=${workingdirectory}/${project}/${sourcefolder}/${samplename}_1.fastq in2=${workingdirectory}/${project}/${sourcefolder}/${samplename}_2.fastq out=${workingdirectory}/${project}/HostDNARemoved/${samplename}_1.fastq out2=${workingdirectory}/${project}/HostDNARemoved/${samplename}_2.fastq
 		#Map reads against the reference genome and retrieve unmapped reads
 		now=$(date +"%Y-%d-%m %H:%M:%S")

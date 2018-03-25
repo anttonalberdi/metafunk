@@ -6,7 +6,7 @@ if [[ $tss == "yes" ]]; then
   export WORKDIR="${workingdirectory}/${project}"
   export NORMALISATIONSCALE="${normalisationscale}"
   export NORMALISATIONDECIMALS="${normalisationdecimals}"
-  Rscript ${workdir}/scripts/createhittable.r --no-save
+  Rscript scripts/createhittable.r --no-save
 
 fi
 
