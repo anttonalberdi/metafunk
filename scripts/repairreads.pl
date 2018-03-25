@@ -60,8 +60,8 @@ open (FILEB, "< $file2") or die "\nCouldn't open file2 ($file2).",$usage;
 
 if(defined $two) {
 
-  open (FASTQ1OUT, "> $outname_1.fastq") or die "\nCouldn't open fastq 1 outfile ($outname.1.fastq)",$usage;
-  open (FASTQ2OUT, "> $outname_2.fastq") or die "\nCouldn't open fastq 2 outfile ($outname.2.fastq)",$usage;
+  open (FASTQ1OUT, "> $outname_1.fastq") or die "\nCouldn't open fastq 1 outfile ($outname_1.fastq)",$usage;
+  open (FASTQ2OUT, "> $outname_2.fastq") or die "\nCouldn't open fastq 2 outfile ($outname_2.fastq)",$usage;
   open (NOMATCHOUT, "> $outname.nomatch.fastq") or die "\nCouldn't open no match outfile ($outname.nomatch.fastq)",$usage;
 
 } else {
