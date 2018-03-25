@@ -82,15 +82,14 @@ echo "$now | 		Removing host DNA from PE data from folder ${sourcefolder}" >> ${
 		genomepath=$(echo $sample | cut -d ' ' -f4)
 		genomefile=$(echo "$genomepath"  | sed 's/.*\///')
 
-		#Avoid repeating operation when looping through the 2nd pair
+		#Prevent repeating operation when looping through the 2nd pair
 		if [[ ! -f ${workingdirectory}/${project}/HostDNARemoved/${samplename}_1.fastq ]]; then
-		#Remove unpaired reads
+		#Remove unpaired reads - Does not re-pair correctly!!! FIXX!!!
 		now=$(date +"%Y-%d-%m %H:%M:%S")
 		echo "$now | 			Repairing sample ${samplename}" >> ${workingdirectory}/${project}/run.log
-		repair.sh in=${workingdirectory}/${project}/${sourcefolder}/${samplename}_1.fastq in2=${workingdirectory}/${project}/${sourcefolder}/${samplename}_2.fastq out=${workingdirectory}/${project}/HostDNARemoved/${samplename}_1.fastq out2=${workingdirectory}/${project}/HostDNARemoved/${samplename}_2.fastq
+		perl repairreads.pl -f1 ${workingdirectory}/${project}/${sourcefolder}/${samplename}_1.fastq -f2 ${workingdirectory}/${project}/${sourcefolder}/${samplename}_2.fastq -r  -t -o {workingdirectory}/${project}/HostDNARemoved/${samplename}
+		#repair.sh in=${workingdirectory}/${project}/${sourcefolder}/${samplename}_1.fastq in2=${workingdirectory}/${project}/${sourcefolder}/${samplename}_2.fastq out=${workingdirectory}/${project}/HostDNARemoved/${samplename}_1.fastq out2=${workingdirectory}/${project}/HostDNARemoved/${samplename}_2.fastq
 		#Map reads against the reference genome and retrieve unmapped reads
-		echo "Two"
-
 		now=$(date +"%Y-%d-%m %H:%M:%S")
 		echo "$now | 			Removing host DNA from sample $samplename" >> ${workingdirectory}/${project}/run.log
 		bwa mem -t ${threads} -R '@RG\tID:ProjectName\tCN:AuthorName\tDS:Mappingt\tPL:Illumina1.9\tSM:Sample' ${workingdirectory}/${project}/HostDNARemoved/ReferenceGenomes/${genomefile} ${workingdirectory}/${project}/${sourcefolder}/${samplename}_1.fastq ${workingdirectory}/${project}/${sourcefolder}/${samplename}_2.fastq | samtools view -b -f12 - > ${workingdirectory}/${project}/HostDNARemoved/${samplename}.bam

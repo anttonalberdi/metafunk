@@ -34,6 +34,7 @@ module load samtools/1.4
 #Bwa (http://bio-bwa.sourceforge.net/)
 module load bwa/0.7.15
 #SeqTK (https://github.com/lh3/seqtk)
+module load jre/1.8.0
 module load bbmap/36.49
 module load seqtk/1.0-r82-dirty
 #FastX-Toolkit (http://hannonlab.cshl.edu/fastx_toolkit/)

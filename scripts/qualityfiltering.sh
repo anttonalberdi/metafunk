@@ -18,7 +18,7 @@ while read sample; do
 
 now=$(date +"%Y-%d-%m %H:%M:%S")
 echo "$now | 		Quality filtering sample $samplefile" >> ${workingdirectory}/${project}/run.log
-AdapterRemoval --file1 ${workingdirectory}/${project}/RawData/${samplefile}.fastq --basename ${workingdirectory}/${project}/QualityFiltered/${samplefile} --minquality 30 --minlength 30 --trimqualities --trimns --maxns 5 --qualitymax 60 --threads ${threads}
+AdapterRemoval --file1 ${workingdirectory}/${project}/RawData/${samplefile}.fastq --basename ${workingdirectory}/${project}/QualityFiltered/${samplefile} --minquality ${minavgquality} --minlength ${minseqlength} --trimqualities --trimns --maxns 5 --qualitymax ${qualitymax} --threads ${threads}
 mv ${workingdirectory}/${project}/QualityFiltered/${samplefile}.truncated ${workingdirectory}/${project}/QualityFiltered/${samplefile}.fastq
 now=$(date +"%Y-%d-%m %H:%M:%S")
 #MESSAGE TO MYSELF: ASS STATISTICS!!!

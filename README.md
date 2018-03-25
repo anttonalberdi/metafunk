@@ -1,11 +1,11 @@
-# metafunk (alpha)
+# MetaFunk (alpha)
 Pipeline for functional metagenomics profiling. Beware this is still an alpha developmental version.
 
 MetaFunk is suitable for Illumina and BGISeq single-read (SR) and paired-end (PE) sequencing data, and by March 2018, it incorporates the following steps:
 
 - Quality filtering
 - Duplicate removal
-- Low complecity read removal
+- Low complexity read removal
 - Host DNA removal (for non-human samples)
 - Human DNA removal (contamination for non-human samples)
 - Co-assembly
