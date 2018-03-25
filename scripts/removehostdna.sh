@@ -95,14 +95,15 @@ echo "$now | 		Removing host DNA from PE data from folder ${sourcefolder}" >> ${
 		#Remove unpaired reads - Does not re-pair correctly!!! FIXX!!!
 		now=$(date +"%Y-%d-%m %H:%M:%S")
 		echo "$now | 			Repairing sample ${samplename}" >> ${workingdirectory}/${project}/run.log
-		python ${metafunkdirectory}/scripts/repair.py ${workingdirectory}/${project}/${sourcefolder}/${samplename}_1.fastq ${workingdirectory}/${project}/${sourcefolder}/${samplename}_2.fastq
+		#python ${metafunkdirectory}/scripts/repair.py ${workingdirectory}/${project}/${sourcefolder}/${samplename}_1.fastq ${workingdirectory}/${project}/${sourcefolder}/${samplename}_2.fastq
+		#mv ${workingdirectory}/${project}/${sourcefolder}/${samplename}_1.fastq_pairs_R1.fastq ${workingdirectory}/${project}/HostDNARemoved/${samplename}_1
+		#mv ${workingdirectory}/${project}/${sourcefolder}/${samplename}_1.fastq_pairs_R2.fastq
 		#BBMap script below not repairing correctly
-		#repair.sh in=${workingdirectory}/${project}/HostDNARemoved/${samplename}_1.tmp.fastq in2=${workingdirectory}/${project}/HostDNARemoved/${samplename}_2.tmp.fastq out=${workingdirectory}/${project}/HostDNARemoved/${samplename}_1.fastq out2=${workingdirectory}/${project}/HostDNARemoved/${samplename}_2.fastq
+		repair.sh in=${workingdirectory}/${project}/${sourcefolder}/${samplename}_1.fastq in2=${workingdirectory}/${project}/${sourcefolder}/${samplename}_2.fastq out=${workingdirectory}/${project}/HostDNARemoved/${samplename}_1.fastq out2=${workingdirectory}/${project}/HostDNARemoved/${samplename}_2.fastq
 		#Map reads against the reference genome and retrieve unmapped reads
-
 		now=$(date +"%Y-%d-%m %H:%M:%S")
 		echo "$now | 			Removing host DNA from sample $samplename" >> ${workingdirectory}/${project}/run.log
-		bwa mem -t ${threads} -R '@RG\tID:ProjectName\tCN:AuthorName\tDS:Mappingt\tPL:Illumina1.9\tSM:Sample' ${workingdirectory}/${project}/HostDNARemoved/ReferenceGenomes/${genomefile} ${workingdirectory}/${project}/${sourcefolder}/${samplename}_1.fastq ${workingdirectory}/${project}/${sourcefolder}/${samplename}_2.fastq | samtools view -b -f12 - > ${workingdirectory}/${project}/HostDNARemoved/${samplename}.bam
+		bwa mem -t ${threads} -R '@RG\tID:ProjectName\tCN:AuthorName\tDS:Mappingt\tPL:Illumina1.9\tSM:Sample' ${workingdirectory}/${project}/HostDNARemoved/ReferenceGenomes/${genomefile} ${workingdirectory}/${project}/HostDNARemoved/${samplename}_1.fastq ${workingdirectory}/${project}/HostDNARemoved/${samplename}_2.fastq | samtools view -b -f12 - > ${workingdirectory}/${project}/HostDNARemoved/${samplename}.bam
 		now=$(date +"%Y-%d-%m %H:%M:%S")
 			if [[ ! -s ${workingdirectory}/${project}/HostDNARemoved/${samplename}.bam ]]; then
 			samtools fastq -1 ${workingdirectory}/${project}/HostDNARemoved/${samplename}_1.fastq -2 ${workingdirectory}/${project}/HostDNARemoved/${samplename}_2.fastq ${workingdirectory}/${project}/HostDNARemoved/${samplename}.bam
