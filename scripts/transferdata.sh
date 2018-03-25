@@ -9,6 +9,8 @@ while read sample; do
   samplename=$(echo $sample | cut -d ' ' -f1 )
   samplefile=$(echo $sample | cut -d ' ' -f2 )
 
+  echo $samplefile
+
   #Get samples if PE and/or multifile
   if [[ $samplefile =~ "/" && ! $samplefile =~ ";" ]]; then
     #It is PE
