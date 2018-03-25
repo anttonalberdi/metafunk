@@ -20,7 +20,9 @@ while read sample; do
     samplefile2=$(echo $samplefile | cut -d'/' -f2)
     #Transfer both files
     cp ${datadirectory}/${samplefile1} ${workingdirectory}/${project}/RawData/${samplename}_1.fastq.gz
+    pigz -d -p ${threads} ${workingdirectory}/${project}/RawData/${samplename}_1.fastq.gz
     cp ${datadirectory}/${samplefile2} ${workingdirectory}/${project}/RawData/${samplename}_2.fastq.gz
+    pigz -d -p ${threads} ${workingdirectory}/${project}/RawData/${samplename}_2.fastq.gz
   elif [[ $samplefile =~ "/" && $samplefile =~ ";" ]]; then
     #It is PE multifile
     echo "Transferring PE multifile sample $samplename"
@@ -32,7 +34,8 @@ while read sample; do
     n=0
     for samplefile in "${array[@]}"; do
     n=$((n+1))
-    cp ${datadirectory}/${samplefile} | pigz -d -p ${threads} ${workingdirectory}/${project}/RawData/${samplename}_1_${n}.fastq
+    cp ${datadirectory}/${samplefile} ${workingdirectory}/${project}/RawData/${samplename}_1_${n}.fastq.gz
+    pigz -d -p ${threads} ${workingdirectory}/${project}/RawData/${samplename}_1_${n}.fastq.gz
     done
     #Merge all files
     cat ${workingdirectory}/${project}/RawData/${samplename}_1_* > ${workingdirectory}/${project}/RawData/${samplename}_1.fastq
@@ -42,7 +45,8 @@ while read sample; do
     n=0
     for samplefile in "${array[@]}"; do
     n=$((n+1))
-    cp ${datadirectory}/${samplefile} | pigz -d -p ${threads} ${workingdirectory}/${project}/RawData/${samplename}_2_${n}.fastq
+    cp ${datadirectory}/${samplefile} ${workingdirectory}/${project}/RawData/${samplename}_2_${n}.fastq
+    pigz -d -p ${threads} ${workingdirectory}/${project}/RawData/${samplename}_2_${n}.fastq.gz
     done
     #Merge all files
     cat ${workingdirectory}/${project}/RawData/${samplename}_2_* > ${workingdirectory}/${project}/RawData/${samplename}_2.fastq
