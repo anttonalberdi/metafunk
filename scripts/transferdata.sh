@@ -51,7 +51,7 @@ while read sample; do
   #It is SR
   echo "Transferring SR sample $samplename"
   fi
-done
+done < ${metafunkdirectory}/sample.data.txt
 
 #Check if files were succesfully transferred
 if [ -z "$(ls -A ${workingdirectory}/${project})" ]; then
