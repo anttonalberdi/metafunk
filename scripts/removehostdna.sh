@@ -92,13 +92,9 @@ echo "$now | 		Removing host DNA from PE data from folder ${sourcefolder}" >> ${
 
 		#Prevent repeating operation when looping through the 2nd pair
 		if [[ ! -f ${workingdirectory}/${project}/HostDNARemoved/${samplename}_1.fastq ]]; then
-		#Remove unpaired reads - Does not re-pair correctly!!! FIXX!!!
+		#Remove unpaired reads
 		now=$(date +"%Y-%d-%m %H:%M:%S")
 		echo "$now | 			Repairing sample ${samplename}" >> ${workingdirectory}/${project}/run.log
-		#python ${metafunkdirectory}/scripts/repair.py ${workingdirectory}/${project}/${sourcefolder}/${samplename}_1.fastq ${workingdirectory}/${project}/${sourcefolder}/${samplename}_2.fastq
-		#mv ${workingdirectory}/${project}/${sourcefolder}/${samplename}_1.fastq_pairs_R1.fastq ${workingdirectory}/${project}/HostDNARemoved/${samplename}_1
-		#mv ${workingdirectory}/${project}/${sourcefolder}/${samplename}_1.fastq_pairs_R2.fastq
-		#BBMap script below not repairing correctly
 		repair.sh in=${workingdirectory}/${project}/${sourcefolder}/${samplename}_1.fastq in2=${workingdirectory}/${project}/${sourcefolder}/${samplename}_2.fastq out=${workingdirectory}/${project}/HostDNARemoved/${samplename}_1.fastq out2=${workingdirectory}/${project}/HostDNARemoved/${samplename}_2.fastq
 		#Map reads against the reference genome and retrieve unmapped reads
 		now=$(date +"%Y-%d-%m %H:%M:%S")
