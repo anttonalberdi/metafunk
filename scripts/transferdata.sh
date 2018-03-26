@@ -1,5 +1,7 @@
 source "$metafunkdirectory/settings.sh"
 
+###### NOTE FOR MYSELF: SR multifile MIGHT NOT BE WORKING PROPERLY!! 26/03/2018
+
 mkdir -p ${workingdirectory}/${project}/RawData
 
 #Loop across samples specified in sample.data.txt
@@ -84,7 +86,7 @@ while read sample; do
 
   elif [[ ! $samplefile =~ "/" && $samplefile =~ ";" ]]; then
   #It is SR multifile
-  echo "$now |    Transferring SR multifile sample $samplename"
+  echo "$now |    Transferring SR multifile sample $samplename" >> ${workingdirectory}/${project}/run.log
   #Get file names
   IFS='; ' read -r -a array <<< $samplefile
   n=0
@@ -105,6 +107,7 @@ while read sample; do
 
   else
   #It is SR single file
+  echo "$now |    Transferring SR single file sample $samplename" >> ${workingdirectory}/${project}/run.log
     if [[ $samplefile == *.fastq.gz || $samplefile == *.fq.gz ]]; then
     cp ${datadirectory}/${samplefile} ${workingdirectory}/${project}/RawData/${samplename}.fastq.gz
     pigz -d -p ${threads} ${workingdirectory}/${project}/RawData/${samplename}.fastq.gz
