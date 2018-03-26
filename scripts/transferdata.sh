@@ -102,7 +102,7 @@ while read sample; do
     #Merge all files
     cat ${workingdirectory}/${project}/RawData/${samplename}_* > ${workingdirectory}/${project}/RawData/${samplename}.fastq
     rm ${workingdirectory}/${project}/RawData/${samplename}_*
-
+  done
   else
   #It is SR single file
     if [[ $samplefile == *.fastq.gz || $samplefile == *.fq.gz ]]; then
