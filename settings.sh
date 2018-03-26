@@ -12,8 +12,6 @@ metafunkdirectory="/home/projects/pr_46704/people/antalb/metafunk"
 
 #Data type - Platform (Illumina, BGI), Read length (e.g. 80, 100, 150...) and read type (SR or PE)
 platform="Illumina"
-readlength="150"
-seqtype="PE"
 
 #Computational information
 threads="16"

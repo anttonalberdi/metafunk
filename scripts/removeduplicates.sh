@@ -4,7 +4,7 @@ source "$metafunkdirectory/settings.sh"
 #Create DuplicatesRemoved directory
 mkdir -p ${workingdirectory}/${project}/DuplicatesRemoved
 
-#Select source folder from which data will be retrieved
+#Select source folder from which data will be retrieved (check if directories contain files)
 if [[ "$(ls -A ${workingdirectory}/${project}/QualityFiltered/)" ]]; then
 sourcefolder="QualityFiltered"
 else
