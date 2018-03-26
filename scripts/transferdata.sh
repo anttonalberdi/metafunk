@@ -8,13 +8,12 @@ while read sample; do
   #Obtain data from sample.data.txt columns
   samplename=$(echo $sample | cut -d ' ' -f1 )
   samplefile=$(echo $sample | cut -d ' ' -f2 )
-
-  echo $samplefile
+  now=$(date +"%Y-%d-%m %H:%M:%S")
 
   #Get samples if PE and/or multifile
   if [[ $samplefile =~ "/" && ! $samplefile =~ ";" ]]; then
   #It is PE single files
-    echo "Transferring PE sample $samplename"
+    echo "$now |    Transferring PE sample $samplename" >> ${workingdirectory}/${project}/run.log
     #Get file names
     samplefile1=$(echo $samplefile | cut -d'/' -f1)
     samplefile2=$(echo $samplefile | cut -d'/' -f2)
@@ -27,7 +26,7 @@ while read sample; do
       elif [[ $samplefile1 == *.fastq || $samplefile1 == *.fq ]]; then
       cp ${datadirectory}/${samplefile1} ${workingdirectory}/${project}/RawData/${samplename}_1.fastq.gz
       else
-      echo "The extension of file $samplefile1 is not recognised"
+      echo "$now |    ERROR: The extension of file $samplefile1 is not recognised" >> ${workingdirectory}/${project}/run.log
       fi
 
       #PE2
@@ -37,12 +36,12 @@ while read sample; do
       elif [[ $samplefile1 == *.fastq || $samplefile1 == *.fq ]]; then
       cp ${datadirectory}/${samplefile1} ${workingdirectory}/${project}/RawData/${samplename}_2.fastq.gz
       else
-      echo "The extension of file $samplefile2 is not recognised"
+      echo "$now |    ERROR: The extension of file $samplefile2 is not recognised" >> ${workingdirectory}/${project}/run.log
       fi
 
   elif [[ $samplefile =~ "/" && $samplefile =~ ";" ]]; then
   #It is PE multifile
-    echo "Transferring PE multifile sample $samplename"
+    echo "$now |    Transferring PE multifile sample $samplename" >> ${workingdirectory}/${project}/run.log
     #Get file names
     samplefile1=$(echo $samplefile | cut -d'/' -f1)
     samplefile2=$(echo $samplefile | cut -d'/' -f2)
@@ -58,7 +57,7 @@ while read sample; do
       elif [[ $samplefile == *.fastq || $samplefile == *.fq ]]; then
       cp ${datadirectory}/${samplefile} ${workingdirectory}/${project}/RawData/${samplename}_1_${n}.fastq
       else
-      echo "The extension of file $samplefile is not recognised"
+      echo "$now |    ERROR: The extension of file $samplefile is not recognised" >> ${workingdirectory}/${project}/run.log
       fi
     done
     #Merge all files
@@ -76,7 +75,7 @@ while read sample; do
       elif [[ $samplefile == *.fastq || $samplefile == *.fq ]]; then
       cp ${datadirectory}/${samplefile} ${workingdirectory}/${project}/RawData/${samplename}_2_${n}.fastq
       else
-      echo "The extension of file $samplefile is not recognised"
+      echo "$now |    ERROR: The extension of file $samplefile is not recognised" >> ${workingdirectory}/${project}/run.log
       fi
     done
     #Merge all files
@@ -85,7 +84,7 @@ while read sample; do
 
   elif [[ ! $samplefile =~ "/" && $samplefile =~ ";" ]]; then
   #It is SR multifile
-  echo "Transferring SR multifile sample $samplename"
+  echo "$now |    Transferring SR multifile sample $samplename"
   #Get file names
   IFS='; ' read -r -a array <<< $samplefile
   n=0
@@ -97,12 +96,13 @@ while read sample; do
     elif [[ $samplefile == *.fastq || $samplefile == *.fq ]]; then
     cp ${datadirectory}/${samplefile} ${workingdirectory}/${project}/RawData/${samplename}_${n}.fastq
     else
-    echo "The extension of file $samplefile is not recognised"
+    echo "$now |    The extension of file $samplefile is not recognised" >> ${workingdirectory}/${project}/run.log
     fi
     #Merge all files
     cat ${workingdirectory}/${project}/RawData/${samplename}_* > ${workingdirectory}/${project}/RawData/${samplename}.fastq
     rm ${workingdirectory}/${project}/RawData/${samplename}_*
   done
+
   else
   #It is SR single file
     if [[ $samplefile == *.fastq.gz || $samplefile == *.fq.gz ]]; then
@@ -111,7 +111,7 @@ while read sample; do
     elif [[ $samplefile == *.fastq || $samplefile == *.fq ]]; then
     cp ${datadirectory}/${samplefile} ${workingdirectory}/${project}/RawData/${samplename}.fastq
     else
-    echo "The extension of file $samplefile is not recognised"
+    echo "$now |    ERROR: The extension of file $samplefile is not recognised" >> ${workingdirectory}/${project}/run.log
     fi
   fi
 done < ${metafunkdirectory}/sample.data.txt
