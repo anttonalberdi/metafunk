@@ -113,7 +113,7 @@ while read sample; do
     else
     echo "The extension of file $samplefile is not recognised"
     fi
-
+  fi
 done < ${metafunkdirectory}/sample.data.txt
 
 #Check if files were succesfully transferred
