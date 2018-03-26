@@ -12,9 +12,8 @@ while read sample; do
   samplefile=$(echo $sample | cut -d ' ' -f2 )
   now=$(date +"%Y-%d-%m %H:%M:%S")
 
-  #Get samples if PE and/or multifile
   if [[ $samplefile =~ "/" && ! $samplefile =~ ";" ]]; then
-  #It is PE single files
+  #It is PE single file
     echo "$now |    Transferring PE sample $samplename" >> ${workingdirectory}/${project}/run.log
     #Get file names
     samplefile1=$(echo $samplefile | cut -d'/' -f1)
@@ -42,7 +41,7 @@ while read sample; do
       fi
 
   elif [[ $samplefile =~ "/" && $samplefile =~ ";" ]]; then
-  #It is PE multifile
+  #It is PE multi-file
     echo "$now |    Transferring PE multifile sample $samplename" >> ${workingdirectory}/${project}/run.log
     #Get file names
     samplefile1=$(echo $samplefile | cut -d'/' -f1)

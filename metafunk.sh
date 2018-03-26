@@ -30,7 +30,7 @@ export metafunkdirectory
 sh ${metafunkdirectory}/scripts/checkdependencies.sh
 
 #########
-# Copy data to project directory
+# Transfer data to project directory
 #########
 now=$(date +"%Y-%d-%m %H:%M:%S")
 if [[ $copydata == "yes" ]]; then
