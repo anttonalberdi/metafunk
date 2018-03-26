@@ -12,7 +12,6 @@ while read sample; do
   samplefile=$(echo $sample | cut -d ' ' -f2 )
   now=$(date +"%Y-%d-%m %H:%M:%S")
 
-  #Identify PE or SR
   if [[ $samplefile =~ "/" ]]; then
   #It is PE
   echo "$now | 		Quality filtering sample $samplename" >> ${workingdirectory}/${project}/run.log

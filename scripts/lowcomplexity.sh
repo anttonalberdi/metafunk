@@ -4,7 +4,7 @@ source "$metafunkdirectory/settings.sh"
 #Create LowComplexFiltered directory
 mkdir -p ${workingdirectory}/${project}/LowComplexFiltered
 
-#Select source folder from which data will be retrieved
+#Select source folder from which data will be retrieved (check if directories contain files)
 if [[ "$(ls -A ${workingdirectory}/${project}/DuplicatesRemoved/)" ]]; then
 sourcefolder="DuplicatesRemoved"
 elif [[ "$(ls -A ${workingdirectory}/${project}/QualityFiltered/)" ]]; then

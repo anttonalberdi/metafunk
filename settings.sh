@@ -56,8 +56,8 @@ module load diamond/0.9.13
 #Read the wiki to learn more about what each module does: https://github.com/anttonalberdi/metafunk/wiki
 
 copydata="no"
-qualityfiltering="yes"
-removeduplicates="no"
+qualityfiltering="no"
+removeduplicates="yes"
 removelowcomplexity="no"
 removehostdna="no"
 removehumandna="no"
