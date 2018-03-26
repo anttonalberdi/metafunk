@@ -1,6 +1,7 @@
-#Source dependencies
+#Source settings
 source "$metafunkdirectory/settings.sh"
 
+#Create QualityFiltered directory
 mkdir -p ${workingdirectory}/${project}/QualityFiltered
 
 #Loop across samples specified in sample.data.txt
