@@ -10,7 +10,7 @@ datadirectory="/home/projects/pr_46704/people/antalb/metafunk_v0.1/testdata"
 workingdirectory="/home/projects/pr_46704/people/antalb/metafunk_v0.1/test_20180325"
 metafunkdirectory="/home/projects/pr_46704/people/antalb/metafunk"
 
-#Data type - Platform (Illumina, BGI), Read length (e.g. 80, 100, 150...) and read type (SR or PE)
+#Data type - Platform (Illumina, BGI)
 platform="Illumina"
 
 #Computational information
