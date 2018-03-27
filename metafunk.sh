@@ -59,8 +59,6 @@ fi
 #########
 
 if [[ $removeduplicates == "yes" ]]; then
-now=$(date +"%Y-%d-%m %H:%M:%S")
-echo "$now | Removing duplicates" >> ${projectdirectory}/run.log
 export metafunkdirectory
 sh ${metafunkdirectory}/scripts/removeduplicates.sh
 else

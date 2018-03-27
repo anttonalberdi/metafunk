@@ -81,15 +81,16 @@ qualitymax="60"
 dustvalue="7"
 
 ##### Host DNA removal settings
-indexedhostgenome="yes"
+indexhostgenome="yes"
 repairingregex="^@(\S+) [1|2](\S+)"
 
 ##### Human DNA removal settings
-humangenome="/home/projects/pr_46704/people/antalb/databases/Homo_sapiens.fasta" #absolute path to fasta file
-indexedhumangenome="no"
+humangenomepath="/home/projects/pr_46704/people/antalb/databases/Homo_sapiens.fasta" #absolute path to fasta file
+indexhumangenome="no"
 
 ##### Coassembly settings
 overridecoassembly="yes" #override if the coassembly directory exists
+indexassembly="no"
 
 ##### Gene prediction settings
 

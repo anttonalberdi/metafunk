@@ -1,6 +1,7 @@
 #Source dependencies
 source "$metafunkdirectory/settings.sh"
 
+#Create GeneMapping directory
 mkdir -p ${workingdirectory}/${project}/GeneMapping
 
 #Index genes
@@ -9,7 +10,7 @@ echo "$now |        Indexing gene catalogue" >> ${workingdirectory}/${project}/r
 samtools faidx ${workingdirectory}/${project}/GenePrediction/assembly.genes.fna
 bwa index ${workingdirectory}/${project}/GenePrediction/assembly.genes.fna
 now=$(date +"%Y-%d-%m %H:%M:%S")
-echo "$now |        Gene catalogue indexed" >> ${workingdirectory}/${project}/run.log
+echo "$now |        Gene catalogue succesfully indexed" >> ${workingdirectory}/${project}/run.log
 
 #Get gene lengths
 now=$(date +"%Y-%d-%m %H:%M:%S")
@@ -23,9 +24,8 @@ else
 echo "$now |        There was an error while generating the gene length file" >> ${workingdirectory}/${project}/run.log
 fi
 
-mkdir -p ${workingdirectory}/${project}/GeneMapping
+#Map reads back to genes - NOTE: THIS NEEDS TO BE UPDATED!!!!
 
-#Map reads back to genes
 if [[ $seqtype == "SR" ]]; then
 now=$(date +"%Y-%d-%m %H:%M:%S")
 echo "$now | Mapping SR reads to the gene catalogue" >> ${workingdirectory}/${project}/run.log
