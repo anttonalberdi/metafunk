@@ -53,12 +53,12 @@ module load diamond/0.9.13
 #Select (yes / no) which modules you want to be ran.
 #Read the wiki to learn more about what each module does: https://github.com/anttonalberdi/metafunk/wiki
 
-copydata="yes"
-qualityfiltering="yes"
+copydata="no"
+qualityfiltering="no"
 removeduplicates="yes"
-removelowcomplexity="yes"
-removehostdna="yes"
-removehumandna="yes"
+removelowcomplexity="no"
+removehostdna="no"
+removehumandna="no"
 coassembly="no"
 geneprediction="no"
 genemapping="no"
