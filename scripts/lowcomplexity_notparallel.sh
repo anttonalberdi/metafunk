@@ -15,12 +15,8 @@ fi
 now=$(date +"%Y-%d-%m %H:%M:%S")
 echo "$now | Removing low complexity reads from files in directory ${sourcefolder}" >> ${workingdirectory}/${project}/run.log
 
-#Declare function
-function lowcompjob() {
-
-  sample=${1}
-  metafunkdirectory=${2}
-  sourcefolder=${3}
+#Loop across samples specified in sample.data.txt
+while read sample; do
 
   #Obtain data from sample.data.txt columns
   samplename=$(echo $sample | cut -d ' ' -f1 )
@@ -64,8 +60,5 @@ function lowcompjob() {
     now=$(date +"%Y-%d-%m %H:%M:%S")
     echo "$now | 		From sample $samplename, $difference reads (${percentage}%) were removed due to low complexity" >> ${workingdirectory}/${project}/run.log
   fi
-}
 
-#Loop in parallel across samples specified in sample.data.txt
-export -f remdupjob
-parallel -j ${threads} -k lowcompjob {} ${metafunkdirectory} ${sourcefolder} <${metafunkdirectory}/sample.data.txt
+done < ${metafunkdirectory}/sample.data.txt

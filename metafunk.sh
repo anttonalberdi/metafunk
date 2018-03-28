@@ -60,12 +60,11 @@ fi
 
 if [[ $removeduplicates == "yes" ]]; then
 export metafunkdirectory
-sh ${metafunkdirectory}/scripts/removeduplicates_parallel.sh
+sh ${metafunkdirectory}/scripts/removeduplicates.sh
 else
 now=$(date +"%Y-%d-%m %H:%M:%S")
 echo "$now | Duplicates will not be removed" >> ${projectdirectory}/run.log
 fi
-
 
 #########
 # Remove low complexity reads
