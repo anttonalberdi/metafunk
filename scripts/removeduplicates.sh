@@ -4,17 +4,22 @@ source "$metafunkdirectory/settings.sh"
 #Create DuplicatesRemoved directory
 mkdir -p ${workingdirectory}/${project}/DuplicatesRemoved
 
+#Select source folder from which data will be retrieved (check if directories contain files)
+if [[ "$(ls -A ${workingdirectory}/${project}/QualityFiltered/)" ]]; then
+sourcefolder="QualityFiltered"
+else
+sourcefolder="RawData"
+fi
+now=$(date +"%Y-%d-%m %H:%M:%S")
+echo "$now | Removing duplicates from files in directory $sourcefolder" >> ${workingdirectory}/${project}/run.log
+
 #Declare function
 function remdupjob() {
 
-  #Select source folder from which data will be retrieved (check if directories contain files)
-  if [[ "$(ls -A ${workingdirectory}/${project}/QualityFiltered/)" ]]; then
-  sourcefolder="QualityFiltered"
-  else
-  sourcefolder="RawData"
-  fi
-  now=$(date +"%Y-%d-%m %H:%M:%S")
-  echo "$now | Removing duplicates from files in directory $sourcefolder" >> ${workingdirectory}/${project}/run.log
+metafunkdirectory=${1}
+sourcefolder=${2}
+
+source "$metafunkdirectory/settings.sh"
 
 #Obtain data from sample.data.txt columns
 samplename=$(echo $sample | cut -d ' ' -f1 )
@@ -63,6 +68,6 @@ fi
 #Loop across samples specified in sample.data.txt
 while read sample; do
 
-remdupjob &
+remdupjob ${metafunkdirectory} ${sourcefolder} &
 
 done < ${metafunkdirectory}/sample.data.txt
