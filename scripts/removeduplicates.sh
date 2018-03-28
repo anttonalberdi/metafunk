@@ -15,6 +15,7 @@ echo "$now | Removing duplicates from files in directory $sourcefolder" >> ${wor
 
 #Declare function
 function remdupjob() {
+source "$metafunkdirectory/settings.sh"
 
 #Obtain data from sample.data.txt columns
 samplename=$(echo $sample | cut -d ' ' -f1 )
