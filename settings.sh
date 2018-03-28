@@ -20,6 +20,7 @@ threads="16"
 ######## Software dependencies ########
 #######################################
 
+module load parallel/20170822
 #Pigz (https://github.com/madler/pigz)
 module load pigz/2.3.4
 #AdapterRemoval (https://github.com/MikkelSchubert/adapterremoval)

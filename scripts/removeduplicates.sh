@@ -66,8 +66,14 @@ fi
 }
 
 #Loop across samples specified in sample.data.txt
-while read sample; do
 
-remdupjob ${metafunkdirectory} ${sourcefolder} &
+parallel --jobs ${threads} remdupjob ${metafunkdirectory} ${sourcefolder} < ${metafunkdirectory}/sample.data.txt
 
-done < ${metafunkdirectory}/sample.data.txt
+#Old way
+#N=${threads}
+#(
+#while read sample; do
+#((i=i%N)); ((i++==0)) && wait
+#remdupjob ${metafunkdirectory} ${sourcefolder} &
+#done < ${metafunkdirectory}/sample.data.txt
+#)
