@@ -11,7 +11,7 @@ else
 sourcefolder="RawData"
 fi
 now=$(date +"%Y-%d-%m %H:%M:%S")
-echo "$now | 		Removing duplicates from files in directory $sourcefolder" >> ${workingdirectory}/${project}/run.log
+echo "$now | Removing duplicates from files in directory $sourcefolder" >> ${workingdirectory}/${project}/run.log
 
 #Loop across samples specified in sample.data.txt
 while read sample; do

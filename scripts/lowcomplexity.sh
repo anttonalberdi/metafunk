@@ -29,16 +29,14 @@ while read sample; do
     echo "$now | 		Removing low complexity reads from sample ${samplename}" >> ${workingdirectory}/${project}/run.log
     prinseq-lite.pl -lc_method "dust" -lc_threshold ${dustvalue} -fastq  ${workingdirectory}/${project}/${sourcefolder}/${samplename}_1.fastq -out_good ${workingdirectory}/${project}/LowComplexFiltered/${samplename}_1
     prinseq-lite.pl -lc_method "dust" -lc_threshold ${dustvalue} -fastq  ${workingdirectory}/${project}/${sourcefolder}/${samplename}_2.fastq -out_good ${workingdirectory}/${project}/LowComplexFiltered/${samplename}_2
-    now=$(date +"%Y-%d-%m %H:%M:%S")
-    echo "$now | 		Low complexity reads were succesfully removed from ${samplename}" >> ${workingdirectory}/${project}/run.log
     #Compute statistics
     before1_1=$(cat ${workingdirectory}/${project}/${sourcefolder}/${samplename}_1.fastq | wc -l)
     before1_2=$((before1_1 / 4))
     before2_1=$(cat ${workingdirectory}/${project}/${sourcefolder}/${samplename}_2.fastq | wc -l)
     before2_2=$((before2_1 / 4))
-    after1_1=$(cat ${workingdirectory}/${project}/QualityFiltered/${samplename}_1.fastq | wc -l)
+    after1_1=$(cat ${workingdirectory}/${project}/LowComplexFiltered/${samplename}_1.fastq | wc -l)
     after1_2=$((after1_1 / 4))
-    after2_1=$(cat ${workingdirectory}/${project}/QualityFiltered/${samplename}_2.fastq | wc -l)
+    after2_1=$(cat ${workingdirectory}/${project}/LowComplexFiltered/${samplename}_2.fastq | wc -l)
     after2_2=$((after2_1 / 4))
     difference1=$((before1_2 - after1_2))
     difference2=$((before2_2 - after2_2))
@@ -54,7 +52,7 @@ while read sample; do
     #Compute statistics
     before1=$(cat ${workingdirectory}/${project}/${sourcefolder}/${samplename}.fastq | wc -l)
     before2=$((before1 / 4))
-    after1=$(cat ${workingdirectory}/${project}/DuplicatesRemoved/${samplename}.fastq | wc -l)
+    after1=$(cat ${workingdirectory}/${project}/LowComplexFiltered/${samplename}.fastq | wc -l)
     after2=$((after1 / 4))
     difference=$((before2 - after2))
     percentage=$((100-(after2 * 100 / before2 )))

@@ -14,7 +14,7 @@ while read sample; do
 
   if [[ $samplefile =~ "/" ]]; then
     #It is PE
-    echo "$now | 		Quality filtering sample $samplename" >> ${workingdirectory}/${project}/run.log
+    echo "$now |  Quality filtering sample $samplename" >> ${workingdirectory}/${project}/run.log
     #Perform quality filtering and rename output files
     AdapterRemoval --file1 ${workingdirectory}/${project}/RawData/${samplename}_1.fastq --file2 ${workingdirectory}/${project}/RawData/${samplename}_2.fastq --basename ${workingdirectory}/${project}/QualityFiltered/${samplename} --minquality ${minavgquality} --minlength ${minseqlength} --trimqualities --trimns --maxns 5 --qualitymax ${qualitymax} --threads ${threads}
     mv ${workingdirectory}/${project}/QualityFiltered/${samplename}.pair1.truncated ${workingdirectory}/${project}/QualityFiltered/${samplename}_1.fastq
@@ -37,14 +37,14 @@ while read sample; do
     echo "$now | 		From sample $samplename, $difference1 (PE1) and $difference2 (PE2) reads (${percentage1}% and ${percentage2}%) were removed due to low quality" >> ${workingdirectory}/${project}/run.log
   else
     #It is SR
-    echo "$now | 		Quality filtering sample $samplename" >> ${workingdirectory}/${project}/run.log
+    echo "$now | 	Quality filtering sample $samplename" >> ${workingdirectory}/${project}/run.log
     #Perform quality filtering and rename output files
     AdapterRemoval --file1 ${workingdirectory}/${project}/RawData/${samplename}.fastq --basename ${workingdirectory}/${project}/QualityFiltered/${samplename} --minquality ${minavgquality} --minlength ${minseqlength} --trimqualities --trimns --maxns 5 --qualitymax ${qualitymax} --threads ${threads}
     mv ${workingdirectory}/${project}/QualityFiltered/${samplename}.truncated ${workingdirectory}/${project}/QualityFiltered/${samplename}.fastq
     #Compute statistics
     before1=$(cat ${workingdirectory}/${project}/RawData/${samplename}.fastq | wc -l)
     before2=$((before1 / 4))
-    after1=$(cat ${workingdirectory}/${project}/DuplicatesRemoved/${samplename}.fastq | wc -l)
+    after1=$(cat ${workingdirectory}/${project}/QualityFiltered/${samplename}.fastq | wc -l)
     after2=$((after1 / 4))
     difference=$((before2 - after2))
     percentage=$((100-(after2 * 100 / before2 )))

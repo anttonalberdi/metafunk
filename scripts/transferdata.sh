@@ -1,6 +1,6 @@
 source "$metafunkdirectory/settings.sh"
 
-###### NOTE FOR MYSELF: SR multifile MIGHT NOT BE WORKING PROPERLY!! 26/03/2018
+###### NOTE FOR MYSELF: SR multifile IS NOT WORKING PROPERLY!! 26/03/2018
 
 mkdir -p ${workingdirectory}/${project}/RawData
 
@@ -9,15 +9,15 @@ while read sample; do
 
   #Obtain data from sample.data.txt columns
   samplename=$(echo $sample | cut -d ' ' -f1 )
-  samplefile=$(echo $sample | cut -d ' ' -f2 )
+  sampleinfo=$(echo $sample | cut -d ' ' -f2 )
   now=$(date +"%Y-%d-%m %H:%M:%S")
 
-  if [[ $samplefile =~ "/" && ! $samplefile =~ ";" ]]; then
+  if [[ $sampleinfo =~ "/" && ! $sampleinfo =~ ";" ]]; then
   #It is PE single file
     echo "$now |    Transferring PE sample $samplename" >> ${workingdirectory}/${project}/run.log
     #Get file names
-    samplefile1=$(echo $samplefile | cut -d'/' -f1)
-    samplefile2=$(echo $samplefile | cut -d'/' -f2)
+    samplefile1=$(echo $sampleinfo | cut -d'/' -f1)
+    samplefile2=$(echo $sampleinfo | cut -d'/' -f2)
 
     #Transfer both files
       #PE1
@@ -40,12 +40,12 @@ while read sample; do
       echo "$now |    ERROR: The extension of file $samplefile2 is not recognised" >> ${workingdirectory}/${project}/run.log
       fi
 
-  elif [[ $samplefile =~ "/" && $samplefile =~ ";" ]]; then
+  elif [[ $sampleinfo =~ "/" && $sampleinfo =~ ";" ]]; then
   #It is PE multi-file
     echo "$now |    Transferring PE multifile sample $samplename" >> ${workingdirectory}/${project}/run.log
     #Get file names
-    samplefile1=$(echo $samplefile | cut -d'/' -f1)
-    samplefile2=$(echo $samplefile | cut -d'/' -f2)
+    samplefile1=$(echo $sampleinfo | cut -d'/' -f1)
+    samplefile2=$(echo $sampleinfo | cut -d'/' -f2)
 
     #PE1
     IFS='; ' read -r -a array <<< $samplefile1
@@ -62,6 +62,8 @@ while read sample; do
       fi
     done
     #Merge all files
+    now=$(date +"%Y-%d-%m %H:%M:%S")
+    echo "$now |      Merging PE1 files" >> ${workingdirectory}/${project}/run.log
     cat ${workingdirectory}/${project}/RawData/${samplename}_1_* > ${workingdirectory}/${project}/RawData/${samplename}_1.fastq
     rm ${workingdirectory}/${project}/RawData/${samplename}_1_*
 
@@ -80,14 +82,15 @@ while read sample; do
       fi
     done
     #Merge all files
+    echo "$now |      Merging PE2 files" >> ${workingdirectory}/${project}/run.log
     cat ${workingdirectory}/${project}/RawData/${samplename}_2_* > ${workingdirectory}/${project}/RawData/${samplename}_2.fastq
     rm ${workingdirectory}/${project}/RawData/${samplename}_2_*
 
-  elif [[ ! $samplefile =~ "/" && $samplefile =~ ";" ]]; then
+  elif [[ ! $sampleinfo =~ "/" && $sampleinfo =~ ";" ]]; then
   #It is SR multifile
   echo "$now |    Transferring SR multifile sample $samplename" >> ${workingdirectory}/${project}/run.log
   #Get file names
-  IFS='; ' read -r -a array <<< $samplefile
+  IFS='; ' read -r -a array <<< $sampleinfo
   n=0
   for samplefile in "${array[@]}"; do
     n=$((n+1))
@@ -100,6 +103,8 @@ while read sample; do
     echo "$now |    The extension of file $samplefile is not recognised" >> ${workingdirectory}/${project}/run.log
     fi
     #Merge all files
+    now=$(date +"%Y-%d-%m %H:%M:%S")
+    echo "$now |    Merging $samplename files" >> ${workingdirectory}/${project}/run.log
     cat ${workingdirectory}/${project}/RawData/${samplename}_* > ${workingdirectory}/${project}/RawData/${samplename}.fastq
     rm ${workingdirectory}/${project}/RawData/${samplename}_*
   done
@@ -107,10 +112,10 @@ while read sample; do
   else
   #It is SR single file
   echo "$now |    Transferring SR single file sample $samplename" >> ${workingdirectory}/${project}/run.log
-    if [[ $samplefile == *.fastq.gz || $samplefile == *.fq.gz ]]; then
+    if [[ $sampleinfo == *.fastq.gz || $sampleinfo == *.fq.gz ]]; then
     cp ${datadirectory}/${samplefile} ${workingdirectory}/${project}/RawData/${samplename}.fastq.gz
     pigz -d -p ${threads} ${workingdirectory}/${project}/RawData/${samplename}.fastq.gz
-    elif [[ $samplefile == *.fastq || $samplefile == *.fq ]]; then
+    elif [[ $sampleinfo == *.fastq || $sampleinfo == *.fq ]]; then
     cp ${datadirectory}/${samplefile} ${workingdirectory}/${project}/RawData/${samplename}.fastq
     else
     echo "$now |    ERROR: The extension of file $samplefile is not recognised" >> ${workingdirectory}/${project}/run.log
@@ -126,5 +131,5 @@ else
   #Print stats
   filenumber=$(ls ${workingdirectory}/${project}/RawData/| wc -l)
   now=$(date +"%Y-%d-%m %H:%M:%S")
-  echo "$now | $filenumber files were processed" >> ${workingdirectory}/${project}/run.log
+  echo "$now |    $filenumber files were processed" >> ${workingdirectory}/${project}/run.log
 fi
