@@ -20,7 +20,7 @@ metafunkdirectory=${1}
 sourcefolder=${2}
 
 source "$metafunkdirectory/settings.sh"
-
+echo $sample
 #Obtain data from sample.data.txt columns
 samplename=$(echo $sample | cut -d ' ' -f1 )
 samplefile=$(echo $sample | cut -d ' ' -f2 )
@@ -68,7 +68,7 @@ fi
 #Loop across samples specified in sample.data.txt
 
 export -f remdupjob
-parallel --j ${threads} -k remdupjob ${metafunkdirectory} ${sourcefolder} {} < ${metafunkdirectory}/sample.data.txt
+parallel -j ${threads} -k remdupjob ${metafunkdirectory} ${sourcefolder} {} <${metafunkdirectory}/sample.data.txt
 
 #Old way
 #N=${threads}
