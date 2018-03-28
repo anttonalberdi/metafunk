@@ -14,7 +14,7 @@ now=$(date +"%Y-%d-%m %H:%M:%S")
 echo "$now | Removing duplicates from files in directory $sourcefolder" >> ${workingdirectory}/${project}/run.log
 
 #Declare function
-function remdupjob{
+function remdupjob() {
 
 #Obtain data from sample.data.txt columns
 samplename=$(echo $sample | cut -d ' ' -f1 )
