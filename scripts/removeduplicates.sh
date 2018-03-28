@@ -4,18 +4,17 @@ source "$metafunkdirectory/settings.sh"
 #Create DuplicatesRemoved directory
 mkdir -p ${workingdirectory}/${project}/DuplicatesRemoved
 
-#Select source folder from which data will be retrieved (check if directories contain files)
-if [[ "$(ls -A ${workingdirectory}/${project}/QualityFiltered/)" ]]; then
-sourcefolder="QualityFiltered"
-else
-sourcefolder="RawData"
-fi
-now=$(date +"%Y-%d-%m %H:%M:%S")
-echo "$now | Removing duplicates from files in directory $sourcefolder" >> ${workingdirectory}/${project}/run.log
-
 #Declare function
 function remdupjob() {
-source "$metafunkdirectory/settings.sh"
+
+  #Select source folder from which data will be retrieved (check if directories contain files)
+  if [[ "$(ls -A ${workingdirectory}/${project}/QualityFiltered/)" ]]; then
+  sourcefolder="QualityFiltered"
+  else
+  sourcefolder="RawData"
+  fi
+  now=$(date +"%Y-%d-%m %H:%M:%S")
+  echo "$now | Removing duplicates from files in directory $sourcefolder" >> ${workingdirectory}/${project}/run.log
 
 #Obtain data from sample.data.txt columns
 samplename=$(echo $sample | cut -d ' ' -f1 )
