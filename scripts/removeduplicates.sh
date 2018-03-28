@@ -68,7 +68,7 @@ fi
 #Loop across samples specified in sample.data.txt
 
 export -f remdupjob
-parallel --j ${threads} -k remdupjob ${metafunkdirectory} ${sourcefolder} < ${metafunkdirectory}/sample.data.txt
+parallel --j ${threads} -k remdupjob -X ${metafunkdirectory} ${sourcefolder} < ${metafunkdirectory}/sample.data.txt
 
 #Old way
 #N=${threads}
