@@ -5,16 +5,16 @@ echo "Settings file successfully loaded"
 #######################################
 
 #You can use the same working directory for multiple projects (e.g. different settings)
-project="test1"
-datadirectory="/home/projects/pr_46704/people/antalb/metafunk_v0.1/testdata"
-workingdirectory="/home/projects/pr_46704/people/antalb/metafunk_v0.1/test_20180325"
+workingdirectory="/home/projects/pr_46704/people/antalb/"
+project="cervids_metagenomics3"
+datadirectory="/home/projects/pr_46704/people/antalb/cervids_metagenomics2/0-Rawdata"
 metafunkdirectory="/home/projects/pr_46704/people/antalb/metafunk"
 
 #Data type - Platform (Illumina, BGI)
 platform="Illumina"
 
 #Computational information
-threads="16"
+threads="24"
 
 #######################################
 ######## Software dependencies ########
@@ -54,12 +54,12 @@ module load diamond/0.9.13
 #Select (yes / no) which modules you want to be ran.
 #Read the wiki to learn more about what each module does: https://github.com/anttonalberdi/metafunk/wiki
 
-copydata="no"
-qualityfiltering="no"
+copydata="yes"
+qualityfiltering="yes"
 removeduplicates="yes"
-removelowcomplexity="no"
-removehostdna="no"
-removehumandna="no"
+removelowcomplexity="yes"
+removehostdna="yes"
+removehumandna="yes"
 coassembly="no"
 geneprediction="no"
 genemapping="no"
