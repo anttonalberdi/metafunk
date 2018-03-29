@@ -61,4 +61,4 @@ while read sample; do
     echo "$now | 		From sample $samplename, $difference reads (${percentage}%) were removed due to low complexity" >> ${workingdirectory}/${project}/run.log
   fi
 
-done < ${metafunkdirectory}/sample.data.txt
+done < ${sampledatafile}

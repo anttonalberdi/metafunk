@@ -107,4 +107,4 @@ while read sample; do
 			#Print statistics
 			echo "$now | 		From sample $samplename, $difference reads (${percentage}%) were mapped to the human genome" >> ${workingdirectory}/${project}/run.log
 		fi
-done < ${metafunkdirectory}/sample.data.txt
+done < ${sampledatafile}

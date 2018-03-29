@@ -19,7 +19,7 @@ while read sample; do
 	now=$(date +"%Y-%d-%m %H:%M:%S")
 	echo "$now |		Genome file $genomefile was copied to the project directory" >> ${workingdirectory}/${project}/run.log
 
-done < ${metafunkdirectory}/sample.data.txt
+done < ${sampledatafile}
 
 #Index host reference genome
 if [[ $indexhostgenome == "yes" ]]; then
@@ -35,7 +35,7 @@ if [[ $indexhostgenome == "yes" ]]; then
 		now=$(date +"%Y-%d-%m %H:%M:%S")
 		echo "$now | 		Genome ${genomefile} was succesfully indexed" >> ${workingdirectory}/${project}/run.log
 		fi
-	done < ${metafunkdirectory}/sample.data.txt
+	done < ${sampledatafile}
 
 fi
 
@@ -115,4 +115,4 @@ while read sample; do
 			#Print statistics
 			echo "$now | 		From sample $samplename, $difference reads (${percentage}%) were mapped to the host genome" >> ${workingdirectory}/${project}/run.log
 		fi
-done < ${metafunkdirectory}/sample.data.txt
+done < ${sampledatafile}

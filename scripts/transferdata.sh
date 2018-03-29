@@ -12,9 +12,10 @@ while read sample; do
   sampleinfo=$(echo $sample | cut -d ' ' -f2 )
   now=$(date +"%Y-%d-%m %H:%M:%S")
 
+  echo "$now |    Processing sample $samplename" >> ${workingdirectory}/${project}/run.log
+
   if [[ $sampleinfo =~ "/" && ! $sampleinfo =~ ";" ]]; then
   #It is PE single file
-    echo "$now |    Transferring PE sample $samplename" >> ${workingdirectory}/${project}/run.log
     #Get file names
     samplefile1=$(echo $sampleinfo | cut -d'/' -f1)
     samplefile2=$(echo $sampleinfo | cut -d'/' -f2)
@@ -42,7 +43,6 @@ while read sample; do
 
   elif [[ $sampleinfo =~ "/" && $sampleinfo =~ ";" ]]; then
   #It is PE multi-file
-    echo "$now |    Transferring PE multifile sample $samplename" >> ${workingdirectory}/${project}/run.log
     #Get file names
     samplefile1=$(echo $sampleinfo | cut -d'/' -f1)
     samplefile2=$(echo $sampleinfo | cut -d'/' -f2)
@@ -88,7 +88,6 @@ while read sample; do
 
   elif [[ ! $sampleinfo =~ "/" && $sampleinfo =~ ";" ]]; then
   #It is SR multifile
-  echo "$now |    Transferring SR multifile sample $samplename" >> ${workingdirectory}/${project}/run.log
   #Get file names
   IFS='; ' read -r -a array <<< $sampleinfo
   n=0
@@ -111,7 +110,6 @@ while read sample; do
 
   else
   #It is SR single file
-  echo "$now |    Transferring SR single file sample $samplename" >> ${workingdirectory}/${project}/run.log
     if [[ $sampleinfo == *.fastq.gz || $sampleinfo == *.fq.gz ]]; then
     cp ${datadirectory}/${samplefile} ${workingdirectory}/${project}/RawData/${samplename}.fastq.gz
     pigz -d -p ${threads} ${workingdirectory}/${project}/RawData/${samplename}.fastq.gz
@@ -121,15 +119,16 @@ while read sample; do
     echo "$now |    ERROR: The extension of file $samplefile is not recognised" >> ${workingdirectory}/${project}/run.log
     fi
   fi
-done < ${metafunkdirectory}/sample.data.txt
+done < ${sampledatafile}
 
 #Check if files were succesfully transferred
 if [ -z "$(ls -A ${workingdirectory}/${project})" ]; then
-  echo "ERROR: The data were not transferred"  >> ${workingdirectory}/${project}/run.log
+  now=$(date +"%Y-%d-%m %H:%M:%S")
+  echo "$now |    ERROR: The data were not transferred"  >> ${workingdirectory}/${project}/run.log
   exit
 else
   #Print stats
   filenumber=$(ls ${workingdirectory}/${project}/RawData/| wc -l)
   now=$(date +"%Y-%d-%m %H:%M:%S")
-  echo "$now |    $filenumber files were processed" >> ${workingdirectory}/${project}/run.log
+  echo "$now |    $filenumber files belonging to $samplenumber samples were succesfully processed" >> ${workingdirectory}/${project}/run.log
 fi

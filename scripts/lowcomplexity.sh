@@ -68,4 +68,4 @@ function lowcompjob() {
 
 #Loop in parallel across samples specified in sample.data.txt
 export -f remdupjob
-parallel -j ${threads} -k lowcompjob {} ${metafunkdirectory} ${sourcefolder} <${metafunkdirectory}/sample.data.txt
+parallel -j ${threads} -k lowcompjob {} ${metafunkdirectory} ${sourcefolder} <${sampledatafile}

@@ -58,7 +58,8 @@ sh ${metafunkdirectory}/scripts/checkdependencies.sh
 #########
 now=$(date +"%Y-%d-%m %H:%M:%S")
 if [[ $copydata == "yes" ]]; then
-echo "$now | Copying and uncompressing data files" >> ${projectdirectory}/run.log
+samplenumber=$(cat sample.data.txt | wc -l)
+echo "$now | Copying and uncompressing data files of $samplenumber samples" >> ${projectdirectory}/run.log
 export metafunkdirectory
 sh ${metafunkdirectory}/scripts/transferdata.sh
 else

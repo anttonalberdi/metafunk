@@ -42,7 +42,7 @@ while read samplefile; do
 		now=$(date +"%Y-%d-%m %H:%M:%S")
 		echo "$now | 	Sample ${samplename} succesfully converted to fasta" >> ${workingdirectory}/${project}/run.log
 	fi
-done < ${metafunkdirectory}/sample.data.txt
+done < ${sampledatafile}
 
 
 #Interleave samples if PE  - NOT NECESSARY - TWEAK MEGAHIT CODE
@@ -55,7 +55,7 @@ while read samplefile; do
 	rm ${workingdirectory}/${project}/CoAssembly/${samplename}_[1-2].fasta
 	now=$(date +"%Y-%d-%m %H:%M:%S")
 	echo "$now | 	Sample ${samplename} succesfully interleaved" >> ${workingdirectory}/${project}/run.log
-done < ${metafunkdirectory}/sample.data.txt
+done < ${sampledatafile}
 fi
 
 #Concatenate

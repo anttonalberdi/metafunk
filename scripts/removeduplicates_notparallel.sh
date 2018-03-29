@@ -59,4 +59,4 @@ while read sample; do
     echo "$now | 		From sample $samplename, $difference duplicated reads (${percentage}%) were removed " >> ${workingdirectory}/${project}/run.log
   fi
 
-done < ${metafunkdirectory}/sample.data.txt
+done < ${sampledatafile}
