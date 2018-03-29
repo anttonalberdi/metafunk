@@ -31,4 +31,3 @@ S5 S5.raw.1.fq.gz;S5.raw.2.fq.gz  /home/projects/pr_46704/people/antalb/cervids_
 TUL1 TUL1.raw.1.fq.gz;TUL1.raw.2.fq.gz  /home/projects/pr_46704/people/antalb/cervids_genomics/genomes/Dama_dama.allpaths.fasta
 TUL2 TUL2.raw.1.fq.gz;TUL2.raw.2.fq.gz  /home/projects/pr_46704/people/antalb/cervids_genomics/genomes/Dama_dama.allpaths.fasta
 TUL4 TUL4.raw.1.fq.gz;TUL4.raw.2.fq.gz  /home/projects/pr_46704/people/antalb/cervids_genomics/genomes/Dama_dama.allpaths.fasta
-.fasta
