@@ -23,6 +23,12 @@ echo "###################" >> ${projectdirectory}/run.log
 echo "" >> ${projectdirectory}/run.log
 
 #########
+# Check sample.data file
+#########
+# Check if the number of columns is as expected in all rows
+cat ${metafunkdirectory}/sample.data.txt | awk -F ' ' -v NCOLS=3 'NF!=NCOLS{printf "Wrong number of columns at line %d\n", NR; exit}'
+
+#########
 # Check dependencies
 #########
 
