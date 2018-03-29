@@ -1,3 +1,6 @@
+#MetaFunk version
+version="0.1"
+
 #Source dependencies
 source "${1}/settings.sh"
 
@@ -12,13 +15,28 @@ cd ${project}
 projectdirectory=${workingdirectory}/${project}
 
 #########
-# Print settings to log file
+# Print settings and sample information to log file
 #########
-
-echo "##### SETTINGS ####" > ${projectdirectory}/run.log
+echo " " > ${projectdirectory}/run.log
+echo "Running MetaFunk v$version pipeline with the following settings and samples:" > ${projectdirectory}/run.log
+echo "##### SETTINGS ####" >> ${projectdirectory}/run.log
 echo "Number of threads: $threads" >> ${projectdirectory}/run.log
-echo "Sequencing read type: $seqtype" >> ${projectdirectory}/run.log
-echo "Sequencing read length: $readlength" >> ${projectdirectory}/run.log
+echo "Sequencing platform: $platform" >> ${projectdirectory}/run.log
+echo " " >> ${projectdirectory}/run.log
+echo "##### SAMPLES ####" >> ${projectdirectory}/run.log
+while read sample; do
+  samplename=$(echo $sample | cut -d ' ' -f1 )
+  samplefile=$(echo $sample | cut -d ' ' -f2 )
+  if [[ $sampleinfo =~ "/" && ! $sampleinfo =~ ";" ]]; then
+  echo "  $samplename PE SF" >> ${projectdirectory}/run.log
+  elif [[ $sampleinfo =~ "/" && $sampleinfo =~ ";" ]]; then
+  echo "  $samplename PE MF" >> ${projectdirectory}/run.log
+  elif [[ ! $sampleinfo =~ "/" && $sampleinfo =~ ";" ]]; then
+  echo "  $samplename SR MF" >> ${projectdirectory}/run.log
+  else
+  echo "  $samplename SR SF" >> ${projectdirectory}/run.log
+  fi
+done < ${metafunkdirectory}/sample.data.txt
 echo "###################" >> ${projectdirectory}/run.log
 echo "" >> ${projectdirectory}/run.log
 
