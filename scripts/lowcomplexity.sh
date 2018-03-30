@@ -22,6 +22,8 @@ function lowcompjob() {
   metafunkdirectory=${2}
   sourcefolder=${3}
 
+  source "$metafunkdirectory/settings.sh"
+
   #Obtain data from sample.data.txt columns
   samplename=$(echo $sample | cut -d ' ' -f1 )
   samplefile=$(echo $sample | cut -d ' ' -f2 )
