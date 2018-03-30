@@ -32,7 +32,7 @@ function lowcompjob() {
 
   if [[ $samplefile =~ "/" ]]; then
     #It is PE
-    echo "$now | 		Removing low complexity reads from sample ${samplename}" >> ${workingdirectory}/${project}/run.log
+    echo "$now | 		Removing low complexity reads from PE sample ${samplename}" >> ${workingdirectory}/${project}/run.log
     prinseq-lite.pl -lc_method "dust" -lc_threshold ${dustvalue} -fastq  ${workingdirectory}/${project}/${sourcefolder}/${samplename}_1.fastq -out_good ${workingdirectory}/${project}/LowComplexFiltered/${samplename}_1
     prinseq-lite.pl -lc_method "dust" -lc_threshold ${dustvalue} -fastq  ${workingdirectory}/${project}/${sourcefolder}/${samplename}_2.fastq -out_good ${workingdirectory}/${project}/LowComplexFiltered/${samplename}_2
     #Compute statistics
@@ -53,7 +53,7 @@ function lowcompjob() {
     echo "$now | 		From sample $samplename, $difference1 (PE1) and $difference2 (PE2) reads (${percentage1}% and ${percentage2}%) were removed due to low complexity" >> ${workingdirectory}/${project}/run.log
   else
     #It is SR
-    echo "$now | 		Removing low complexity reads from sample ${samplename}" >> ${workingdirectory}/${project}/run.log
+    echo "$now | 		Removing low complexity reads from SR sample ${samplename}" >> ${workingdirectory}/${project}/run.log
     prinseq-lite.pl -lc_method "dust" -lc_threshold ${dustvalue} -fastq  ${workingdirectory}/${project}/${sourcefolder}/${samplename}.fastq -out_good ${workingdirectory}/${project}/LowComplexFiltered/${samplename}
     #Compute statistics
     before1=$(cat ${workingdirectory}/${project}/${sourcefolder}/${samplename}.fastq | wc -l)

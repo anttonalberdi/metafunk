@@ -1,7 +1,7 @@
 #Source dependencies
 source "$metafunkdirectory/settings.sh"
 
-echo "##### DEPENDENCIES ####" >> ${projectdirectory}/run.log
+echo "##### DEPENDENCIES ####" >> ${workingdirectory}/${project}/run.log
 
 #Check software needed for transferring and uncompressing data
 if [[ $copydata == "yes" ]]; then
