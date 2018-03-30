@@ -15,10 +15,10 @@ MetaFunk is suitable for Illumina and BGISeq single-read (SR) and paired-end (PE
 - Taxonomic profiling
 
 ## Quick start
-1- Clone or download metafunk to your working environment
-2- Prepare the sample data file (sample.data.txt)
-3- Modify the settings.sh file 
-4- Run the following script:
+1. Clone or download metafunk to your working environment
+2. Prepare the sample data file (sample.data.txt)
+3. Modify the settings.sh file 
+4. Run the following script:
 
 metafunkdir="/[absolutepath]/metafunk"
 sh $metafunkdir/metafunk.sh $metafunkdir
