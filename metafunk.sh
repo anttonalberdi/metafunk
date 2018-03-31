@@ -17,9 +17,9 @@ while getopts w:d:s:t: option; do
 done
 
 metafunkdirectory=$(pwd)
-
+echo "${settingsfile}"
 #Source dependencies
-source ${settingsfile}
+source "${settingsfile}"
 
 #########
 # Create and set working directory
