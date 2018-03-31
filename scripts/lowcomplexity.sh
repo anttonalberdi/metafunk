@@ -26,7 +26,7 @@ function lowcompjob() {
 
   #Obtain data from sample.data.txt columns
   samplename=$(echo $sample | cut -d ' ' -f1 )
-  sampleinfo$(echo $sample | cut -d ' ' -f2 )
+  sampleinfo=$(echo $sample | cut -d ' ' -f2 )
 
   now=$(date +"%Y-%d-%m %H:%M:%S")
 
