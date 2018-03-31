@@ -16,6 +16,7 @@ while getopts w:d:s:f:t: option; do
   esac
 done
 
+#Get metafunk directory
 metafunkdirectory="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 #Source dependencies

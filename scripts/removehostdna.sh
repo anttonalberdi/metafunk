@@ -18,7 +18,7 @@ while read sample; do
 	cp ${genomepath}* ${workdir}/HostDNARemoved/ReferenceGenomes
 	now=$(date +"%Y-%d-%m %H:%M:%S")
 	echo "$now |		Genome file $genomefile was copied to the project directory" >> ${workdir}/run.log
-
+	fi
 done < ${sampledatafile}
 
 #Index host reference genome
