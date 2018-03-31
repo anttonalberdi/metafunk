@@ -129,7 +129,8 @@ if [ -z "$(ls -A ${workdir}/RawData/)" ]; then
   exit
 else
   #Print stats
-  filenumber=$(ls ${workdir}/RawData/| wc -l)
+  samplenumber=$(cat ${sampledatafile} | wc -l)
+  filenumber=$(ls ${workdir}/RawData/ | wc -l)
   now=$(date +"%Y-%d-%m %H:%M:%S")
   echo "$now |    $filenumber files belonging to $samplenumber samples were succesfully processed" >> ${workdir}/run_${timestamp}.log
 fi
