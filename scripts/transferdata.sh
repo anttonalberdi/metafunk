@@ -112,10 +112,10 @@ while read sample; do
   else
   #It is SR single file
     if [[ $sampleinfo == *.fastq.gz || $sampleinfo == *.fq.gz ]]; then
-    cp ${datadir}/${samplefile} ${workdir}/RawData/${samplename}.fastq.gz
+    cp ${datadir}/${sampleinfo} ${workdir}/RawData/${samplename}.fastq.gz
     pigz -d -p ${threads} ${workdir}/RawData/${samplename}.fastq.gz
     elif [[ $sampleinfo == *.fastq || $sampleinfo == *.fq ]]; then
-    cp ${datadir}/${samplefile} ${workdir}/RawData/${samplename}.fastq
+    cp ${datadir}/${sampleinfo} ${workdir}/RawData/${samplename}.fastq
     else
     echo "$now |    ERROR: The extension of file $samplefile is not recognised" >> ${workdir}/run_${timestamp}.log
     fi
