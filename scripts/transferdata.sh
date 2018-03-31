@@ -123,7 +123,7 @@ while read sample; do
 done < ${sampledatafile}
 
 #Check if files were succesfully transferred
-if [ -z "$(ls -A ${workdir})" ]; then
+if [ -z "$(ls -A ${workdir}/RawData/)" ]; then
   now=$(date +"%Y-%d-%m %H:%M:%S")
   echo "$now |    ERROR: The data were not transferred"  >> ${workdir}/run_${timestamp}.log
   exit
