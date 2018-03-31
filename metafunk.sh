@@ -17,7 +17,7 @@ while getopts w:d:s:t: option; do
 done
 
 metafunkdirectory=$(pwd)
-echo "${settingsfile}"
+
 #Source dependencies
 source "${settingsfile}"
 
@@ -34,13 +34,17 @@ cd ${workdir}
 echo " " > ${workdir}/run.log
 echo "Running MetaFunk v$version pipeline with the following settings and samples:" > ${workdir}/run.log
 echo "##### SETTINGS ####" >> ${workdir}/run.log
+echo "Working directory: $workdir" >> ${workdir}/run.log
+echo "Sample data file: $sampledatafile" >> ${workdir}/run.log
+echo "Settings file: $settingsfile" >> ${workdir}/run.log
+echo "Data directory: $datadir" >> ${workdir}/run.log
 echo "Number of threads: $threads" >> ${workdir}/run.log
 echo "Sequencing platform: $platform" >> ${workdir}/run.log
 echo " " >> ${workdir}/run.log
 echo "##### SAMPLES ####" >> ${workdir}/run.log
 while read sample; do
   samplename=$(echo $sample | cut -d ' ' -f1 )
-  samplefile=$(echo $sample | cut -d ' ' -f2 )
+  sampleinfo=$(echo $sample | cut -d ' ' -f2 )
   if [[ $sampleinfo =~ "/" && ! $sampleinfo =~ ";" ]]; then
   echo "  $samplename PE SF" >> ${workdir}/run.log
   elif [[ $sampleinfo =~ "/" && $sampleinfo =~ ";" ]]; then
