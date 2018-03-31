@@ -20,9 +20,7 @@ MetaFunk is suitable for Illumina and BGISeq single-read (SR) and paired-end (PE
 3. Modify the settings.sh file*
 4. Run the following script:
 
-`metafunkdir="[absolutepathtometafunkfolder]"`
-
-`sh $metafunkdir/metafunk.sh $metafunkdir`
+`sh /[path]/metafunk.sh -w [workingdirectory] -d [/path/sample.data.txt] -s [/path/settings.sh] -t [number of threads]`
 
 *read wiki for further details
 
