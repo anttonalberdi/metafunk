@@ -4,18 +4,8 @@ echo "Settings file successfully loaded"
 ######### Project information #########
 #######################################
 
-#You can use the same working directory for multiple projects (e.g. different settings)
-workingdirectory="/home/projects/pr_46704/people/antalb/"
-project="cervids_metagenomics3"
-datadirectory="/home/projects/pr_46704/people/antalb/cervids_metagenomics2/0-Rawdata"
-metafunkdirectory="/home/projects/pr_46704/people/antalb/metafunk"
-sampledatafile="/home/projects/pr_46704/people/antalb/cervids_metagenomics3/sample.data.txt"
-
 #Data type - Platform (Illumina, BGI)
 platform="Illumina"
-
-#Computational information
-threads="24"
 
 #######################################
 ######## Software dependencies ########

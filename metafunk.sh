@@ -1,56 +1,70 @@
 #MetaFunk version
 version="0.1"
 
+#########
+# Get options
+#########
+
+while getopts w:d:s:t: option; do
+  case "${option}"
+  in
+  w) workdir=${OPTARG};;
+  d) sampledatafile=${OPTARG};;
+  s) settingsfile=${OPTARG};;
+  f) datadir=${OPTARG};;
+  t) threads=$OPTARG;;
+  esac
+done
+
+metafunkdirectory=$(pwd)
+
 #Source dependencies
-source "${1}/settings.sh"
+source ${settingsfile}
 
 #########
 # Create and set working directory
 #########
 
-mkdir -p ${workingdirectory}
-cd ${workingdirectory}
-mkdir ${project}
-cd ${project}
-projectdirectory=${workingdirectory}/${project}
+mkdir -p ${workdir}
+cd ${workdir}
 
 #########
 # Print settings and sample information to log file
 #########
-echo " " > ${projectdirectory}/run.log
-echo "Running MetaFunk v$version pipeline with the following settings and samples:" > ${projectdirectory}/run.log
-echo "##### SETTINGS ####" >> ${projectdirectory}/run.log
-echo "Number of threads: $threads" >> ${projectdirectory}/run.log
-echo "Sequencing platform: $platform" >> ${projectdirectory}/run.log
-echo " " >> ${projectdirectory}/run.log
-echo "##### SAMPLES ####" >> ${projectdirectory}/run.log
+echo " " > ${workdir}/run.log
+echo "Running MetaFunk v$version pipeline with the following settings and samples:" > ${workdir}/run.log
+echo "##### SETTINGS ####" >> ${workdir}/run.log
+echo "Number of threads: $threads" >> ${workdir}/run.log
+echo "Sequencing platform: $platform" >> ${workdir}/run.log
+echo " " >> ${workdir}/run.log
+echo "##### SAMPLES ####" >> ${workdir}/run.log
 while read sample; do
   samplename=$(echo $sample | cut -d ' ' -f1 )
   samplefile=$(echo $sample | cut -d ' ' -f2 )
   if [[ $sampleinfo =~ "/" && ! $sampleinfo =~ ";" ]]; then
-  echo "  $samplename PE SF" >> ${projectdirectory}/run.log
+  echo "  $samplename PE SF" >> ${workdir}/run.log
   elif [[ $sampleinfo =~ "/" && $sampleinfo =~ ";" ]]; then
-  echo "  $samplename PE MF" >> ${projectdirectory}/run.log
+  echo "  $samplename PE MF" >> ${workdir}/run.log
   elif [[ ! $sampleinfo =~ "/" && $sampleinfo =~ ";" ]]; then
-  echo "  $samplename SR MF" >> ${projectdirectory}/run.log
+  echo "  $samplename SR MF" >> ${workdir}/run.log
   else
-  echo "  $samplename SR SF" >> ${projectdirectory}/run.log
+  echo "  $samplename SR SF" >> ${workdir}/run.log
   fi
-done < ${metafunkdirectory}/sample.data.txt
-echo "###################" >> ${projectdirectory}/run.log
-echo "" >> ${projectdirectory}/run.log
+done < ${sampledatafile}
+echo "###################" >> ${workdir}/run.log
+echo "" >> ${workdir}/run.log
 
 #########
 # Check sample.data file
 #########
 # Check if the number of columns is as expected in all rows
-cat ${metafunkdirectory}/sample.data.txt | awk -F ' ' -v NCOLS=3 'NF!=NCOLS{printf "Wrong number of columns at line %d\n", NR; exit}'
+cat ${sampledatafile} | awk -F ' ' -v NCOLS=3 'NF!=NCOLS{printf "Wrong number of columns at line %d\n", NR; exit}'
 
 #########
 # Check dependencies
 #########
 
-export metafunkdirectory
+export workdir; export sampledatafile; export settingsfile; export datadir; export threads; export metafunkdirectory
 sh ${metafunkdirectory}/scripts/checkdependencies.sh
 
 #########
@@ -59,11 +73,11 @@ sh ${metafunkdirectory}/scripts/checkdependencies.sh
 now=$(date +"%Y-%d-%m %H:%M:%S")
 if [[ $copydata == "yes" ]]; then
 samplenumber=$(cat sample.data.txt | wc -l)
-echo "$now | Copying and uncompressing data files of $samplenumber samples" >> ${projectdirectory}/run.log
-export metafunkdirectory
+echo "$now | Copying and uncompressing data files of $samplenumber samples" >> ${workdir}/run.log
+export workdir; export sampledatafile; export settingsfile; export datadir; export threads; export metafunkdirectory
 sh ${metafunkdirectory}/scripts/transferdata.sh
 else
-echo "$now | Data will not be copied and uncompressed" >> ${projectdirectory}/run.log
+echo "$now | Data will not be copied and uncompressed" >> ${workdir}/run.log
 fi
 
 #########
@@ -72,11 +86,11 @@ fi
 
 now=$(date +"%Y-%d-%m %H:%M:%S")
 if [[ $qualityfiltering == "yes" ]]; then
-echo "$now | Performing quality filtering" >> ${projectdirectory}/run.log
+echo "$now | Performing quality filtering" >> ${workdir}/run.log
 export metafunkdirectory
 sh ${metafunkdirectory}/scripts/qualityfiltering.sh
 else
-echo "$now | Quality filtering will not be performed" >> ${projectdirectory}/run.log
+echo "$now | Quality filtering will not be performed" >> ${workdir}/run.log
 fi
 
 #########
@@ -88,7 +102,7 @@ export metafunkdirectory
 sh ${metafunkdirectory}/scripts/removeduplicates.sh
 else
 now=$(date +"%Y-%d-%m %H:%M:%S")
-echo "$now | Duplicates will not be removed" >> ${projectdirectory}/run.log
+echo "$now | Duplicates will not be removed" >> ${workdir}/run.log
 fi
 
 #########
@@ -100,7 +114,7 @@ export metafunkdirectory
 sh ${metafunkdirectory}/scripts/lowcomplexity.sh
 else
 now=$(date +"%Y-%d-%m %H:%M:%S")
-echo "$now | Low complexity will not be filtered" >> ${projectdirectory}/run.log
+echo "$now | Low complexity will not be filtered" >> ${workdir}/run.log
 fi
 
 #########
@@ -109,12 +123,12 @@ fi
 
 if [[ $removehostdna == "yes" ]]; then
 now=$(date +"%Y-%d-%m %H:%M:%S")
-echo "$now | Removing host DNA" >> ${projectdirectory}/run.log
+echo "$now | Removing host DNA" >> ${workdir}/run.log
 export metafunkdirectory
 sh ${metafunkdirectory}/scripts/removehostdna.sh
 else
 now=$(date +"%Y-%d-%m %H:%M:%S")
-echo "$now | Host DNA will not be removed" >> ${projectdirectory}/run.log
+echo "$now | Host DNA will not be removed" >> ${workdir}/run.log
 fi
 
 #########
@@ -123,12 +137,12 @@ fi
 
 if [[ $coassembly == "yes" ]]; then
 now=$(date +"%Y-%d-%m %H:%M:%S")
-echo "$now | Co-assembling reads" >> ${projectdirectory}/run.log
+echo "$now | Co-assembling reads" >> ${workdir}/run.log
 export metafunkdirectory
 sh ${metafunkdirectory}/scripts/coassembly.sh
 else
 now=$(date +"%Y-%d-%m %H:%M:%S")
-echo "$now | Reads will not be co-assembled" >> ${projectdirectory}/run.log
+echo "$now | Reads will not be co-assembled" >> ${workdir}/run.log
 fi
 
 #########
@@ -137,12 +151,12 @@ fi
 
 if [[ $geneprediction == "yes" ]]; then
 now=$(date +"%Y-%d-%m %H:%M:%S")
-echo "$now | Predicting genes" >> ${projectdirectory}/run.log
+echo "$now | Predicting genes" >> ${workdir}/run.log
 export metafunkdirectory
 sh ${metafunkdirectory}/scripts/geneprediction.sh
 else
 now=$(date +"%Y-%d-%m %H:%M:%S")
-echo "$now | Gene prediction will not be performed" >> ${projectdirectory}/run.log
+echo "$now | Gene prediction will not be performed" >> ${workdir}/run.log
 fi
 
 #########
@@ -150,11 +164,11 @@ fi
 #########
 now=$(date +"%Y-%d-%m %H:%M:%S")
 if [[ $genemapping == "yes" ]]; then
-echo "$now | Mapping reads back to genes" >> ${projectdirectory}/run.log
+echo "$now | Mapping reads back to genes" >> ${workdir}/run.log
 export metafunkdirectory
 sh ${metafunkdirectory}/scripts/genemapping.sh
 else
-echo "$now | Gene mapping will not be performed" >> ${projectdirectory}/run.log
+echo "$now | Gene mapping will not be performed" >> ${workdir}/run.log
 fi
 
 #########
@@ -162,11 +176,11 @@ fi
 #########
 now=$(date +"%Y-%d-%m %H:%M:%S")
 if [[ $tss == "yes" || $css == "yes" ]]; then
-  echo "$now | Normalising hit and coverage tables" >> ${projectdirectory}/run.log
+  echo "$now | Normalising hit and coverage tables" >> ${workdir}/run.log
   export metafunkdirectory
   sh ${metafunkdirectory}/scripts/normalisetables.sh
   else
-  echo "$now | Hit and coverage tables will not be normalised" >> ${projectdirectory}/run.log
+  echo "$now | Hit and coverage tables will not be normalised" >> ${workdir}/run.log
 fi
 
 #########
@@ -174,24 +188,24 @@ fi
 #########
 now=$(date +"%Y-%d-%m %H:%M:%S")
 if [[ $kegg == "yes" ]]; then
-  echo "$now | Starting KEGG functional annotation" >> ${projectdirectory}/run.log
+  echo "$now | Starting KEGG functional annotation" >> ${workdir}/run.log
   export metafunkdirectory
   sh ${metafunkdirectory}/scripts/functionalannotation_kegg.sh
   else
-  echo "$now | KEGG functional annotation will not be performed" >> ${projectdirectory}/run.log
+  echo "$now | KEGG functional annotation will not be performed" >> ${workdir}/run.log
 fi
 
 now=$(date +"%Y-%d-%m %H:%M:%S")
 if [[ $eggnog == "yes" ]]; then
-  echo "$now | Starting EggNog functional annotation" >> ${projectdirectory}/run.log
+  echo "$now | Starting EggNog functional annotation" >> ${workdir}/run.log
   export metafunkdirectory
   sh ${metafunkdirectory}/scripts/functionalannotation_eggnog.sh
   else
-  echo "$now | EggNog functional annotation will not be performed" >> ${projectdirectory}/run.log
+  echo "$now | EggNog functional annotation will not be performed" >> ${workdir}/run.log
 fi
 
 #########
 # Final message
 #########
 now=$(date +"%Y-%d-%m %H:%M:%S")
-echo "$now | Congratulations, the pipeline was succesfully run" >> ${projectdirectory}/run.log
+echo "$now | Congratulations, the pipeline was succesfully run" >> ${workdir}/run.log
