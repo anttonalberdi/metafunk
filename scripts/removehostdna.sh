@@ -23,6 +23,8 @@ done < ${sampledatafile}
 
 #Index host reference genome
 if [[ $indexhostgenome == "yes" ]]; then
+	now=$(date +"%Y-%d-%m %H:%M:%S")
+	echo "$now | 		Indexing host genome(s)" >> ${workdir}/run.log
 
 	while read sample; do
 		genomepath=$(echo $sample | cut -d ' ' -f3)

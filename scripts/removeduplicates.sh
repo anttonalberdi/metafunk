@@ -1,17 +1,17 @@
-#Source dependencies
-source "$metafunkdirectory/settings.sh"
+#Source settings file
+source $settingsfile
 
 #Create DuplicatesRemoved directory
-mkdir -p ${workingdirectory}/${project}/DuplicatesRemoved
+mkdir -p ${workdir}/DuplicatesRemoved
 
 #Select source folder from which data will be retrieved (check if directories contain files)
-if [[ "$(ls -A ${workingdirectory}/${project}/QualityFiltered/)" ]]; then
+if [[ "$(ls -A ${workdir}/QualityFiltered/)" ]]; then
 sourcefolder="QualityFiltered"
 else
 sourcefolder="RawData"
 fi
 now=$(date +"%Y-%d-%m %H:%M:%S")
-echo "$now | Removing duplicates from files in directory $sourcefolder" >> ${workingdirectory}/${project}/run.log
+echo "$now | Removing duplicates from files in directory $sourcefolder" >> ${workdir}/run_${timestamp}.log
 
 #Declare function
 function remdupjob() {
@@ -24,23 +24,23 @@ source "$metafunkdirectory/settings.sh"
 
 #Obtain data from sample.data.txt columns
 samplename=$(echo $sample | cut -d ' ' -f1 )
-samplefile=$(echo $sample | cut -d ' ' -f2 )
+sampleinfo=$(echo $sample | cut -d ' ' -f2 )
 
 now=$(date +"%Y-%d-%m %H:%M:%S")
 
-if [[ $samplefile =~ "/" ]]; then
+if [[ $sampleinfo =~ "/" ]]; then
   #It is PE
-  echo "$now | 		Removing duplicates from sample $samplename" >> ${workingdirectory}/${project}/run.log
-  cat ${workingdirectory}/${project}/${sourcefolder}/${samplename}_1.fastq | seqkit rmdup -s -o ${workingdirectory}/${project}/DuplicatesRemoved/${samplename}_1.fastq
-  cat ${workingdirectory}/${project}/${sourcefolder}/${samplename}_2.fastq | seqkit rmdup -s -o ${workingdirectory}/${project}/DuplicatesRemoved/${samplename}_2.fastq
+  echo "$now | 		Removing duplicates from sample $samplename" >> ${workdir}/run_${timestamp}.log
+  cat ${workdir}/${sourcefolder}/${samplename}_1.fastq | seqkit rmdup -s -o ${workdir}/DuplicatesRemoved/${samplename}_1.fastq
+  cat ${workdir}/${sourcefolder}/${samplename}_2.fastq | seqkit rmdup -s -o ${workdir}/DuplicatesRemoved/${samplename}_2.fastq
   #Get statistics
-  before1_1=$(cat ${workingdirectory}/${project}/${sourcefolder}/${samplename}_1.fastq | wc -l)
+  before1_1=$(cat ${workdir}/${sourcefolder}/${samplename}_1.fastq | wc -l)
   before1_2=$((before1_1 / 4))
-  before2_1=$(cat ${workingdirectory}/${project}/${sourcefolder}/${samplename}_2.fastq | wc -l)
+  before2_1=$(cat ${workdir}/${sourcefolder}/${samplename}_2.fastq | wc -l)
   before2_2=$((before2_1 / 4))
-  after1_1=$(cat ${workingdirectory}/${project}/DuplicatesRemoved/${samplename}_1.fastq | wc -l)
+  after1_1=$(cat ${workdir}/DuplicatesRemoved/${samplename}_1.fastq | wc -l)
   after1_2=$((after1_1 / 4))
-  after2_1=$(cat ${workingdirectory}/${project}/DuplicatesRemoved/${samplename}_2.fastq | wc -l)
+  after2_1=$(cat ${workdir}/DuplicatesRemoved/${samplename}_2.fastq | wc -l)
   after2_2=$((after2_1 / 4))
   difference1=$((before1_2 - after1_2))
   difference2=$((before2_2 - after2_2))
@@ -48,21 +48,21 @@ if [[ $samplefile =~ "/" ]]; then
   percentage2=$((100-(after2_2 * 100 / before2_2 )))
   #Print statistics
   now=$(date +"%Y-%d-%m %H:%M:%S")
-  echo "$now | 		From sample $samplename, $difference1 (PE1) and $difference2 (PE2) duplicated reads (${percentage1}% and ${percentage2}%) were removed " >> ${workingdirectory}/${project}/run.log
+  echo "$now | 		From sample $samplename, $difference1 (PE1) and $difference2 (PE2) duplicated reads (${percentage1}% and ${percentage2}%) were removed " >> ${workdir}/run_${timestamp}.log
 else
   #It is SR
-  echo "$now | 		Removing duplicates from sample $samplename" >> ${workingdirectory}/${project}/run.log
-  cat ${workingdirectory}/${project}/${sourcefolder}/${samplename}.fastq | seqkit rmdup -s -o ${workingdirectory}/${project}/DuplicatesRemoved/${samplename}.fastq
+  echo "$now | 		Removing duplicates from sample $samplename" >> ${workdir}/run_${timestamp}.log
+  cat ${workdir}/${sourcefolder}/${samplename}.fastq | seqkit rmdup -s -o ${workdir}/DuplicatesRemoved/${samplename}.fastq
   #Get statistics
-  before1=$(cat ${workingdirectory}/${project}/${sourcefolder}/${samplename}.fastq | wc -l)
+  before1=$(cat ${workdir}/${sourcefolder}/${samplename}.fastq | wc -l)
   before2=$((before1 / 4))
-  after1=$(cat ${workingdirectory}/${project}/DuplicatesRemoved/${samplename}.fastq | wc -l)
+  after1=$(cat ${workdir}/DuplicatesRemoved/${samplename}.fastq | wc -l)
   after2=$((after1 / 4))
   difference=$((before2 - after2))
   percentage=$((100-(after2 * 100 / before2 )))
   #Print statistics
   now=$(date +"%Y-%d-%m %H:%M:%S")
-  echo "$now | 		From sample $samplename, $difference duplicated reads (${percentage}%) were removed " >> ${workingdirectory}/${project}/run.log
+  echo "$now | 		From sample $samplename, $difference duplicated reads (${percentage}%) were removed " >> ${workdir}/run_${timestamp}.log
 fi
 }
 

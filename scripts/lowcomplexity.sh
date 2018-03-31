@@ -13,7 +13,7 @@ else
 sourcefolder="RawData"
 fi
 now=$(date +"%Y-%d-%m %H:%M:%S")
-echo "$now | Removing low complexity reads from files in directory ${sourcefolder}" >> ${workdir}/run.log
+echo "$now | Removing low complexity reads from files in directory ${sourcefolder}" >> ${workdir}/run_${timestamp}.log
 
 #Declare function
 function lowcompjob() {
@@ -32,7 +32,7 @@ function lowcompjob() {
 
   if [[ $sampleinfo =~ "/" ]]; then
     #It is PE
-    echo "$now | 		Removing low complexity reads from PE sample ${samplename}" >> ${workdir}/run.log
+    echo "$now | 		Removing low complexity reads from PE sample ${samplename}" >> ${workdir}/run_${timestamp}.log
     prinseq-lite.pl -lc_method "dust" -lc_threshold ${dustvalue} -fastq  ${workdir}/${sourcefolder}/${samplename}_1.fastq -out_good ${workdir}/LowComplexFiltered/${samplename}_1
     prinseq-lite.pl -lc_method "dust" -lc_threshold ${dustvalue} -fastq  ${workdir}/${sourcefolder}/${samplename}_2.fastq -out_good ${workdir}/LowComplexFiltered/${samplename}_2
     #Compute statistics
@@ -50,10 +50,10 @@ function lowcompjob() {
     percentage2=$((100-(after2_2 * 100 / before2_2 )))
     #Print statistics
     now=$(date +"%Y-%d-%m %H:%M:%S")
-    echo "$now | 		From sample $samplename, $difference1 (PE1) and $difference2 (PE2) reads (${percentage1}% and ${percentage2}%) were removed due to low complexity" >> ${workdir}/run.log
+    echo "$now | 		From sample $samplename, $difference1 (PE1) and $difference2 (PE2) reads (${percentage1}% and ${percentage2}%) were removed due to low complexity" >> ${workdir}/run_${timestamp}.log
   else
     #It is SR
-    echo "$now | 		Removing low complexity reads from SR sample ${samplename}" >> ${workdir}/run.log
+    echo "$now | 		Removing low complexity reads from SR sample ${samplename}" >> ${workdir}/run_${timestamp}.log
     prinseq-lite.pl -lc_method "dust" -lc_threshold ${dustvalue} -fastq  ${workdir}/${sourcefolder}/${samplename}.fastq -out_good ${workdir}/LowComplexFiltered/${samplename}
     #Compute statistics
     before1=$(cat ${workdir}/${sourcefolder}/${samplename}.fastq | wc -l)
@@ -64,7 +64,7 @@ function lowcompjob() {
     percentage=$((100-(after2 * 100 / before2 )))
     #Print statistics
     now=$(date +"%Y-%d-%m %H:%M:%S")
-    echo "$now | 		From sample $samplename, $difference reads (${percentage}%) were removed due to low complexity" >> ${workdir}/run.log
+    echo "$now | 		From sample $samplename, $difference reads (${percentage}%) were removed due to low complexity" >> ${workdir}/run_${timestamp}.log
   fi
 }
 
