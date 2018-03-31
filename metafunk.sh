@@ -12,7 +12,7 @@ while getopts w:d:s:t: option; do
   d) sampledatafile=${OPTARG};;
   s) settingsfile=${OPTARG};;
   f) datadir=${OPTARG};;
-  t) threads=$OPTARG;;
+  t) threads=${OPTARG};;
   esac
 done
 
