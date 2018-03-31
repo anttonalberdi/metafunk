@@ -5,7 +5,7 @@ version="0.1"
 # Get options
 #########
 
-while getopts w:d:s:t: option; do
+while getopts w:d:s:f:t: option; do
   case "${option}"
   in
   w) workdir=${OPTARG};;
