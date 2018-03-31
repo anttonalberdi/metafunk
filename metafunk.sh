@@ -33,6 +33,7 @@ cd ${workdir}
 #########
 echo " " > ${workdir}/run.log
 echo "Running MetaFunk v$version pipeline with the following settings and samples:" > ${workdir}/run.log
+echo " " >> ${workdir}/run.log
 echo "##### SETTINGS ####" >> ${workdir}/run.log
 echo "Working directory: $workdir" >> ${workdir}/run.log
 echo "Sample data file: $sampledatafile" >> ${workdir}/run.log
@@ -91,7 +92,7 @@ fi
 now=$(date +"%Y-%d-%m %H:%M:%S")
 if [[ $qualityfiltering == "yes" ]]; then
 echo "$now | Performing quality filtering" >> ${workdir}/run.log
-export metafunkdirectory
+export workdir; export sampledatafile; export settingsfile; export datadir; export threads; export metafunkdirectory
 sh ${metafunkdirectory}/scripts/qualityfiltering.sh
 else
 echo "$now | Quality filtering will not be performed" >> ${workdir}/run.log
@@ -102,7 +103,7 @@ fi
 #########
 
 if [[ $removeduplicates == "yes" ]]; then
-export metafunkdirectory
+export workdir; export sampledatafile; export settingsfile; export datadir; export threads; export metafunkdirectory
 sh ${metafunkdirectory}/scripts/removeduplicates.sh
 else
 now=$(date +"%Y-%d-%m %H:%M:%S")
@@ -114,7 +115,7 @@ fi
 #########
 
 if [[ $removelowcomplexity == "yes" ]]; then
-export metafunkdirectory
+export workdir; export sampledatafile; export settingsfile; export datadir; export threads; export metafunkdirectory
 sh ${metafunkdirectory}/scripts/lowcomplexity.sh
 else
 now=$(date +"%Y-%d-%m %H:%M:%S")
@@ -128,7 +129,7 @@ fi
 if [[ $removehostdna == "yes" ]]; then
 now=$(date +"%Y-%d-%m %H:%M:%S")
 echo "$now | Removing host DNA" >> ${workdir}/run.log
-export metafunkdirectory
+export workdir; export sampledatafile; export settingsfile; export datadir; export threads; export metafunkdirectory
 sh ${metafunkdirectory}/scripts/removehostdna.sh
 else
 now=$(date +"%Y-%d-%m %H:%M:%S")

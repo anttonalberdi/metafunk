@@ -1,3 +1,4 @@
+#Source settings file
 source $settingsfile
 
 ###### NOTE FOR MYSELF: SR multifile IS NOT WORKING PROPERLY!! 26/03/2018
