@@ -20,11 +20,11 @@ MetaFunk is suitable for Illumina and BGISeq single-read (SR) and paired-end (PE
 3. Modify the settings.sh file*
 4. Run the following script:
 
-`sh /[path]/metafunk.sh -w [workingdirectory] -d [/path/sample.data.txt] -s [/path/settings.sh] -t [number of threads]`
+`sh /[path]/metafunk.sh -w [working directory] -d [/path/sample.data.txt] -s [/path/settings.sh] -f [data file directory] -t [number of threads]`
 
 example:
 
-`sh /home/software/metafunk.sh -w /home/projects/wolfproject -d /home/projects/wolfproject/sample.data.txt -s /home/projects/wolfproject/settings.sh -t 24`
+`sh /home/software/metafunk.sh -w /home/projects/wolfproject -d /home/projects/wolfproject/sample.data.txt -s /home/projects/wolfproject/settings.sh -f /home/rawdata/wolfdata  -t 24`
 
 
 *read wiki for further details
