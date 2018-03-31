@@ -16,7 +16,7 @@ while getopts w:d:s:f:t: option; do
   esac
 done
 
-metafunkdirectory=$(pwd)
+metafunkdirectory="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 #Source dependencies
 source "${settingsfile}"
@@ -35,6 +35,7 @@ echo " " > ${workdir}/run.log
 echo "Running MetaFunk v$version pipeline with the following settings and samples:" > ${workdir}/run.log
 echo " " >> ${workdir}/run.log
 echo "##### SETTINGS ####" >> ${workdir}/run.log
+echo "Metafunk directory: $metafunkdirectory" >> ${workdir}/run.log
 echo "Working directory: $workdir" >> ${workdir}/run.log
 echo "Sample data file: $sampledatafile" >> ${workdir}/run.log
 echo "Settings file: $settingsfile" >> ${workdir}/run.log
