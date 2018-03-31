@@ -24,7 +24,7 @@ MetaFunk is suitable for Illumina and BGISeq single-read (SR) and paired-end (PE
 
 example:
 
-`sh /home/software/metafunk.sh -w /home/projects/wolfproject -d /home/projects/wolfproject/sample.data.txt -s /home/projects/wolfproject/settings.sh -f /home/rawdata/wolfdata  -t 24`
+`sh /home/software/metafunk/metafunk.sh -w /home/projects/wolfproject -d /home/projects/wolfproject/sample.data.txt -s /home/projects/wolfproject/settings.sh -f /home/rawdata/wolfdata  -t 24`
 
 
 *read wiki for further details
