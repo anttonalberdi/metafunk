@@ -17,15 +17,21 @@ MetaFunk is suitable for Illumina and BGISeq single-read (SR) and paired-end (PE
 ## Quick start
 1. Clone or download metafunk to your working environment
 
+`cd /home/software/`
+
 `git clone https://github.com/anttonalberdi/metafunk.git`
 
-2. Edit the sample data file (sample.data.txt)*
+2. Edit the sample data file (sample.data.txt) and save it in another directory*
 
-`nano metafunk/sample.data.txt`
+`nano /home/software/metafunk/sample.data.txt`
 
-3. Modify the settings.sh file*
+`mv /home/software/metafunk/sample.data.txt /home/projects/wolfproject/sample.data.txt`
 
-`nano metafunk/settings.sh`
+3. Modify the settings.sh file and save it in another directory*
+
+`nano /home/software/metafunk/settings.sh`
+
+`mv /home/software/metafunk/settings.sh /home/projects/wolfproject/settins.sh`
 
 4. Run the following script:
 
