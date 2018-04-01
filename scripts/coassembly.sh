@@ -37,15 +37,25 @@ sourcefolder=${3}
 
   if [[ $samplefile =~ "/" ]]; then
     #It is PE
-		fastq_to_fasta -i ${workdir}/${sourcefolder}/${samplename}_1.fastq -o ${workdir}/CoAssembly/${samplename}_1.fasta
-		fastq_to_fasta -i ${workdir}/${sourcefolder}/${samplename}_2.fastq -o ${workdir}/CoAssembly/${samplename}_2.fasta
-		now=$(date +"%Y-%m-%d %H:%M:%S")
-		echo "$now | 	${samplename} succesfully converted to fasta" >> ${workdir}/run_${timestamp}.log
+    if [ ! -f ${workdir}/CoAssembly/${samplename}_1.fasta ]; then
+  		fastq_to_fasta -i ${workdir}/${sourcefolder}/${samplename}_1.fastq -o ${workdir}/CoAssembly/${samplename}_1.fasta
+  		fastq_to_fasta -i ${workdir}/${sourcefolder}/${samplename}_2.fastq -o ${workdir}/CoAssembly/${samplename}_2.fasta
+      now=$(date +"%Y-%m-%d %H:%M:%S")
+  		echo "$now | 	${samplename} succesfully converted to fasta" >> ${workdir}/run_${timestamp}.log
+    else
+      now=$(date +"%Y-%m-%d %H:%M:%S")
+      echo "$now | 	${samplename} fasta files already exists" >> ${workdir}/run_${timestamp}.log
+    fi
 	else
 		#It is SR
-		fastq_to_fasta -i ${workdir}/${sourcefolder}/${samplename}.fastq -o ${workdir}/CoAssembly/${samplename}.fasta
-		now=$(date +"%Y-%m-%d %H:%M:%S")
-		echo "$now | 	Sample ${samplename} succesfully converted to fasta" >> ${workdir}/run_${timestamp}.log
+    if [ ! -f ${workdir}/CoAssembly/${samplename}.fasta ]; then
+  		fastq_to_fasta -i ${workdir}/${sourcefolder}/${samplename}.fastq -o ${workdir}/CoAssembly/${samplename}.fasta
+  		now=$(date +"%Y-%m-%d %H:%M:%S")
+  		echo "$now | 	Sample ${samplename} succesfully converted to fasta" >> ${workdir}/run_${timestamp}.log
+    else
+      now=$(date +"%Y-%m-%d %H:%M:%S")
+      echo "$now | 	${samplename} fasta file already exists" >> ${workdir}/run_${timestamp}.log
+    fi
 	fi
 }
 
@@ -90,11 +100,11 @@ if [[ $samplefile =~ "/" ]]; then
 	#It is PE
   PE1=$(ls -p ${workdir}/CoAssembly/*_1.fasta | tr '\n' ',')
   PE2=$(ls -p ${workdir}/CoAssembly/*_2.fasta | tr '\n' ',')
-	megahit -t ${threads} -1 ${workdir}/CoAssembly/${PE1} -2 ${workdir}/CoAssembly/${PE2} -o ${workdir}/CoAssembly/Megahit
+	megahit -t ${threads} -1 ${PE1} -2 ${PE2} -o ${workdir}/CoAssembly/Megahit
 else
 	#It is SR
   SR=$(ls -p ${workdir}/CoAssembly/*.fasta | tr '\n' ',')
-	megahit -t ${threads} -r ${workdir}/CoAssembly/${SR} -o ${workdir}/CoAssembly/Megahit
+	megahit -t ${threads} -r ${SR} -o ${workdir}/CoAssembly/Megahit
 fi
 now=$(date +"%Y-%m-%d %H:%M:%S")
 echo "$now | Co-assembly succesfully finished" >> ${workdir}/run_${timestamp}.log
