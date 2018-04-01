@@ -66,9 +66,9 @@ while read sample; do
 			now=$(date +"%Y-%m-%d %H:%M:%S")
 			echo "$now | 			Removing human DNA from sample $samplename" >> ${workdir}/run_${timestamp}.log
 			bwa mem -t ${threads} -R '@RG\tID:ProjectName\tCN:AuthorName\tDS:Mappingt\tPL:Illumina1.9\tSM:Sample' ${workdir}/HumanDNARemoved/ReferenceGenome/${humangenomefile} ${workdir}/HumanDNARemoved/${samplename}_1.fastq ${workdir}/HumanDNARemoved/${samplename}_2.fastq | samtools view -b -f12 - > ${workdir}/HumanDNARemoved/${samplename}.bam
-			now=$(date +"%Y-%m-%d %H:%M:%S")
 			#Check if output file has been created; otherwise, print error message and kill the job
 			if [[ ! -s ${workdir}/HumanDNARemoved/${samplename}.bam ]]; then
+				now=$(date +"%Y-%m-%d %H:%M:%S")
 				echo "$now | 			ERROR: There was an error when mapping sample $samplename" >> ${workdir}/run_${timestamp}.log
 				exit
 			fi
@@ -83,15 +83,18 @@ while read sample; do
 	    difference=$((before2 - after2))
 	    percentage=$((100-(after2 * 100 / before2 )))
 			#Print statistics
+			now=$(date +"%Y-%m-%d %H:%M:%S")
 	  	echo "$now | 		From sample $samplename, $difference PE reads (${percentage}%) were mapped to the human genome" >> ${workdir}/run_${timestamp}.log
 
 		else
 
 			#It is SR
 			#Map reads against the reference genome and retrieve unmapped reads
+			now=$(date +"%Y-%m-%d %H:%M:%S")
 			echo "				Removing human DNA from sample $samplename" >> ${workdir}/run_${timestamp}.log
 			bwa mem -t ${threads} -R '@RG\tID:ProjectName\tCN:AuthorName\tDS:Mappingt\tPL:Illumina1.9\tSM:Sample' ${workdir}/HumanDNARemoved/ReferenceGenome/${humangenomefile} ${workdir}/${sourcefolder}/${samplename}.fastq | samtools view -b -f4 - > ${workdir}/HumanDNARemoved/${samplename}.bam
 			if [[ ! -s ${workdir}/HumanDNARemoved/${samplename}.bam ]]; then
+				now=$(date +"%Y-%m-%d %H:%M:%S")
 				echo "$now | 			ERROR: There was an error when mapping sample $samplename" >> ${workdir}/run_${timestamp}.log
 				exit
 			fi
@@ -106,6 +109,7 @@ while read sample; do
 			difference=$((before2 - after2))
 			percentage=$((100-(after2 * 100 / before2 )))
 			#Print statistics
+			now=$(date +"%Y-%m-%d %H:%M:%S")
 			echo "$now | 		From sample $samplename, $difference reads (${percentage}%) were mapped to the human genome" >> ${workdir}/run_${timestamp}.log
 		fi
 done < ${sampledatafile}
