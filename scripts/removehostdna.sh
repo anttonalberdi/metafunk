@@ -92,7 +92,7 @@ while read sample; do
 	    difference=$((before2 - after2))
 	    percentage=$((100-(after2 * 100 / before2 )))
 			#Print statistics
-	  	echo "$now | 		From sample $samplename, $difference PE reads (${percentage}%) were mapped to the host genome" >> ${workdir}/run_${timestamp}.log
+	  	echo "$now | 			From sample $samplename, $difference PE reads (${percentage}%) were mapped to the host genome" >> ${workdir}/run_${timestamp}.log
 
 		else
 

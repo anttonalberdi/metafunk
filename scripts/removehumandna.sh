@@ -14,6 +14,7 @@ if [ ! -f ${workdir}/HumanDNARemoved/ReferenceGenome/${humangenomefile} ]; then
 	now=$(date +"%Y-%d-%m %H:%M:%S")
 	echo "$now |		Human genome file $humangenomefile was copied to the project directory" >> ${workdir}/run_${timestamp}.log
 else
+	now=$(date +"%Y-%d-%m %H:%M:%S")
 	echo "$now | 		Human genome ${genomefile} already exists in the project directory" >> ${workdir}/run_${timestamp}.log
 fi
 
