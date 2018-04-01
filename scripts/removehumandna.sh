@@ -10,7 +10,7 @@ humangenomefile=$(echo "${humangenomepath}" | sed 's/.*\///')
 if [ ! -f ${workdir}/HumanDNARemoved/ReferenceGenome/${humangenomefile} ]; then
 	now=$(date +"%Y-%d-%m %H:%M:%S")
 	echo "$now | 		Copying human genome" >>  ${workdir}/run_${timestamp}.log
-	cp ${humangenome}* ${workdir}/HumanDNARemoved/ReferenceGenome
+	cp ${humangenomepath}* ${workdir}/HumanDNARemoved/ReferenceGenome
 	now=$(date +"%Y-%d-%m %H:%M:%S")
 	echo "$now |		Human genome file $humangenomefile was copied to the project directory" >> ${workdir}/run_${timestamp}.log
 else

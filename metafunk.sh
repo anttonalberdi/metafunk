@@ -22,7 +22,7 @@ done
 
 #Get timestamp
 
-timestamp=$(date +"%Y%d%m_%H%M%S")
+timestamp=$(date +"%Y%m%d_%H%M%S")
 
 #Get metafunk directory
 metafunkdirectory="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
