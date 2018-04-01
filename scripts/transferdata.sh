@@ -11,7 +11,7 @@ while read sample; do
   #Obtain data from sample.data.txt columns
   samplename=$(echo $sample | cut -d ' ' -f1 )
   sampleinfo=$(echo $sample | cut -d ' ' -f2 )
-  now=$(date +"%Y-%d-%m %H:%M:%S")
+  now=$(date +"%Y-%m-%d %H:%M:%S")
 
   echo "$now |    Processing sample $samplename" >> ${workdir}/run_${timestamp}.log
 
@@ -63,7 +63,7 @@ while read sample; do
       fi
     done
     #Merge all files
-    now=$(date +"%Y-%d-%m %H:%M:%S")
+    now=$(date +"%Y-%m-%d %H:%M:%S")
     echo "$now |      Merging PE1 files" >> ${workdir}/run_${timestamp}.log
     cat ${workdir}/RawData/${samplename}_1_* > ${workdir}/RawData/${samplename}_1.fastq
     rm ${workdir}/RawData/${samplename}_1_*
@@ -103,7 +103,7 @@ while read sample; do
     echo "$now |    The extension of file $samplefile is not recognised" >> ${workdir}/run_${timestamp}.log
     fi
     #Merge all files
-    now=$(date +"%Y-%d-%m %H:%M:%S")
+    now=$(date +"%Y-%m-%d %H:%M:%S")
     echo "$now |    Merging $samplename files" >> ${workdir}/run_${timestamp}.log
     cat ${workdir}/RawData/${samplename}_* > ${workdir}/RawData/${samplename}.fastq
     rm ${workdir}/RawData/${samplename}_*
@@ -124,13 +124,13 @@ done < ${sampledatafile}
 
 #Check if files were succesfully transferred
 if [ -z "$(ls -A ${workdir}/RawData/)" ]; then
-  now=$(date +"%Y-%d-%m %H:%M:%S")
+  now=$(date +"%Y-%m-%d %H:%M:%S")
   echo "$now |    ERROR: The data were not transferred"  >> ${workdir}/run_${timestamp}.log
   exit
 else
   #Print stats
   samplenumber=$(cat ${sampledatafile} | wc -l)
   filenumber=$(ls ${workdir}/RawData/ | wc -l)
-  now=$(date +"%Y-%d-%m %H:%M:%S")
+  now=$(date +"%Y-%m-%d %H:%M:%S")
   echo "$now |    $filenumber files belonging to $samplenumber samples were succesfully processed" >> ${workdir}/run_${timestamp}.log
 fi

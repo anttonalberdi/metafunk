@@ -10,7 +10,7 @@ sourcefolder="QualityFiltered"
 else
 sourcefolder="RawData"
 fi
-now=$(date +"%Y-%d-%m %H:%M:%S")
+now=$(date +"%Y-%m-%d %H:%M:%S")
 echo "$now | Removing duplicates from files in directory $sourcefolder" >> ${workdir}/run_${timestamp}.log
 
 #Declare function
@@ -26,7 +26,7 @@ source "$metafunkdirectory/settings.sh"
 samplename=$(echo $sample | cut -d ' ' -f1 )
 sampleinfo=$(echo $sample | cut -d ' ' -f2 )
 
-now=$(date +"%Y-%d-%m %H:%M:%S")
+now=$(date +"%Y-%m-%d %H:%M:%S")
 
 if [[ $sampleinfo =~ "/" ]]; then
   #It is PE
@@ -47,7 +47,7 @@ if [[ $sampleinfo =~ "/" ]]; then
   percentage1=$((100-(after1_2 * 100 / before1_2 )))
   percentage2=$((100-(after2_2 * 100 / before2_2 )))
   #Print statistics
-  now=$(date +"%Y-%d-%m %H:%M:%S")
+  now=$(date +"%Y-%m-%d %H:%M:%S")
   echo "$now | 		From sample $samplename, $difference1 (PE1) and $difference2 (PE2) duplicated reads (${percentage1}% and ${percentage2}%) were removed " >> ${workdir}/run_${timestamp}.log
 else
   #It is SR
@@ -61,7 +61,7 @@ else
   difference=$((before2 - after2))
   percentage=$((100-(after2 * 100 / before2 )))
   #Print statistics
-  now=$(date +"%Y-%d-%m %H:%M:%S")
+  now=$(date +"%Y-%m-%d %H:%M:%S")
   echo "$now | 		From sample $samplename, $difference duplicated reads (${percentage}%) were removed " >> ${workdir}/run_${timestamp}.log
 fi
 }

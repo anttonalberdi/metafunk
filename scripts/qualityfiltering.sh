@@ -10,7 +10,7 @@ while read sample; do
   #Obtain data from sample.data.txt columns
   samplename=$(echo $sample | cut -d ' ' -f1 )
   sampleinfo=$(echo $sample | cut -d ' ' -f2 )
-  now=$(date +"%Y-%d-%m %H:%M:%S")
+  now=$(date +"%Y-%m-%d %H:%M:%S")
 
   if [[ $sampleinfo =~ "/" ]]; then
     #It is PE
@@ -33,7 +33,7 @@ while read sample; do
     percentage1=$((100-(after1_2 * 100 / before1_2 )))
     percentage2=$((100-(after2_2 * 100 / before2_2 )))
     #Print statistics
-    now=$(date +"%Y-%d-%m %H:%M:%S")
+    now=$(date +"%Y-%m-%d %H:%M:%S")
     echo "$now | 		From sample $samplename, $difference1 (PE1) and $difference2 (PE2) reads (${percentage1}% and ${percentage2}%) were removed due to low quality" >> ${workdir}/run_${timestamp}.log
   else
     #It is SR
@@ -49,7 +49,7 @@ while read sample; do
     difference=$((before2 - after2))
     percentage=$((100-(after2 * 100 / before2 )))
     #Print statistics
-    now=$(date +"%Y-%d-%m %H:%M:%S")
+    now=$(date +"%Y-%m-%d %H:%M:%S")
     echo "$now | 		From sample $samplename, $difference reads (${percentage}%) were removed due to low quality" >> ${workdir}/run_${timestamp}.log
   fi
 

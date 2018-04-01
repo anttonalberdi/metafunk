@@ -25,7 +25,9 @@ genemapping="no"
 #######################################
 ######## Software dependencies ########
 #######################################
+# Software loading commands
 
+#Parallel (https://www.gnu.org/software/parallel/)
 module load parallel/20170822
 #Pigz (https://github.com/madler/pigz)
 module load pigz/2.3.4
@@ -41,38 +43,39 @@ module load samtools/1.4
 module load bwa/0.7.15
 #SeqTK (https://github.com/lh3/seqtk)
 module load jre/1.8.0
+#BBMap (https://sourceforge.net/projects/bbmap/)
 module load bbmap/36.49
+#SeqTK (https://github.com/lh3/seqtk)
 module load seqtk/1.0-r82-dirty
 #FastX-Toolkit (http://hannonlab.cshl.edu/fastx_toolkit/)
 module load fastx_toolkit/0.0.14
 #Megahit (https://github.com/voutcn/megahit)
 module load megahit/1.1.1
+#Prodigal (https://github.com/hyattpd/Prodigal)
 module load prodigal/2.6.3
+#BedTools (http://bedtools.readthedocs.io/en/latest/)
 module load bedtools/2.26.0
+#Anaconda (https://conda.io/docs/)
 module load anaconda2/4.0.0
+#R (https://www.r-project.org/)
 module load R/3.2.1
+#Diamond (https://github.com/bbuchfink/diamond)
 module load diamond/0.9.13
 
 #######################################
 ############## Settings ###############
 #######################################
 
-##### Data transfer settings
-compressed="yes"
-
 ##### Quality filtering settings
 minavgquality="30"
 minseqlength="30"
 qualitymax="60"
-
-##### Remove duplicate sequences
 
 ##### Low complexity settings
 dustvalue="7"
 
 ##### Host DNA removal settings
 indexhostgenome="yes"
-repairingregex="^@(\S+) [1|2](\S+)"
 
 ##### Human DNA removal settings
 humangenomepath="/home/projects/pr_46704/people/antalb/databases/Homo_sapiens.fasta" #absolute path to fasta file

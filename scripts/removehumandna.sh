@@ -8,20 +8,20 @@ mkdir -p ${workdir}/HumanDNARemoved/ReferenceGenome
 #Copy host reference genome to project directory
 humangenomefile=$(echo "${humangenomepath}" | sed 's/.*\///')
 if [ ! -f ${workdir}/HumanDNARemoved/ReferenceGenome/${humangenomefile} ]; then
-	now=$(date +"%Y-%d-%m %H:%M:%S")
+	now=$(date +"%Y-%m-%d %H:%M:%S")
 	echo "$now | 		Copying human genome" >>  ${workdir}/run_${timestamp}.log
 	cp ${humangenomepath}* ${workdir}/HumanDNARemoved/ReferenceGenome
-	now=$(date +"%Y-%d-%m %H:%M:%S")
+	now=$(date +"%Y-%m-%d %H:%M:%S")
 	echo "$now |		Human genome file $humangenomefile was copied to the project directory" >> ${workdir}/run_${timestamp}.log
 else
-	now=$(date +"%Y-%d-%m %H:%M:%S")
+	now=$(date +"%Y-%m-%d %H:%M:%S")
 	echo "$now | 		Human genome ${genomefile} already exists in the project directory" >> ${workdir}/run_${timestamp}.log
 fi
 
 #Index human reference genome
 if [[ $indexhumangenome == "yes" ]]; then
 	if [ ! -f ${workdir}/HumanDNARemoved/ReferenceGenome/${humangenomefile}.fai ]; then
-		now=$(date +"%Y-%d-%m %H:%M:%S")
+		now=$(date +"%Y-%m-%d %H:%M:%S")
 		echo "$now | 		Indexing human genome" >> ${workdir}/run_${timestamp}.log
 		samtools faidx ${workdir}/HumanDNARemoved/ReferenceGenome/${genomefile}
 		bwa index ${workdir}/HumanDNARemoved/ReferenceGenome/${genomefile}
@@ -46,7 +46,7 @@ fi
 
 #Map to human genome
 
-now=$(date +"%Y-%d-%m %H:%M:%S")
+now=$(date +"%Y-%m-%d %H:%M:%S")
 echo "$now | 		Removing human DNA from files in directory ${sourcefolder}" >> ${workdir}/run_${timestamp}.log
 
 while read sample; do
@@ -59,14 +59,14 @@ while read sample; do
 		if [[ $sampleinfo =~ "/" ]]; then
 			#It is PE
 			#Remove unpaired reads
-			now=$(date +"%Y-%d-%m %H:%M:%S")
+			now=$(date +"%Y-%m-%d %H:%M:%S")
 			echo "$now | 			Repairing sample ${samplename}" >> ${workdir}/run_${timestamp}.log
 			repair.sh in=${workdir}/${sourcefolder}/${samplename}_1.fastq in2=${workdir}/${sourcefolder}/${samplename}_2.fastq out=${workdir}/HumanDNARemoved/${samplename}_1.fastq out2=${workdir}/HumanDNARemoved/${samplename}_2.fastq
 			#Map reads against the reference genome and retrieve unmapped reads
-			now=$(date +"%Y-%d-%m %H:%M:%S")
+			now=$(date +"%Y-%m-%d %H:%M:%S")
 			echo "$now | 			Removing human DNA from sample $samplename" >> ${workdir}/run_${timestamp}.log
 			bwa mem -t ${threads} -R '@RG\tID:ProjectName\tCN:AuthorName\tDS:Mappingt\tPL:Illumina1.9\tSM:Sample' ${workdir}/HumanDNARemoved/ReferenceGenome/${humangenomefile} ${workdir}/HumanDNARemoved/${samplename}_1.fastq ${workdir}/HumanDNARemoved/${samplename}_2.fastq | samtools view -b -f12 - > ${workdir}/HumanDNARemoved/${samplename}.bam
-			now=$(date +"%Y-%d-%m %H:%M:%S")
+			now=$(date +"%Y-%m-%d %H:%M:%S")
 			#Check if output file has been created; otherwise, print error message and kill the job
 			if [[ ! -s ${workdir}/HumanDNARemoved/${samplename}.bam ]]; then
 				echo "$now | 			ERROR: There was an error when mapping sample $samplename" >> ${workdir}/run_${timestamp}.log
