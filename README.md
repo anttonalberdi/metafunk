@@ -19,8 +19,14 @@ MetaFunk is suitable for Illumina and BGISeq single-read (SR) and paired-end (PE
 
 `git clone https://github.com/anttonalberdi/metafunk.git`
 
-2. Prepare the sample data file (sample.data.txt)*
+2. Edit the sample data file (sample.data.txt)*
+
+`nano metafunk/sample.data.txt`
+
 3. Modify the settings.sh file*
+
+`nano metafunk/settings.sh`
+
 4. Run the following script:
 
 `sh /[path]/metafunk.sh -w [working directory] -d [/path/sample.data.txt] -s [/path/settings.sh] -f [data file directory] -t [number of threads]`
