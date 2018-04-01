@@ -71,7 +71,7 @@ if [[ $coassembly == "yes" ]]; then
         exit
         fi
   fi
-test=$(command -v fastx_toolkit)
+test=$(command -v fastq_to_fasta)
     if [[ ${#test} > 0 ]]; then
     echo "  Fastx-toolkit is installed" >> ${workdir}/run_${timestamp}.log
     else
