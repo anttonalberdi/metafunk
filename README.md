@@ -16,6 +16,9 @@ MetaFunk is suitable for Illumina and BGISeq single-read (SR) and paired-end (PE
 
 ## Quick start
 1. Clone or download metafunk to your working environment
+
+`git clone https://github.com/anttonalberdi/metafunk.git`
+
 2. Prepare the sample data file (sample.data.txt)*
 3. Modify the settings.sh file*
 4. Run the following script:
