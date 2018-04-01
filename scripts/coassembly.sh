@@ -1,19 +1,19 @@
-#Source settings
-source "$metafunkdirectory/settings.sh"
+#Source settings file
+source $settingsfile
 
 #Create Coassembly directory
-mkdir -p ${workingdirectory}/${project}/CoAssembly
+mkdir -p ${workdir}/CoAssembly
 
 #Select source folder from which data will be retrieved
-if [[ "$(ls -A ${workingdirectory}/${project}/HumanDNARemoved/)" ]]; then
+if [[ "$(ls -A ${workdir}/HumanDNARemoved/)" ]]; then
 sourcefolder="HumanDNARemoved"
-elif [[ "$(ls -A ${workingdirectory}/${project}/HostDNARemoved/)" ]]; then
+elif [[ "$(ls -A ${workdir}/HostDNARemoved/)" ]]; then
 sourcefolder="HostDNARemoved"
-elif [[ "$(ls -A ${workingdirectory}/${project}/LowComplexFiltered/)" ]]; then
+elif [[ "$(ls -A ${workdir}/LowComplexFiltered/)" ]]; then
 sourcefolder="LowComplexFiltered"
-elif [[ "$(ls -A ${workingdirectory}/${project}/DuplicatesRemoved/)" ]]; then
+elif [[ "$(ls -A ${workdir}/DuplicatesRemoved/)" ]]; then
 sourcefolder="DuplicatesRemoved"
-elif [[ "$(ls -A ${workingdirectory}/${project}/QualityFiltered/)" ]]; then
+elif [[ "$(ls -A ${workdir}/QualityFiltered/)" ]]; then
 sourcefolder="QualityFiltered"
 else
 sourcefolder="RawData"
@@ -21,9 +21,14 @@ fi
 
 #Convert to fasta
 now=$(date +"%Y-%m-%d %H:%M:%S")
-echo "$now | Converting FASTQ files to FASTA" >> ${workingdirectory}/${project}/run.log
+echo "$now | Converting FASTQ files to FASTA" >> ${workdir}/run_${timestamp}.log
 
-while read samplefile; do
+#Declare fastq-to-fasta function
+function fastqtofasta() {
+
+sample=${1}
+metafunkdirectory=${2}
+sourcefolder=${3}
 
 	#Obtain data from sample.data.txt columns
   samplename=$(echo $sample | cut -d ' ' -f1 )
@@ -32,68 +37,74 @@ while read samplefile; do
 
   if [[ $samplefile =~ "/" ]]; then
     #It is PE
-		fastq_to_fasta -i ${workingdirectory}/${project}/${sourcefolder}/${samplename}_1.fastq -o ${workingdirectory}/${project}/CoAssembly/${samplename}_1.fasta
-		fastq_to_fasta -i ${workingdirectory}/${project}/${sourcefolder}/${samplename}_2.fastq -o ${workingdirectory}/${project}/CoAssembly/${samplename}_2.fasta
+		fastq_to_fasta -i ${workdir}/${sourcefolder}/${samplename}_1.fastq -o ${workdir}/CoAssembly/${samplename}_1.fasta
+		fastq_to_fasta -i ${workdir}/${sourcefolder}/${samplename}_2.fastq -o ${workdir}/CoAssembly/${samplename}_2.fasta
 		now=$(date +"%Y-%m-%d %H:%M:%S")
-		echo "$now | 	${samplename} succesfully converted to fasta" >> ${workingdirectory}/${project}/run.log
+		echo "$now | 	${samplename} succesfully converted to fasta" >> ${workdir}/run_${timestamp}.log
 	else
 		#It is SR
-		fastq_to_fasta -i ${workingdirectory}/${project}/${sourcefolder}/${samplename}.fastq -o ${workingdirectory}/${project}/CoAssembly/${samplename}.fasta
+		fastq_to_fasta -i ${workdir}/${sourcefolder}/${samplename}.fastq -o ${workdir}/CoAssembly/${samplename}.fasta
 		now=$(date +"%Y-%m-%d %H:%M:%S")
-		echo "$now | 	Sample ${samplename} succesfully converted to fasta" >> ${workingdirectory}/${project}/run.log
+		echo "$now | 	Sample ${samplename} succesfully converted to fasta" >> ${workdir}/run_${timestamp}.log
 	fi
-done < ${sampledatafile}
+}
 
+#Loop in parallel across samples specified in sample.data.txt
+export -f fastqtofasta
+parallel -j ${threads} -k fastqtofasta {} ${metafunkdirectory} ${sourcefolder} <${sampledatafile}
 
 #Interleave samples if PE  - NOT NECESSARY - TWEAK MEGAHIT CODE
-if [[ $samplefile =~ "/" ]]; then
-now=$(date +"%Y-%m-%d %H:%M:%S")
-echo "$now | Interleaving samples" >> ${workingdirectory}/${project}/run.log
+#if [[ $samplefile =~ "/" ]]; then
+#now=$(date +"%Y-%m-%d %H:%M:%S")
+#echo "$now | Interleaving samples" >> ${workdir}/run_${timestamp}.log
 
-while read samplefile; do
-	seqtk mergepe ${workingdirectory}/${project}/CoAssembly/${samplename}_1.fasta ${workingdirectory}/${project}/CoAssembly/${samplename}_2.fasta > ${workingdirectory}/${project}/CoAssembly/${samplename}.fasta
-	rm ${workingdirectory}/${project}/CoAssembly/${samplename}_[1-2].fasta
-	now=$(date +"%Y-%m-%d %H:%M:%S")
-	echo "$now | 	Sample ${samplename} succesfully interleaved" >> ${workingdirectory}/${project}/run.log
-done < ${sampledatafile}
-fi
+#while read samplefile; do
+#	seqtk mergepe ${workdir}/CoAssembly/${samplename}_1.fasta ${workdir}/CoAssembly/${samplename}_2.fasta > ${workdir}/CoAssembly/${samplename}.fasta
+#	rm ${workdir}/CoAssembly/${samplename}_[1-2].fasta
+#	now=$(date +"%Y-%m-%d %H:%M:%S")
+#	echo "$now | 	Sample ${samplename} succesfully interleaved" >> ${workdir}/run_${timestamp}.log
+#done < ${sampledatafile}
+#fi
 
 #Concatenate
-now=$(date +"%Y-%m-%d %H:%M:%S")
-echo "$now | Concatenating all samples" >> ${workingdirectory}/${project}/run.log
-cat ${workingdirectory}/${project}/CoAssembly/*.fasta > ${workingdirectory}/${project}/CoAssembly/Allsamples.fasta
+#now=$(date +"%Y-%m-%d %H:%M:%S")
+#echo "$now | Concatenating all samples" >> ${workdir}/run_${timestamp}.log
+#cat ${workdir}/CoAssembly/*.fasta > ${workdir}/CoAssembly/Allsamples.fasta
 
 #Remove co-assembly directory if exists
 if [[ $overridecoassembly == "yes" ]]; then
-rm -r ${workingdirectory}/${project}/CoAssembly/Megahit
+rm -r ${workdir}/CoAssembly/Megahit
 fi
 
 #Kill process if concatenated file does not exists
-if [[ ! -f ${workingdirectory}/${project}/CoAssembly/Allsamples.fasta ]]; then
-now=$(date +"%Y-%m-%d %H:%M:%S")
-echo "$now | ERROR: The concatenated file required for running the co-assembly does not exist" >> ${workingdirectory}/${project}/run.log
-exit
-fi
+#if [[ ! -f ${workdir}/CoAssembly/Allsamples.fasta ]]; then
+#now=$(date +"%Y-%m-%d %H:%M:%S")
+#echo "$now | ERROR: The concatenated file required for running the co-assembly does not exist" >> ${workdir}/run_${timestamp}.log
+#exit
+#fi
 
 #Co-assembly
 now=$(date +"%Y-%m-%d %H:%M:%S")
-echo "$now | Co-assembling all reads" >> ${workingdirectory}/${project}/run.log
+echo "$now | Co-assembling all reads" >> ${workdir}/run_${timestamp}.log
 if [[ $samplefile =~ "/" ]]; then
 	#It is PE
-	megahit -t ${threads} --12 ${workingdirectory}/${project}/CoAssembly/Allsamples.fasta -o ${workingdirectory}/${project}/CoAssembly/Megahit
+  PE1=$(ls -p ${workdir}/CoAssembly/*_1.fasta | tr '\n' ',')
+  PE2=$(ls -p ${workdir}/CoAssembly/*_2.fasta | tr '\n' ',')
+	megahit -t ${threads} -1 ${workdir}/CoAssembly/${PE1} -2 ${workdir}/CoAssembly/${PE2} -o ${workdir}/CoAssembly/Megahit
 else
 	#It is SR
-	megahit -t ${threads} -r ${workingdirectory}/${project}/CoAssembly/Allsamples.fasta -o ${workingdirectory}/${project}/CoAssembly/Megahit
+  SR=$(ls -p ${workdir}/CoAssembly/*.fasta | tr '\n' ',')
+	megahit -t ${threads} -r ${workdir}/CoAssembly/${SR} -o ${workdir}/CoAssembly/Megahit
 fi
 now=$(date +"%Y-%m-%d %H:%M:%S")
-echo "$now | Co-assembly succesfully finished" >> ${workingdirectory}/${project}/run.log
+echo "$now | Co-assembly succesfully finished" >> ${workdir}/run_${timestamp}.log
 
 #Index the assembly
 if [[ $indexassembly == "yes" ]]; then
 	now=$(date +"%Y-%m-%d %H:%M:%S")
-	echo "$now | Indexing the co-assembly" >> ${workingdirectory}/${project}/run.log
-	samtools faidx ${workingdirectory}/${project}/CoAssembly/Megahit/final.contigs.fa
-	bwa index ${workingdirectory}/${project}/CoAssembly/Megahit/final.contigs.fa
+	echo "$now | Indexing the co-assembly" >> ${workdir}/run_${timestamp}.log
+	samtools faidx ${workdir}/CoAssembly/Megahit/final.contigs.fa
+	bwa index ${workdir}/CoAssembly/Megahit/final.contigs.fa
 	now=$(date +"%Y-%m-%d %H:%M:%S")
-	echo "$now | Co-assembly succesfully indexed" >> ${workingdirectory}/${project}/run.log
+	echo "$now | Co-assembly succesfully indexed" >> ${workdir}/run_${timestamp}.log
 fi

@@ -85,7 +85,7 @@ sh ${metafunkdirectory}/scripts/checkdependencies.sh
 #########
 # Transfer data to project directory
 #########
-now=$(date +"%Y-%d-%m %H:%M:%S")
+now=$(date +"%Y-%m-%d %H:%M:%S")
 if [[ $copydata == "yes" ]]; then
 samplenumber=$(cat sample.data.txt | wc -l)
 echo "$now | Copying and uncompressing data files of $samplenumber samples" >> ${workdir}/run_${timestamp}.log
@@ -99,7 +99,7 @@ fi
 # Quality filtering
 #########
 
-now=$(date +"%Y-%d-%m %H:%M:%S")
+now=$(date +"%Y-%m-%d %H:%M:%S")
 if [[ $qualityfiltering == "yes" ]]; then
 echo "$now | Performing quality filtering" >> ${workdir}/run_${timestamp}.log
 export workdir; export sampledatafile; export settingsfile; export datadir; export threads; export metafunkdirectory; export timestamp
@@ -116,7 +116,7 @@ if [[ $removeduplicates == "yes" ]]; then
 export workdir; export sampledatafile; export settingsfile; export datadir; export threads; export metafunkdirectory; export timestamp
 sh ${metafunkdirectory}/scripts/removeduplicates.sh
 else
-now=$(date +"%Y-%d-%m %H:%M:%S")
+now=$(date +"%Y-%m-%d %H:%M:%S")
 echo "$now | Duplicates will not be removed" >> ${workdir}/run_${timestamp}.log
 fi
 
@@ -128,7 +128,7 @@ if [[ $removelowcomplexity == "yes" ]]; then
 export workdir; export sampledatafile; export settingsfile; export datadir; export threads; export metafunkdirectory; export timestamp
 sh ${metafunkdirectory}/scripts/lowcomplexity.sh
 else
-now=$(date +"%Y-%d-%m %H:%M:%S")
+now=$(date +"%Y-%m-%d %H:%M:%S")
 echo "$now | Low complexity will not be filtered" >> ${workdir}/run_${timestamp}.log
 fi
 
@@ -137,12 +137,12 @@ fi
 #########
 
 if [[ $removehostdna == "yes" ]]; then
-now=$(date +"%Y-%d-%m %H:%M:%S")
+now=$(date +"%Y-%m-%d %H:%M:%S")
 echo "$now | Removing host DNA" >> ${workdir}/run_${timestamp}.log
 export workdir; export sampledatafile; export settingsfile; export datadir; export threads; export metafunkdirectory; export timestamp
 sh ${metafunkdirectory}/scripts/removehostdna.sh
 else
-now=$(date +"%Y-%d-%m %H:%M:%S")
+now=$(date +"%Y-%m-%d %H:%M:%S")
 echo "$now | Host DNA will not be removed" >> ${workdir}/run_${timestamp}.log
 fi
 
@@ -151,12 +151,12 @@ fi
 #########
 
 if [[ $removehumandna == "yes" ]]; then
-now=$(date +"%Y-%d-%m %H:%M:%S")
+now=$(date +"%Y-%m-%d %H:%M:%S")
 echo "$now | Removing human DNA" >> ${workdir}/run_${timestamp}.log
 export workdir; export sampledatafile; export settingsfile; export datadir; export threads; export metafunkdirectory; export timestamp
 sh ${metafunkdirectory}/scripts/removehumandna.sh
 else
-now=$(date +"%Y-%d-%m %H:%M:%S")
+now=$(date +"%Y-%m-%d %H:%M:%S")
 echo "$now | Human DNA will not be removed" >> ${workdir}/run_${timestamp}.log
 fi
 
@@ -165,12 +165,12 @@ fi
 #########
 
 if [[ $coassembly == "yes" ]]; then
-now=$(date +"%Y-%d-%m %H:%M:%S")
+now=$(date +"%Y-%m-%d %H:%M:%S")
 echo "$now | Co-assembling reads" >> ${workdir}/run_${timestamp}.log
-export metafunkdirectory
+export workdir; export sampledatafile; export settingsfile; export datadir; export threads; export metafunkdirectory; export timestamp
 sh ${metafunkdirectory}/scripts/coassembly.sh
 else
-now=$(date +"%Y-%d-%m %H:%M:%S")
+now=$(date +"%Y-%m-%d %H:%M:%S")
 echo "$now | Reads will not be co-assembled" >> ${workdir}/run_${timestamp}.log
 fi
 
@@ -179,19 +179,19 @@ fi
 #########
 
 if [[ $geneprediction == "yes" ]]; then
-now=$(date +"%Y-%d-%m %H:%M:%S")
+now=$(date +"%Y-%m-%d %H:%M:%S")
 echo "$now | Predicting genes" >> ${workdir}/run_${timestamp}.log
 export metafunkdirectory
 sh ${metafunkdirectory}/scripts/geneprediction.sh
 else
-now=$(date +"%Y-%d-%m %H:%M:%S")
+now=$(date +"%Y-%m-%d %H:%M:%S")
 echo "$now | Gene prediction will not be performed" >> ${workdir}/run_${timestamp}.log
 fi
 
 #########
 # Map reads back to the genes and generate Coverage and Hit tables
 #########
-now=$(date +"%Y-%d-%m %H:%M:%S")
+now=$(date +"%Y-%m-%d %H:%M:%S")
 if [[ $genemapping == "yes" ]]; then
 echo "$now | Mapping reads back to genes" >> ${workdir}/run_${timestamp}.log
 export metafunkdirectory
@@ -203,7 +203,7 @@ fi
 #########
 # Normalise Coverage and Hit tables
 #########
-now=$(date +"%Y-%d-%m %H:%M:%S")
+now=$(date +"%Y-%m-%d %H:%M:%S")
 if [[ $tss == "yes" || $css == "yes" ]]; then
   echo "$now | Normalising hit and coverage tables" >> ${workdir}/run_${timestamp}.log
   export metafunkdirectory
@@ -215,7 +215,7 @@ fi
 #########
 # Perform functional annotation
 #########
-now=$(date +"%Y-%d-%m %H:%M:%S")
+now=$(date +"%Y-%m-%d %H:%M:%S")
 if [[ $kegg == "yes" ]]; then
   echo "$now | Starting KEGG functional annotation" >> ${workdir}/run_${timestamp}.log
   export metafunkdirectory
@@ -224,7 +224,7 @@ if [[ $kegg == "yes" ]]; then
   echo "$now | KEGG functional annotation will not be performed" >> ${workdir}/run_${timestamp}.log
 fi
 
-now=$(date +"%Y-%d-%m %H:%M:%S")
+now=$(date +"%Y-%m-%d %H:%M:%S")
 if [[ $eggnog == "yes" ]]; then
   echo "$now | Starting EggNog functional annotation" >> ${workdir}/run_${timestamp}.log
   export metafunkdirectory
@@ -236,5 +236,5 @@ fi
 #########
 # Final message
 #########
-now=$(date +"%Y-%d-%m %H:%M:%S")
+now=$(date +"%Y-%m-%d %H:%M:%S")
 echo "$now | Congratulations, the pipeline was succesfully run" >> ${workdir}/run_${timestamp}.log
