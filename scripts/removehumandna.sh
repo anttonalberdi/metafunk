@@ -25,9 +25,9 @@ if [[ $indexhumangenome == "yes" ]]; then
 		echo "$now | 		Indexing human genome" >> ${workdir}/run_${timestamp}.log
 		samtools faidx ${workdir}/HumanDNARemoved/ReferenceGenome/${genomefile}
 		bwa index ${workdir}/HumanDNARemoved/ReferenceGenome/${genomefile}
-		echo "$now | 		Human genome ${genomefile} was succesfully indexed" >> ${workdir}/run_${timestamp}.log
+		echo "$now | 		Human genome ${humangenomefile} was succesfully indexed" >> ${workdir}/run_${timestamp}.log
 	else
-		echo "$now | 		Human genome ${genomefile} is already indexed" >> ${workdir}/run_${timestamp}.log
+		echo "$now | 		Human genome ${humangenomefile} is already indexed" >> ${workdir}/run_${timestamp}.log
 	fi
 fi
 
