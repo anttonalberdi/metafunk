@@ -13,6 +13,10 @@ while getopts w:d:s:f:t: option; do
   s) settingsfile=${OPTARG};;
   f) datadir=${OPTARG};;
   t) threads=${OPTARG};;
+  \?) echo "Invalid option: -$OPTARG"
+  exit ;;
+  :) echo "Option -$OPTARG requires an argument."
+  exit ;;
   esac
 done
 
@@ -140,6 +144,20 @@ sh ${metafunkdirectory}/scripts/removehostdna.sh
 else
 now=$(date +"%Y-%d-%m %H:%M:%S")
 echo "$now | Host DNA will not be removed" >> ${workdir}/run_${timestamp}.log
+fi
+
+#########
+# Remove human DNA
+#########
+
+if [[ $removehumandna == "yes" ]]; then
+now=$(date +"%Y-%d-%m %H:%M:%S")
+echo "$now | Removing human DNA" >> ${workdir}/run_${timestamp}.log
+export workdir; export sampledatafile; export settingsfile; export datadir; export threads; export metafunkdirectory; export timestamp
+sh ${metafunkdirectory}/scripts/removehumandna.sh
+else
+now=$(date +"%Y-%d-%m %H:%M:%S")
+echo "$now | Human DNA will not be removed" >> ${workdir}/run_${timestamp}.log
 fi
 
 #########

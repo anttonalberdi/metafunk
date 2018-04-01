@@ -1,11 +1,26 @@
-echo "Settings file successfully loaded"
-
 #######################################
 ######### Project information #########
 #######################################
 
 #Data type - Platform (Illumina, BGI)
 platform="Illumina"
+
+#######################################
+########## Module switcher ############
+#######################################
+
+#Select (yes / no) which modules you want to be ran.
+#Read the wiki to learn more about what each module does: https://github.com/anttonalberdi/metafunk/wiki
+
+copydata="no"
+qualityfiltering="no"
+removeduplicates="no"
+removelowcomplexity="yes"
+removehostdna="yes"
+removehumandna="yes"
+coassembly="no"
+geneprediction="no"
+genemapping="no"
 
 #######################################
 ######## Software dependencies ########
@@ -37,23 +52,6 @@ module load bedtools/2.26.0
 module load anaconda2/4.0.0
 module load R/3.2.1
 module load diamond/0.9.13
-
-#######################################
-########## Module switcher ############
-#######################################
-
-#Select (yes / no) which modules you want to be ran.
-#Read the wiki to learn more about what each module does: https://github.com/anttonalberdi/metafunk/wiki
-
-copydata="no"
-qualityfiltering="no"
-removeduplicates="no"
-removelowcomplexity="yes"
-removehostdna="yes"
-removehumandna="yes"
-coassembly="no"
-geneprediction="no"
-genemapping="no"
 
 #######################################
 ############## Settings ###############
@@ -101,3 +99,6 @@ keggevalue="0.0000000001"
 
 ##### Functional annotation EggNog
 eggnog="no"
+
+##### Source load message
+echo "Settings file successfully loaded"
