@@ -24,11 +24,12 @@ MetaFunk is suitable for Illumina and BGISeq single-read (SR) and paired-end (PE
 
 example:
 
-`sh /home/software/metafunk.sh -w /home/projects/wolfproject -d /home/projects/wolfproject/sample.data.txt -s /home/projects/wolfproject/settings.sh -f /home/rawdata/wolfdata  -t 24`
+`sh /home/software/metafunk/metafunk.sh -w /home/projects/wolfproject -d /home/projects/wolfproject/sample.data.txt -s /home/projects/wolfproject/settings.sh -f /home/rawdata/wolfdata  -t 24`
 
 
 *read wiki for further details
 
 ## Change log
 2018/03/30 | The pipeline is ready until the co-assembly step for SR and PE, SF and MF datasets.
+
 2018/03/22 | The adventure has started. This is still a protoalpha version of the metafunk pipeline.
