@@ -98,12 +98,12 @@ now=$(date +"%Y-%m-%d %H:%M:%S")
 echo "$now | Co-assembling all reads" >> ${workdir}/run_${timestamp}.log
 if [[ $samplefile =~ "/" ]]; then
 	#It is PE
-  PE1=$(ls -p ${workdir}/CoAssembly/*_1.fasta | tr '\n' ',')
-  PE2=$(ls -p ${workdir}/CoAssembly/*_2.fasta | tr '\n' ',')
+  PE1=$(ls -p ${workdir}/CoAssembly/*_1.fasta | tr '\n' ',' | sed 's/.$//')
+  PE2=$(ls -p ${workdir}/CoAssembly/*_2.fasta | tr '\n' ',' | sed 's/.$//')
 	megahit -t ${threads} -1 ${PE1} -2 ${PE2} -o ${workdir}/CoAssembly/Megahit
 else
 	#It is SR
-  SR=$(ls -p ${workdir}/CoAssembly/*.fasta | tr '\n' ',')
+  SR=$(ls -p ${workdir}/CoAssembly/*.fasta | tr '\n' ',' | sed 's/.$//')
 	megahit -t ${threads} -r ${SR} -o ${workdir}/CoAssembly/Megahit
 fi
 now=$(date +"%Y-%m-%d %H:%M:%S")
