@@ -19,7 +19,7 @@ fi
 
 #Index human reference genome
 if [[ $indexhumangenome == "yes" ]]; then
-	if [ ! -f ${workdir}/HumanDNARemoved/ReferenceGenome/${genomefile}.fai ]; then
+	if [ ! -f ${workdir}/HumanDNARemoved/ReferenceGenome/${humangenomefile}.fai ]; then
 		now=$(date +"%Y-%d-%m %H:%M:%S")
 		echo "$now | 		Indexing human genome" >> ${workdir}/run_${timestamp}.log
 		samtools faidx ${workdir}/HumanDNARemoved/ReferenceGenome/${genomefile}
@@ -64,7 +64,7 @@ while read sample; do
 			#Map reads against the reference genome and retrieve unmapped reads
 			now=$(date +"%Y-%d-%m %H:%M:%S")
 			echo "$now | 			Removing human DNA from sample $samplename" >> ${workdir}/run_${timestamp}.log
-			bwa mem -t ${threads} -R '@RG\tID:ProjectName\tCN:AuthorName\tDS:Mappingt\tPL:Illumina1.9\tSM:Sample' ${workdir}/HumanDNARemoved/ReferenceGenome/${genomefile} ${workdir}/HumanDNARemoved/${samplename}_1.fastq ${workdir}/HumanDNARemoved/${samplename}_2.fastq | samtools view -b -f12 - > ${workdir}/HumanDNARemoved/${samplename}.bam
+			bwa mem -t ${threads} -R '@RG\tID:ProjectName\tCN:AuthorName\tDS:Mappingt\tPL:Illumina1.9\tSM:Sample' ${workdir}/HumanDNARemoved/ReferenceGenome/${humangenomefile} ${workdir}/HumanDNARemoved/${samplename}_1.fastq ${workdir}/HumanDNARemoved/${samplename}_2.fastq | samtools view -b -f12 - > ${workdir}/HumanDNARemoved/${samplename}.bam
 			now=$(date +"%Y-%d-%m %H:%M:%S")
 			#Check if output file has been created; otherwise, print error message and kill the job
 			if [[ ! -s ${workdir}/HumanDNARemoved/${samplename}.bam ]]; then
@@ -89,7 +89,7 @@ while read sample; do
 			#It is SR
 			#Map reads against the reference genome and retrieve unmapped reads
 			echo "				Removing human DNA from sample $samplename" >> ${workdir}/run_${timestamp}.log
-			bwa mem -t ${threads} -R '@RG\tID:ProjectName\tCN:AuthorName\tDS:Mappingt\tPL:Illumina1.9\tSM:Sample' ${workdir}/HumanDNARemoved/ReferenceGenome/${genomefile} ${workdir}/${sourcefolder}/${samplename}.fastq | samtools view -b -f4 - > ${workdir}/HumanDNARemoved/${samplename}.bam
+			bwa mem -t ${threads} -R '@RG\tID:ProjectName\tCN:AuthorName\tDS:Mappingt\tPL:Illumina1.9\tSM:Sample' ${workdir}/HumanDNARemoved/ReferenceGenome/${humangenomefile} ${workdir}/${sourcefolder}/${samplename}.fastq | samtools view -b -f4 - > ${workdir}/HumanDNARemoved/${samplename}.bam
 			if [[ ! -s ${workdir}/HumanDNARemoved/${samplename}.bam ]]; then
 				echo "$now | 			ERROR: There was an error when mapping sample $samplename" >> ${workdir}/run_${timestamp}.log
 				exit
