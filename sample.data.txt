@@ -1,4 +1,4 @@
-PEMU BCL5.raw.1.fq.gz;BCL8.raw.1.fq.gz/BCL5.raw.2.fq.gz;BCL8.raw.2.fq.gz /home/projects/pr_46704/people/antalb/cervids_genomics/genomes/Cervus_albirostris.platanus.fasta
-PESI BCL5.raw.1.fq.gz/BCL5.raw.2.fq.gz /home/projects/pr_46704/people/antalb/cervids_genomics/genomes/Cervus_albirostris.platanus.fasta
-SRMU BCL5.raw.1.fq.gz;BCL8.raw.1.fq.gz /home/projects/pr_46704/people/antalb/cervids_genomics/genomes/Cervus_albirostris.platanus.fasta
-SRSI BCL5.raw.1.fq.gz /home/projects/pr_46704/people/antalb/cervids_genomics/genomes/Cervus_albirostris.platanus.fasta
+PEMU BCL5.raw.1_1.fq.gz;BCL5.raw.1_2.fq.gz/BCL5.raw.2_1.fq.gz;BCL5.raw.2_2.fq.gz genomes/Cervus_albirostris.fasta
+PESI BCL5.raw.1.fq.gz/BCL5.raw.2.fq.gz genomes/Cervus_albirostris.fasta
+SRMU BCL5.raw.1_1.fq.gz;BCL5.raw.1_2.fq.gz genomes/Cervus_albirostris.fasta
+SRSI BCL5.raw.1.fq.gz genomes/Cervus_albirostris.fasta
