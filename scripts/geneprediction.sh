@@ -43,11 +43,12 @@ prodigal -p meta -q -i ${sample} -f gff -o ${workdir}/GenePrediction/assembly.ge
 }
 
 #Create file list
-filelist=$(ls ${workdir}/CoAssembly/Megahit/final.contigs.fa.*)
+filelist=$()
+echo "$filelist"
 #Export function lowcompjob
 export -f geneprediction
 #Loop in parallel across samples specified in sample.data.txt
-parallel -j ${threads} -k geneprediction {} ${settingsfile} < ${filelist}
+ls ${workdir}/CoAssembly/Megahit/final.contigs.fa.* | parallel -j ${threads} -k geneprediction {} ${settingsfile}
 
 #Merge all files
 cat ${workdir}/GenePrediction/assembly.genes.gff.* > ${workdir}/GenePrediction/assembly.genes.gff
