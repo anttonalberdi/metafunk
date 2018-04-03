@@ -42,9 +42,6 @@ echo "$now | $sample" >> ${workdir}/run_${timestamp}.log
 prodigal -p meta -q -i ${sample} -f gff -o ${workdir}/GenePrediction/assembly.genes.gff.${suffix} -a ${workdir}/GenePrediction/assembly.genes.faa.${suffix} -d ${workdir}/GenePrediction/assembly.genes.fna.${suffix}
 }
 
-#Create file list
-filelist=$()
-echo "$filelist"
 #Export function lowcompjob
 export -f geneprediction
 #Loop in parallel across samples specified in sample.data.txt
