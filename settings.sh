@@ -6,23 +6,6 @@
 platform="Illumina"
 
 #######################################
-########## Module switcher ############
-#######################################
-
-#Select (yes / no) which modules you want to be ran.
-#Read the wiki to learn more about what each module does: https://github.com/anttonalberdi/metafunk/wiki
-
-copydata="no"
-qualityfiltering="no"
-removeduplicates="no"
-removelowcomplexity="yes"
-removehostdna="yes"
-removehumandna="yes"
-coassembly="no"
-geneprediction="no"
-genemapping="no"
-
-#######################################
 ######## Software dependencies ########
 #######################################
 # Software loading commands

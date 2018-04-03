@@ -5,7 +5,7 @@ version="0.1"
 # Get options
 #########
 
-while getopts w:d:s:f:t: option; do
+while getopts w:d:s:f:t:m: option; do
   case "${option}"
   in
   w) workdir=${OPTARG};;
@@ -13,6 +13,7 @@ while getopts w:d:s:f:t: option; do
   s) settingsfile=${OPTARG};;
   f) datadir=${OPTARG};;
   t) threads=${OPTARG};;
+  m) modules=${OPTARG};;
   \?) echo "Invalid option: -$OPTARG"
   exit ;;
   :) echo "Option -$OPTARG requires an argument."
@@ -21,7 +22,6 @@ while getopts w:d:s:f:t: option; do
 done
 
 #Get timestamp
-
 timestamp=$(date +"%Y%m%d_%H%M%S")
 
 #Get metafunk directory
@@ -29,6 +29,51 @@ metafunkdirectory="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 #Source dependencies
 source "${settingsfile}"
+
+#########
+# Process module data
+#########
+
+if [[ $modules == "1" || $modules =~ ",1," || $modules == 1,* || $modules == *,1 ]];
+  then copydata="yes"
+  else copydata="no"
+fi
+if [[ $modules == "2" || $modules =~ ",2," || $modules == 2,* || $modules == *,2 ]];
+  then qualityfiltering="yes"
+  else qualityfiltering="no"
+fi
+if [[ $modules == "3" || $modules =~ ",3," || $modules == 3,* || $modules == *,3 ]];
+  then removeduplicates="yes"
+  else removeduplicates="no"
+fi
+if [[ $modules == "4" || $modules =~ ",4," || $modules == 4,* || $modules == *,4 ]];
+  then removelowcomplexity="yes"
+  else removelowcomplexity="no"
+fi
+if [[ $modules == "5" || $modules =~ ",5," || $modules == 5,* || $modules == *,5 ]];
+  then removehostdna="yes"
+  else removeduplicates="no"
+fi
+if [[ $modules == "6" || $modules =~ ",6," || $modules == 6,* || $modules == *,6 ]];
+  then removehumandna="yes"
+  else removehumandna="no"
+fi
+if [[ $modules == "7" || $modules =~ ",7," || $modules == 7,* || $modules == *,7 ]];
+  then coassembly="yes"
+  else coassembly="no"
+fi
+if [[ $modules == "8" || $modules =~ ",8," || $modules == 8,* || $modules == *,8 ]];
+  then geneprediction="yes"
+  else geneprediction="no"
+fi
+if [[ $modules == "9" || $modules =~ ",9," || $modules == 9,* || $modules == *,9 ]];
+  then genemapping="yes"
+  else genemapping="no"
+fi
+if [ -z "$modules" ]; then
+  echo "No modules were specified."
+  exit
+fi
 
 #########
 # Create and set working directory
