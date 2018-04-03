@@ -27,8 +27,10 @@ echo "$now | Converting FASTQ files to FASTA" >> ${workdir}/run_${timestamp}.log
 function fastqtofasta() {
 
 sample=${1}
-metafunkdirectory=${2}
+settingsfile=${2}
 sourcefolder=${3}
+
+source $settingsfile
 
 	#Obtain data from sample.data.txt columns
   samplename=$(echo $sample | cut -d ' ' -f1 )
@@ -61,7 +63,7 @@ sourcefolder=${3}
 
 #Loop in parallel across samples specified in sample.data.txt
 export -f fastqtofasta
-parallel -j ${threads} -k fastqtofasta {} ${metafunkdirectory} ${sourcefolder} <${sampledatafile}
+parallel -j ${threads} -k fastqtofasta {} ${settingsfile} ${sourcefolder} <${sampledatafile}
 
 #Interleave samples if PE  - NOT NECESSARY - TWEAK MEGAHIT CODE
 #if [[ $samplefile =~ "/" ]]; then

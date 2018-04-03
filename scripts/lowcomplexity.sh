@@ -19,10 +19,10 @@ echo "$now | Removing low complexity reads from files in directory ${sourcefolde
 function lowcompjob() {
 
   sample=${1}
-  metafunkdirectory=${2}
+  settingsfile=${2}
   sourcefolder=${3}
 
-  source "$metafunkdirectory/settings.sh"
+  source $settingsfile
 
   #Obtain data from sample.data.txt columns
   samplename=$(echo $sample | cut -d ' ' -f1 )
@@ -71,4 +71,4 @@ function lowcompjob() {
 #Loop in parallel across samples specified in sample.data.txt
 #Export function lowcompjob
 export -f lowcompjob
-parallel -j ${threads} -k lowcompjob {} ${metafunkdirectory} ${sourcefolder} <${sampledatafile}
+parallel -j ${threads} -k lowcompjob {} ${settingsfile} ${sourcefolder} <${sampledatafile}

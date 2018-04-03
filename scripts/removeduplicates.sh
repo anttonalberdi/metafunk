@@ -17,10 +17,10 @@ echo "$now | Removing duplicates from files in directory $sourcefolder" >> ${wor
 function remdupjob() {
 
 sample=${1}
-metafunkdirectory=${2}
+settingsfile=${2}
 sourcefolder=${3}
 
-source "$metafunkdirectory/settings.sh"
+source $settingsfile
 
 #Obtain data from sample.data.txt columns
 samplename=$(echo $sample | cut -d ' ' -f1 )
@@ -68,4 +68,4 @@ fi
 
 #Loop in parallel across samples specified in sample.data.txt
 export -f remdupjob
-parallel -j ${threads} -k remdupjob {} ${metafunkdirectory} ${sourcefolder} <${sampledatafile}
+parallel -j ${threads} -k remdupjob {} ${settingsfile} ${sourcefolder} <${sampledatafile}
