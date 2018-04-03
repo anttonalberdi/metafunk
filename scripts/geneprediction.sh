@@ -52,6 +52,10 @@ cat ${workdir}/GenePrediction/assembly.genes.gff.* > ${workdir}/GenePrediction/a
 cat ${workdir}/GenePrediction/assembly.genes.faa.* > ${workdir}/GenePrediction/assembly.genes.faa
 cat ${workdir}/GenePrediction/assembly.genes.fna.* > ${workdir}/GenePrediction/assembly.genes.fna
 
+#Remove split files
+rm ${workdir}/CoAssembly/Megahit/final.contigs.fa.*
+rm ${workdir}/GenePrediction/assembly.genes.[a-z][a-z][a-z].*
+
 #Count number of predicted genes
 genenumber=$(grep -c ">" ${workdir}/GenePrediction/assembly.genes.faa)
 
