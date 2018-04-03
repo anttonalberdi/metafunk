@@ -50,8 +50,8 @@ parallel -j ${threads} -k geneprediction {} ${settingsfile} < ${filelist}
 
 #Merge all files
 cat ${workdir}/GenePrediction/assembly.genes.gff.* > ${workdir}/GenePrediction/assembly.genes.gff
-cat ${workdir}/GenePrediction/assembly.genes.faa.* > ${suffix} ${workdir}/GenePrediction/assembly.genes.faa
-cat ${workdir}/GenePrediction/assembly.genes.fna.* > ${suffix} ${workdir}/GenePrediction/assembly.genes.fna
+cat ${workdir}/GenePrediction/assembly.genes.faa.* > ${workdir}/GenePrediction/assembly.genes.faa
+cat ${workdir}/GenePrediction/assembly.genes.fna.* > ${workdir}/GenePrediction/assembly.genes.fna
 
 #Count number of predicted genes
 genenumber=$(grep -c ">" ${workdir}/GenePrediction/assembly.genes.faa)
