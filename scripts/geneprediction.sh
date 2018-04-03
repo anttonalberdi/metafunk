@@ -37,6 +37,7 @@ function geneprediction() {
   suffix=$(echo $sample | awk '{print $NF}' FS=.)
 
 source $settingsfile
+echo "$now | $sample" >> ${workdir}/run_${timestamp}.log
 
 prodigal -p meta -q -i ${sample} -f gff -o ${workdir}/GenePrediction/assembly.genes.gff.${suffix} -a ${workdir}/GenePrediction/assembly.genes.faa.${suffix} -d ${workdir}/GenePrediction/assembly.genes.fna.${suffix}
 }
