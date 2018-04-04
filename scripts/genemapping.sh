@@ -6,23 +6,34 @@ source $settingsfile
 mkdir -p ${workdir}/GeneMapping
 
 #Index genes
-now=$(date +"%Y-%m-%d %H:%M:%S")
-echo "$now |        Indexing gene catalogue" >> ${workdir}/run_${timestamp}.log
-samtools faidx ${workdir}/GenePrediction/assembly.genes.fna
-bwa index ${workdir}/GenePrediction/assembly.genes.fna
-now=$(date +"%Y-%m-%d %H:%M:%S")
-echo "$now |        Gene catalogue succesfully indexed" >> ${workdir}/run_${timestamp}.log
+if [ ! -f ${workdir}/GenePrediction/assembly.genes.fna.fai ]; then
+	now=$(date +"%Y-%m-%d %H:%M:%S")
+	echo "$now |        Indexing gene catalogue" >> ${workdir}/run_${timestamp}.log
+	samtools faidx ${workdir}/GenePrediction/assembly.genes.fna
+	bwa index ${workdir}/GenePrediction/assembly.genes.fna
+	now=$(date +"%Y-%m-%d %H:%M:%S")
+	echo "$now |        Gene catalogue succesfully indexed" >> ${workdir}/run_${timestamp}.log
+else
+	now=$(date +"%Y-%m-%d %H:%M:%S")
+	echo "$now |        Gene catalogue is already indexed" >> ${workdir}/run_${timestamp}.log
+fi
 
 #Get gene lengths
+if [ ! -f ${workdir}/GenePrediction/assembly.genes.lengths ]; then
 now=$(date +"%Y-%m-%d %H:%M:%S")
 echo "$now |        Calculating gene lengths" >> ${workdir}/run_${timestamp}.log
 python ${metafunkdirectory}/scripts/contiglengths.py -i ${workdir}/GenePrediction/assembly.genes.fna > ${workdir}/GenePrediction/assembly.genes.lengths
 filesize=$(ls -l ${workdir}/GenePrediction/assembly.genes.lengths | awk '{print $5}')
 now=$(date +"%Y-%m-%d %H:%M:%S")
-if [[ $filesize > 0 ]]; then
-echo "$now |        Gene length file was successfully created" >> ${workdir}/run_${timestamp}.log
+	if [[ $filesize > 0 ]]; then
+	echo "$now |        Gene length file was successfully created" >> ${workdir}/run_${timestamp}.log
+	else
+	echo "$now |        There was an error while generating the gene length file" >> ${workdir}/run_${timestamp}.log
+	fi
 else
-echo "$now |        There was an error while generating the gene length file" >> ${workdir}/run_${timestamp}.log
+	now=$(date +"%Y-%m-%d %H:%M:%S")
+	echo "$now |        Gene lengths are already indexed" >> ${workdir}/run_${timestamp}.log
+
 fi
 
 #Select source folder from which data will be retrieved
@@ -116,6 +127,7 @@ while read sample; do
 			else
 				echo "$now |      Coverage of $samplefile successfully calculated" >> ${workdir}/run_${timestamp}.log
 			fi
+		fi
 done < ${sampledatafile}
 
 #Collate coverages
