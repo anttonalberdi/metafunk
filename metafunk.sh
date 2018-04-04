@@ -224,9 +224,7 @@ fi
 #########
 
 if [[ $geneprediction == "yes" ]]; then
-now=$(date +"%Y-%m-%d %H:%M:%S")
-echo "$now | Predicting genes" >> ${workdir}/run_${timestamp}.log
-export metafunkdirectory
+export workdir; export sampledatafile; export settingsfile; export datadir; export threads; export metafunkdirectory; export timestamp
 sh ${metafunkdirectory}/scripts/geneprediction.sh
 else
 now=$(date +"%Y-%m-%d %H:%M:%S")
@@ -236,10 +234,8 @@ fi
 #########
 # Map reads back to the genes and generate Coverage and Hit tables
 #########
-now=$(date +"%Y-%m-%d %H:%M:%S")
 if [[ $genemapping == "yes" ]]; then
-echo "$now | Mapping reads back to genes" >> ${workdir}/run_${timestamp}.log
-export metafunkdirectory
+export export workdir; export sampledatafile; export settingsfile; export datadir; export threads; export metafunkdirectory; export timestamp
 sh ${metafunkdirectory}/scripts/genemapping.sh
 else
 echo "$now | Gene mapping will not be performed" >> ${workdir}/run_${timestamp}.log

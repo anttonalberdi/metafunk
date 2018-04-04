@@ -60,7 +60,7 @@ fi
 
 #Map reads back to genes
 now=$(date +"%Y-%m-%d %H:%M:%S")
-echo "$now | 			Mapping reads from directory $sourcefolder to gene catalogue" >> ${workdir}/run_${timestamp}.log
+echo "$now | Mapping reads from directory $sourcefolder to gene catalogue" >> ${workdir}/run_${timestamp}.log
 
 while read sample; do
 
@@ -73,33 +73,33 @@ while read sample; do
 			#Repair reads
 			if [[ $repair == "yes" ]]; then
 				now=$(date +"%Y-%m-%d %H:%M:%S")
-				echo "$now | 			Repairing sample ${samplename}" >> ${workdir}/run_${timestamp}.log
+				echo "$now | 		Repairing sample ${samplename}" >> ${workdir}/run_${timestamp}.log
 				repair.sh in=${workdir}/${sourcefolder}/${samplename}_1.fastq in2=${workdir}/${sourcefolder}/${samplename}_2.fastq out=${workdir}/GeneMapping/${samplename}_1.fastq out2=${workdir}/GeneMapping/${samplename}_2.fastq
 				sourcefolder="GeneMapping"
 			fi
 			#Map reads against the gene catalogue
 			now=$(date +"%Y-%m-%d %H:%M:%S")
-			echo "$now | 			Mapping $samplename reads" >> ${workdir}/run_${timestamp}.log
+			echo "$now | 		Mapping $samplename reads" >> ${workdir}/run_${timestamp}.log
 			bwa mem -t ${threads} -R '@RG\tID:ProjectName\tCN:AuthorName\tDS:Mappingt\tPL:Illumina1.9\tSM:Sample' ${workdir}/GenePrediction/assembly.genes.fna ${workdir}/${sourcefolder}/${samplename}_1.fastq ${workdir}/${sourcefolder}/${samplename}_2.fastq | samtools view -b -F0x4 - > ${workdir}/GeneMapping/${samplename}.bam
 			#Check if output file has been created; otherwise, print error message and kill the job
 			if [[ ! -s ${workdir}/GeneMapping/${samplename}.bam ]]; then
 				now=$(date +"%Y-%m-%d %H:%M:%S")
-				echo "$now | 			ERROR: There was an error when mapping sample $samplename" >> ${workdir}/run_${timestamp}.log
+				echo "$now | 		ERROR: There was an error when mapping sample $samplename" >> ${workdir}/run_${timestamp}.log
 				exit
 			fi
 			#Generate coverage table
 			samtools sort -T ${workdir}/GeneMapping/${samplename}.tmp.bam -o ${workdir}/GeneMapping/${samplename}.sorted.bam ${workdir}/GeneMapping/${samplename}.bam
 			samtools flagstat ${workdir}/GeneMapping/${samplename}.bam > ${workdir}/GeneMapping/${samplename}.flagstat
-				echo "$now |      Calculating coverage for $samplename" >> ${workdir}/run_${timestamp}.log
+				echo "$now | 		Calculating coverage for $samplename" >> ${workdir}/run_${timestamp}.log
 			bedtools genomecov -ibam ${workdir}/GeneMapping/${samplename}.sorted.bam -g ${workdir}/GenePrediction/assembly.genes.lengths > ${workdir}/GeneMapping/${samplename}.cov
 			awk -F"\t" '{l[$1]=l[$1]+($2 *$3);r[$1]=$4} END {for (i in l){print i","(l[i]/r[i])}}' ${workdir}/GeneMapping/${samplename}.cov > ${workdir}/GeneMapping/${samplename}.cov.csv
 			now=$(date +"%Y-%m-%d %H:%M:%S")
 			if [[ ! -s ${workdir}/GeneMapping/${samplename}.cov.csv ]]; then
 				now=$(date +"%Y-%m-%d %H:%M:%S")
-				echo "$now | 			ERROR: There was an error when mapping sample $samplename" >> ${workdir}/run_${timestamp}.log
+				echo "$now | 		ERROR: There was an error when mapping sample $samplename" >> ${workdir}/run_${timestamp}.log
 				exit
 			else
-				echo "$now |      Coverage of $samplefile successfully calculated" >> ${workdir}/run_${timestamp}.log
+				echo "$now | 		Coverage of $samplefile successfully calculated" >> ${workdir}/run_${timestamp}.log
 			fi
 		else
 			#It is SR
