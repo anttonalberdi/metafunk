@@ -1,19 +1,24 @@
 # MetaFunk (alpha)
 Pipeline for functional metagenomics profiling. Beware this is still an alpha developmental version.
 
-MetaFunk is suitable for Illumina and BGISeq single-read (SR) and paired-end (PE) sequencing data, and by March 2018, it incorporates the following steps:
+MetaFunk is suitable for Illumina and BGISeq single-read (SR) and paired-end (PE) sequencing data, and by March 2018, it incorporates the following modules:
 
+### Pre-processing
 1. Data transference
 2. Quality filtering
 3. Duplicate removal
 4. Low complexity read removal
 5. Host DNA removal (for non-human samples)
 6. Human DNA removal (contamination for non-human samples)
+### Assembly and mapping
 7. Co-assembly
 8. Gene prediction
 9. Gene mapping
+### Functional and taxonomic profiling
 10. Functional profiling (KEGG and EggNog databases)
 11. Taxonomic profiling
+### Statistical analyses and visualisation
+
 
 ## Quick start
 1. Clone or download metafunk to your working environment
