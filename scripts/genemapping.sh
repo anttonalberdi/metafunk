@@ -138,7 +138,7 @@ perl ${metafunkdirectory}/scripts/collatecoverages.pl ${workdir}/GeneMapping/ > 
 #Generate hit table
 echo "$now | Generating hit table" >> ${workdir}/run_${timestamp}.log
 export WORKDIR="${workdir}"
-Rscript ${workingdirectory}/scripts/createhittable.r --no-save
+Rscript ${metafunkdirectory}/scripts/createhittable.r --no-save
 filesize=$(ls -l ${workdir}/HitTable.csv | awk '{print $5}')
 now=$(date +"%Y-%m-%d %H:%M:%S")
 if [[ $filesize > 0 ]]; then
