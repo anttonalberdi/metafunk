@@ -235,7 +235,7 @@ fi
 # Map reads back to the genes and generate Coverage and Hit tables
 #########
 if [[ $genemapping == "yes" ]]; then
-export export workdir; export sampledatafile; export settingsfile; export datadir; export threads; export metafunkdirectory; export timestamp
+export workdir; export sampledatafile; export settingsfile; export datadir; export threads; export metafunkdirectory; export timestamp
 sh ${metafunkdirectory}/scripts/genemapping.sh
 else
 echo "$now | Gene mapping will not be performed" >> ${workdir}/run_${timestamp}.log
@@ -244,12 +244,11 @@ fi
 #########
 # Normalise Coverage and Hit tables
 #########
-now=$(date +"%Y-%m-%d %H:%M:%S")
 if [[ $tss == "yes" || $css == "yes" ]]; then
-  echo "$now | Normalising hit and coverage tables" >> ${workdir}/run_${timestamp}.log
-  export metafunkdirectory
+  export metafunkdirectory; export timestamp
   sh ${metafunkdirectory}/scripts/normalisetables.sh
   else
+  now=$(date +"%Y-%m-%d %H:%M:%S")
   echo "$now | Hit and coverage tables will not be normalised" >> ${workdir}/run_${timestamp}.log
 fi
 

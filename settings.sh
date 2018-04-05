@@ -73,9 +73,9 @@ indexassembly="no"
 ##### Gene mapping settings
 
 ##### Coverage/Hit table normalisation
-tss="no"
+tss="yes"
 css="no"
-normalisationscale="1000000" # range of values in nucleotide hits (e.g. 0-1, 0-100, 0-10000, etc.)
+normalisationscale="1000000" # range of values in nucleotide hits (e.g. 0-1, 0-100, 0-1000000, etc.)
 normalisationdecimals="2" #increase for smaller scales (e.g. 0-1)
 
 ##### Functional annotation KEGG
