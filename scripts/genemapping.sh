@@ -132,14 +132,15 @@ done < ${sampledatafile}
 
 #Collate coverages
 now=$(date +"%Y-%m-%d %H:%M:%S")
+mkdir -p ${workdir}/GeneTables
 echo "$now |      Collating coverage files" >> ${workdir}/run_${timestamp}.log
-perl ${metafunkdirectory}/scripts/collatecoverages.pl ${workdir}/GeneMapping/ > ${workdir}/GeneCoverageTable.csv
+perl ${metafunkdirectory}/scripts/collatecoverages.pl ${workdir}/GeneMapping/ > ${workdir}/GeneTables/GeneCoverageTable.csv
 
 #Generate hit table
 echo "$now | Generating hit table" >> ${workdir}/run_${timestamp}.log
 export WORKDIR="${workdir}"
 Rscript ${metafunkdirectory}/scripts/createhittable.r --no-save
-filesize=$(ls -l ${workdir}/HitTable.csv | awk '{print $5}')
+filesize=$(ls -l ${workdir}/GeneTables/HitTable.csv | awk '{print $5}')
 now=$(date +"%Y-%m-%d %H:%M:%S")
 if [[ $filesize > 0 ]]; then
 echo "$now |        Hit table was successfully created" >> ${workdir}/run_${timestamp}.log
