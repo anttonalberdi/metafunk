@@ -79,6 +79,7 @@ normalisationscale="1000000" # range of values in nucleotide hits (e.g. 0-1, 0-1
 normalisationdecimals="2" #increase for smaller scales (e.g. 0-1)
 
 ##### Functional annotation KEGG
+kegg="yes"
 keggdatabase="/home/projects/pr_46704/people/antalb/databases/KEGG_species_prokaryotes_metafunk.pep" #absolute path to fasta (.fasta, .fa, .pep) or diamond (.dmnd) file
 keggevalue="0.0000000001"
 
