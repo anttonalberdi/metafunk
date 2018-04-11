@@ -14,12 +14,11 @@ MetaFunk is suitable for Illumina and BGISeq single-read (SR) and paired-end (PE
 7. Co-assembly
 8. Gene prediction
 9. Gene mapping
-10. Gene table normalisation
 ### Functional and taxonomic profiling
-11. Functional profiling (KEGG and EggNog databases)
-12. Taxonomic profiling
+10. Functional profiling (KEGG and EggNog databases)
+11. Taxonomic profiling
 ### Statistical analyses and visualisation
-
+12. Gene table normalisation
 
 ## Quick start
 1. Clone or download metafunk to your working environment
