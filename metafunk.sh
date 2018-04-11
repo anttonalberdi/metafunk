@@ -70,6 +70,14 @@ if [[ $modules == "9" || $modules =~ ",9," || $modules == 9,* || $modules == *,9
   then genemapping="yes"
   else genemapping="no"
 fi
+if [[ $modules == "10" || $modules =~ ",10," || $modules == 10,* || $modules == *,10 ]];
+  then functional="yes"
+  else functional="no"
+fi
+if [[ $modules == "11" || $modules =~ ",11," || $modules == 11,* || $modules == *,11 ]];
+  then taxonomic="yes"
+  else taxonomic="no"
+fi
 if [ -z "$modules" ]; then
   echo "No modules were specified."
   exit
@@ -256,21 +264,23 @@ fi
 # Perform functional annotation
 #########
 now=$(date +"%Y-%m-%d %H:%M:%S")
-if [[ $kegg == "yes" ]]; then
-  echo "$now | Starting KEGG functional annotation" >> ${workdir}/run_${timestamp}.log
-  export metafunkdirectory
-  sh ${metafunkdirectory}/scripts/functionalannotation_kegg.sh
-  else
-  echo "$now | KEGG functional annotation will not be performed" >> ${workdir}/run_${timestamp}.log
-fi
+if [[ $functional == "yes" ]]; then
+  if [[ $kegg == "yes" ]]; then
+    echo "$now | Starting KEGG functional annotation" >> ${workdir}/run_${timestamp}.log
+    export metafunkdirectory; export timestamp; export settingsfile
+    sh ${metafunkdirectory}/scripts/functionalannotation_kegg.sh
+    else
+    echo "$now | KEGG functional annotation will not be performed" >> ${workdir}/run_${timestamp}.log
+  fi
 
-now=$(date +"%Y-%m-%d %H:%M:%S")
-if [[ $eggnog == "yes" ]]; then
-  echo "$now | Starting EggNog functional annotation" >> ${workdir}/run_${timestamp}.log
-  export metafunkdirectory
-  sh ${metafunkdirectory}/scripts/functionalannotation_eggnog.sh
-  else
-  echo "$now | EggNog functional annotation will not be performed" >> ${workdir}/run_${timestamp}.log
+  now=$(date +"%Y-%m-%d %H:%M:%S")
+  if [[ $eggnog == "yes" ]]; then
+    echo "$now | Starting EggNog functional annotation" >> ${workdir}/run_${timestamp}.log
+    export metafunkdirectory; export timestamp; export settingsfile
+    sh ${metafunkdirectory}/scripts/functionalannotation_eggnog.sh
+    else
+    echo "$now | EggNog functional annotation will not be performed" >> ${workdir}/run_${timestamp}.log
+  fi
 fi
 
 #########

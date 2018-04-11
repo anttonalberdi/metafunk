@@ -1,0 +1,38 @@
+KEGG	Phylosift	Gene	Archea	Bacteria
+K02967	DNGNGWU00001	ribosomal protein S2 rpsB	100	99.5
+K02946	DNGNGWU00002	ribosomal protein S10 rpsJ	100	98.51
+K02863	DNGNGWU00003	ribosomal protein L1 rplA	100	99.83
+K02519	DNGNGWU00005	translation initiation factor IF-2	100	99.83
+K08646	DNGNGWU00006	metalloendopeptidase	100	99.83
+K02890	DNGNGWU00007	ribosomal protein L22	100	99.67
+K02926	DNGNGWU00009	ribosomal protein L4/L1e rplD	100	99.67
+K02886	DNGNGWU00010	ribosomal protein L2 rplB	100	99.5
+K02996	DNGNGWU00011	ribosomal protein S9 rpsI	100	100
+K02906	DNGNGWU00012	ribosomal protein L3 rplC	100	99.5
+K01890	DNGNGWU00013	phenylalanyl-tRNA synthetase beta subunit	100	99.67
+K02874	DNGNGWU00014	ribosomal protein L14b/L23e rplN	100	99.34
+K02988	DNGNGWU00015	ribosomal protein S5	100	99.5
+K02965	DNGNGWU00016	ribosomal protein S19 rpsS	100	99.17
+K02992	DNGNGWU00017	ribosomal protein S7	100	99.67
+K02878	DNGNGWU00018	ribosomal protein L16/L10E rplP	100	99.67
+K02952	DNGNGWU00019	ribosomal protein S13 rpsM	100	99.17
+K01889	DNGNGWU00020	phenylalanyl-tRNA synthetase alpha subunit	100	99.83
+K02876	DNGNGWU00021	ribosomal protein L15	100	99.5
+K02892	DNGNGWU00022	ribosomal protein L25/L23	100	99.17
+K02933	DNGNGWU00023	ribosomal protein L6 rplF	100	99.5
+K02867	DNGNGWU00024	ribosomal protein L11 rplK	100	99.83
+K02931	DNGNGWU00025	ribosomal protein L5 rplE	100	99.83
+K02950	DNGNGWU00026	ribosomal protein S12/S23	100	99.17
+K02904	DNGNGWU00027	ribosomal protein L29	98.39	98.68
+K02982	DNGNGWU00028	ribosomal protein S3 rpsC	100	99.83
+K02948	DNGNGWU00029	ribosomal protein S11 rpsK	100	99.17
+K02864	DNGNGWU00030	ribosomal protein L10	98.39	99.67
+K02994	DNGNGWU00031	ribosomal protein S8	100	99.5
+K03177	DNGNGWU00032	tRNA pseudouridine synthase B	95.16	97.35
+K02881	DNGNGWU00033	ribosomal protein L18P/L5E	100	99.83
+K02956	DNGNGWU00034	ribosomal protein S15P/S13e	100	99.84
+K01749	DNGNGWU00035	Porphobilinogen deaminase	85.48	86.59
+K02961	DNGNGWU00036	ribosomal protein S17	100	99.17
+K02871	DNGNGWU00037	ribosomal protein L13 rplM	100	99.83
+K03470	DNGNGWU00039	ribonuclease HII	100	98.51
+K02895	DNGNGWU00040	ribosomal protein L24	100	99.5
