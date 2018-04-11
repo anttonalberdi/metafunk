@@ -5,7 +5,9 @@ source $settingsfile
 mkdir -p ${workdir}/GeneAnnotationKEGG
 
 #Create diamond database
-if [ ! -f ${keggdatabase}.dmnd ]; then
+keggdatabaseext=$(echo ${keggdatabase} | awk -F . '{print $NF}')
+
+if [[ $keggdatabaseext != "dmnd" ]]; then
   now=$(date +"%Y-%m-%d %H:%M:%S")
   echo "$now | 	Creating diamond database"
   diamond makedb -p ${threads} --in ${keggdatabase} -d ${keggdatabase}
@@ -15,4 +17,4 @@ if [ ! -f ${keggdatabase}.dmnd ]; then
 fi
 
 #Perform Diamond blastp
-diamond blastp -d ${keggdatabase} -p ${threads} -q ${workdir}/GenePrediction/assembly.genes.faa --out ${workdir}/GeneAnnotationKEGG/assembly.genes.KEGG.txt --outfmt 6 --max-target-seqs 1 --evalue 0.01
+#diamond blastp -d ${keggdatabase} -p ${threads} -q ${workdir}/GenePrediction/assembly.genes.faa --out ${workdir}/GeneAnnotationKEGG/assembly.genes.KEGG.txt --outfmt 6 --max-target-seqs 1 --evalue 0.01
