@@ -4,16 +4,23 @@ source $settingsfile
 #Create Coassembly directory
 mkdir -p ${workdir}/GeneAnnotationKEGG
 
+#Check if
 #Create diamond database
 keggdatabaseext=$(echo ${keggdatabase} | awk -F . '{print $NF}')
 
 if [[ $keggdatabaseext != "dmnd" ]]; then
   now=$(date +"%Y-%m-%d %H:%M:%S")
-  echo "$now | 	Creating diamond database from $keggdatabaseext file"
+  echo "$now | 	Creating diamond database from $keggdatabaseext file" >>  ${workdir}/run_${timestamp}.log
   diamond makedb -p ${threads} --in ${keggdatabase} -d ${keggdatabase}
   else
-  now=$(date +"%Y-%m-%d %H:%M:%S")
-  echo "$now | 	Diamond database already exists"
+  if [[ -s ${keggdatabase} ]]; then
+    now=$(date +"%Y-%m-%d %H:%M:%S")
+    echo "$now | 	Diamond database already exists" >>  ${workdir}/run_${timestamp}.log
+    else
+    now=$(date +"%Y-%m-%d %H:%M:%S")
+    echo "$now | 	The indicated Diamond database does not exist" >>  ${workdir}/run_${timestamp}.log
+  fi
+
 fi
 
 #Perform Diamond blastp
