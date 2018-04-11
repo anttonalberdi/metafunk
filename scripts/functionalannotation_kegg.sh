@@ -9,7 +9,7 @@ keggdatabaseext=$(echo ${keggdatabase} | awk -F . '{print $NF}')
 
 if [[ $keggdatabaseext != "dmnd" ]]; then
   now=$(date +"%Y-%m-%d %H:%M:%S")
-  echo "$now | 	Creating diamond database"
+  echo "$now | 	Creating diamond database from $keggdatabaseext file"
   diamond makedb -p ${threads} --in ${keggdatabase} -d ${keggdatabase}
   else
   now=$(date +"%Y-%m-%d %H:%M:%S")
