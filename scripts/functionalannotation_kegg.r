@@ -39,4 +39,4 @@ KEGG.merged <- merge(KEGG.table[,c("Gene","KEGG","evalue","pident")],KEGG.entry.
 KEGG.merged.sorted <- KEGG.merged[order(KEGG.merged$Gene),c("Gene","KEGG","KO","Pathway","evalue","pident")]
 
 #Output annotated table
-write.table(KEGG.merged.sorted,paste(workingdirectory,"assembly.genes.KEGG.annotated.txt",sep=""),sep="\t",col.names=TRUE,row.names=FALSE,quote=FALSE)
+write.table(KEGG.merged.sorted,paste(workingdirectory,"/GeneAnnotationKEGG/assembly.genes.KEGG.annotated.txt",sep=""),sep="\t",col.names=TRUE,row.names=FALSE,quote=FALSE)
