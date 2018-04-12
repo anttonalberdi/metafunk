@@ -11,14 +11,14 @@ keggdatabaseext=$(echo ${keggdatabase} | awk -F . '{print $NF}')
 if [[ $keggdatabaseext != "dmnd" ]]; then
   if [[ -s ${keggdatabase}.dmnd ]]; then
     now=$(date +"%Y-%m-%d %H:%M:%S")
-    echo "$now | 	Creating diamond database from .$keggdatabaseext file" >>  ${workdir}/run_${timestamp}.log
-    diamond makedb -p ${threads} --in ${keggdatabase} -d ${keggdatabase}
+    echo "$now | 	Diamond database already exists" >>  ${workdir}/run_${timestamp}.log
     keggdatabase=${keggdatabase}.dmnd
   else
     now=$(date +"%Y-%m-%d %H:%M:%S")
-    echo "$now | 	Diamond database already exists" >>  ${workdir}/run_${timestamp}.log
+    echo "$now | 	Creating diamond database from .$keggdatabaseext file" >>  ${workdir}/run_${timestamp}.log
+    diamond makedb -p ${threads} --in ${keggdatabase} -d ${keggdatabase}
     keggdatabase=${keggdatabase}.dmnd
-  fi
+    fi
   else
   if [[ -s ${keggdatabase} ]]; then
     now=$(date +"%Y-%m-%d %H:%M:%S")
