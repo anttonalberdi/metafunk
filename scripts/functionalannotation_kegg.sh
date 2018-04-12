@@ -46,7 +46,7 @@ fi
 cut -f2 ${workdir}/GeneAnnotationKEGG/assembly.genes.KEGG.txt | sort | uniq > ${workdir}/GeneAnnotationKEGG/assembly.genes.KEGG.entrylist.txt
 
 #Assign KO and Pathway codes to KEGG entries
-echo "$now |  Annotating KEGG entries" >> ${workdir}/run_${timestamp}.log
+echo "$now |    Annotating KEGG entries" >> ${workdir}/run_${timestamp}.log
 export WORKDIR="${workdir}"
 export GENES_KO="${genes_ko}"
 export GENES_PATH="${genes_path}"
