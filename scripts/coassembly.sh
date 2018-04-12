@@ -65,35 +65,10 @@ source $settingsfile
 export -f fastqtofasta
 parallel -j ${threads} -k fastqtofasta {} ${settingsfile} ${sourcefolder} <${sampledatafile}
 
-#Interleave samples if PE  - NOT NECESSARY - TWEAK MEGAHIT CODE
-#if [[ $samplefile =~ "/" ]]; then
-#now=$(date +"%Y-%m-%d %H:%M:%S")
-#echo "$now | Interleaving samples" >> ${workdir}/run_${timestamp}.log
-
-#while read samplefile; do
-#	seqtk mergepe ${workdir}/CoAssembly/${samplename}_1.fasta ${workdir}/CoAssembly/${samplename}_2.fasta > ${workdir}/CoAssembly/${samplename}.fasta
-#	rm ${workdir}/CoAssembly/${samplename}_[1-2].fasta
-#	now=$(date +"%Y-%m-%d %H:%M:%S")
-#	echo "$now | 	Sample ${samplename} succesfully interleaved" >> ${workdir}/run_${timestamp}.log
-#done < ${sampledatafile}
-#fi
-
-#Concatenate
-#now=$(date +"%Y-%m-%d %H:%M:%S")
-#echo "$now | Concatenating all samples" >> ${workdir}/run_${timestamp}.log
-#cat ${workdir}/CoAssembly/*.fasta > ${workdir}/CoAssembly/Allsamples.fasta
-
 #Remove co-assembly directory if exists
 if [[ $overridecoassembly == "yes" ]]; then
 rm -r ${workdir}/CoAssembly/Megahit
 fi
-
-#Kill process if concatenated file does not exists
-#if [[ ! -f ${workdir}/CoAssembly/Allsamples.fasta ]]; then
-#now=$(date +"%Y-%m-%d %H:%M:%S")
-#echo "$now | ERROR: The concatenated file required for running the co-assembly does not exist" >> ${workdir}/run_${timestamp}.log
-#exit
-#fi
 
 #Co-assembly
 now=$(date +"%Y-%m-%d %H:%M:%S")

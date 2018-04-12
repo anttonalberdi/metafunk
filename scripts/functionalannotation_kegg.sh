@@ -29,18 +29,18 @@ if [[ $keggdatabaseext != "dmnd" ]]; then
   fi
 fi
 
-#Perform Diamond blastp
-#now=$(date +"%Y-%m-%d %H:%M:%S")
-#echo "$now | 	Performing Diamond blastp" >>  ${workdir}/run_${timestamp}.log
-#diamond blastp -d ${keggdatabase} -p ${threads} -q ${workdir}/GenePrediction/assembly.genes.faa --out ${workdir}/GeneAnnotationKEGG/assembly.genes.KEGG.txt --outfmt 6 --max-target-seqs 1 --evalue 0.01
-#if [[ -s ${workdir}/GeneAnnotationKEGG/assembly.genes.KEGG.txt ]]; then
-#  now=$(date +"%Y-%m-%d %H:%M:%S")
-#  echo "$now | 	Diamond blastp was succesfully finished" >>  ${workdir}/run_${timestamp}.log
-#else
-#  now=$(date +"%Y-%m-%d %H:%M:%S")
-#  echo "$now | 	There was an error during the Diamond blastp" >>  ${workdir}/run_${timestamp}.log
-#  exit
-#fi
+Perform Diamond blastp
+now=$(date +"%Y-%m-%d %H:%M:%S")
+echo "$now | 	Performing Diamond blastp" >>  ${workdir}/run_${timestamp}.log
+diamond blastp -d ${keggdatabase} -p ${threads} -q ${workdir}/GenePrediction/assembly.genes.faa --out ${workdir}/GeneAnnotationKEGG/assembly.genes.KEGG.txt --outfmt 6 --max-target-seqs 1 --evalue 0.01
+if [[ -s ${workdir}/GeneAnnotationKEGG/assembly.genes.KEGG.txt ]]; then
+  now=$(date +"%Y-%m-%d %H:%M:%S")
+  echo "$now | 	Diamond blastp was succesfully finished" >>  ${workdir}/run_${timestamp}.log
+else
+  now=$(date +"%Y-%m-%d %H:%M:%S")
+  echo "$now | 	There was an error during the Diamond blastp" >>  ${workdir}/run_${timestamp}.log
+  exit
+fi
 
 #Get unique KEGG entry list
 cut -f2 ${workdir}/GeneAnnotationKEGG/assembly.genes.KEGG.txt | sort | uniq > ${workdir}/GeneAnnotationKEGG/assembly.genes.KEGG.entrylist.txt
@@ -51,3 +51,11 @@ export WORKDIR="${workdir}"
 export GENES_KO="${genes_ko}"
 export GENES_PATH="${genes_path}"
 Rscript ${metafunkdirectory}/scripts/functionalannotation_kegg.r --no-save
+
+if [[ -s ${workdir}/GeneAnnotationKEGG/assembly.genes.KEGG.annotated.txt ]]; then
+  now=$(date +"%Y-%m-%d %H:%M:%S")
+  echo "$now | 	Genes have been succesfully annotated" >>  ${workdir}/run_${timestamp}.log
+  else
+  now=$(date +"%Y-%m-%d %H:%M:%S")
+  echo "$now | 	There was a problem when annotating the genes" >>  ${workdir}/run_${timestamp}.log
+fi
