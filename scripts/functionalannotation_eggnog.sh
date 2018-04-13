@@ -18,7 +18,7 @@ if [[ $eggnogdatabase != "dmnd" ]]; then
     echo "$now | 	Creating diamond database from .$eggnogdatabaseext file" >>  ${workdir}/run_${timestamp}.log
     eggnogdatabasedir=$(echo $eggnogdatabase | sed 's%/[^/]*$%/%' )
     mkdir ${eggnogdatabasedir}/extract
-    tar -xvf ${eggnogdatabase} -C ${eggnogdatabasedir}/extract
+    tar -xf ${eggnogdatabase} -C ${eggnogdatabasedir}/extract
     cat ${eggnogdatabasedir}/extract/*/* > ${eggnogdatabasedir}.fasta
     diamond makedb -p ${threads} --in ${eggnogdatabasedir}.fasta -d ${eggnogdatabasedir}
     eggnogdatabase=${eggnogdatabase}.dmnd
