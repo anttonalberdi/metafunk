@@ -29,7 +29,7 @@ if [[ $keggdatabaseext != "dmnd" ]]; then
   fi
 fi
 
-Perform Diamond blastp
+#Perform Diamond blastp
 now=$(date +"%Y-%m-%d %H:%M:%S")
 echo "$now | 	Performing Diamond blastp" >>  ${workdir}/run_${timestamp}.log
 diamond blastp -d ${keggdatabase} -p ${threads} -q ${workdir}/GenePrediction/assembly.genes.faa --out ${workdir}/GeneAnnotationKEGG/assembly.genes.KEGG.txt --outfmt 6 --max-target-seqs 1 --evalue 0.01

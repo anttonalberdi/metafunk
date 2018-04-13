@@ -87,6 +87,9 @@ keggevalue="0.0000000001"
 
 ##### Functional annotation EggNog
 eggnog="no"
+eggnogdatabase="/home/databases/eggnog-mapper/data/eggnog_proteins.dmnd"
+annotations="/home/projects/pr_46704/people/antalb/databases/eggnog/NOG.annotations.tsv"
+members="/home/projects/pr_46704/people/antalb/databases/eggnog/NOG.members.tsv"
 
 ##### Source load message
 echo "Settings file successfully loaded"
