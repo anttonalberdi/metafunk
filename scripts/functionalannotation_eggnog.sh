@@ -19,6 +19,7 @@ if [[ $eggnogdatabase != "dmnd" ]]; then
     eggnogdatabasedir=$(echo $eggnogdatabase | sed s/\.tar\.gz//)
     eggnogdatabaseparentdir=$(echo $eggnogdatabasedir | sed 's%/[^/]*$%/%')
     tar -xvf ${eggnogdatabase} -C ${eggnogdatabaseparentdir}
+    eggnogdatabasedir=$(echo $eggnogdatabasedir | sed s/\.raw\_algs/\_raw\_algs/)
     cat ${eggnogdatabasedir}/* > ${eggnogdatabasedir}.fasta
     diamond makedb -p ${threads} --in ${eggnogdatabasedir}.fasta -d ${eggnogdatabasedir}
     eggnogdatabase=${eggnogdatabase}.dmnd
