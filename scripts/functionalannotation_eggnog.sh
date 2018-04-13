@@ -21,6 +21,7 @@ if [[ $eggnogdatabase != "dmnd" ]]; then
     mkdir ${eggnogdatabasedir}/extract
     tar -xf ${eggnogdatabase} -C ${eggnogdatabasedir}/extract
     cat ${eggnogdatabasedir}/extract/*/* > ${eggnogdatabasedir}/${eggnogdatabasefile}.fasta
+    rm -r ${eggnogdatabasedir}/extract
     diamond makedb -p ${threads} --in ${eggnogdatabasedir}/${eggnogdatabasefile}.fasta -d ${eggnogdatabasedir}/${eggnogdatabasefile}
     eggnogdatabase=${eggnogdatabasedir}/${eggnogdatabasefile}.dmnd
     fi
