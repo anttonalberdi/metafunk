@@ -78,6 +78,11 @@ if [[ $modules == "11" || $modules =~ ",11," || $modules == 11,* || $modules == 
   then taxonomic="yes"
   else taxonomic="no"
 fi
+if [[ $modules == "12" || $modules =~ ",12," || $modules == 12,* || $modules == *,12 ]];
+  then contigmapping="yes"
+  else contigmapping="no"
+fi
+
 if [ -z "$modules" ]; then
   echo "No modules were specified."
   exit
@@ -281,6 +286,27 @@ if [[ $functional == "yes" ]]; then
     else
     echo "$now | EggNog functional annotation will not be performed" >> ${workdir}/run_${timestamp}.log
   fi
+fi
+
+#########
+# Contig Mapping
+#########
+if [[ $contigmapping == "yes" ]]; then
+  export metafunkdirectory; export timestamp
+  sh ${metafunkdirectory}/scripts/contigmapping.sh
+  else
+  now=$(date +"%Y-%m-%d %H:%M:%S")
+  echo "$now | Reads will not be mapped to contigs" >> ${workdir}/run_${timestamp}.log
+fi
+
+#########
+# Estimate number of genomes
+#########
+now=$(date +"%Y-%m-%d %H:%M:%S")
+if [[ $genomeestimation == "yes" ]]; then
+  echo "$now | Starting genome estimation" >> ${workdir}/run_${timestamp}.log
+  export WORKDIR="${workdir}"; export METAFUNKDIR="${metafunkdirectory}"
+  Rscript ${metafunkdirectory}/scripts/genomestimation.r
 fi
 
 #########

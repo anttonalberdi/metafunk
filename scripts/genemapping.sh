@@ -32,7 +32,7 @@ now=$(date +"%Y-%m-%d %H:%M:%S")
 	fi
 else
 	now=$(date +"%Y-%m-%d %H:%M:%S")
-	echo "$now |        Gene lengths are already indexed" >> ${workdir}/run_${timestamp}.log
+	echo "$now |        Gene lengths are already computed" >> ${workdir}/run_${timestamp}.log
 
 fi
 
