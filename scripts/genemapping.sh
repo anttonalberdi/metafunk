@@ -99,7 +99,7 @@ while read sample; do
 				echo "$now | 		ERROR: There was an error when mapping sample $samplename" >> ${workdir}/run_${timestamp}.log
 				exit
 			else
-				echo "$now | 		Coverage of $samplefile successfully calculated" >> ${workdir}/run_${timestamp}.log
+				echo "$now | 		Coverage of $samplename successfully calculated" >> ${workdir}/run_${timestamp}.log
 			fi
 		else
 			#It is SR
@@ -125,7 +125,7 @@ while read sample; do
 				echo "$now | 			ERROR: There was an error when mapping sample $samplename" >> ${workdir}/run_${timestamp}.log
 				exit
 			else
-				echo "$now |      Coverage of $samplefile successfully calculated" >> ${workdir}/run_${timestamp}.log
+				echo "$now |      Coverage of $samplename successfully calculated" >> ${workdir}/run_${timestamp}.log
 			fi
 		fi
 done < ${sampledatafile}
