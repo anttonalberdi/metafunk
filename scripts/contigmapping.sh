@@ -14,6 +14,7 @@ fi
 #Index contigs
 if [[ $cutcontigs == "yes" ]]; then
   if [ ! -f ${workdir}/CoAssembly/Megahit/final.contigs.cut.filt.fa.fai ]; then
+    now=$(date +"%Y-%m-%d %H:%M:%S")
     echo "$now |        Indexing chunked assembly" >> ${workdir}/run_${timestamp}.log
     samtools faidx ${workdir}/CoAssembly/Megahit/final.contigs.cut.filt.fa
   	bwa index ${workdir}/CoAssembly/Megahit/final.contigs.cut.filt.fa
@@ -24,6 +25,7 @@ if [[ $cutcontigs == "yes" ]]; then
   fi
 else
   if [ ! -f ${workdir}/CoAssembly/Megahit/final.contigs.fa.fai ]; then
+    now=$(date +"%Y-%m-%d %H:%M:%S")
     echo "$now |        Indexing assembly" >> ${workdir}/run_${timestamp}.log
     samtools faidx ${workdir}/CoAssembly/Megahit/final.contigs.fa
     bwa index ${workdir}/CoAssembly/Megahit/final.contigs.fa
@@ -121,7 +123,7 @@ while read sample; do
 				echo "$now | 		ERROR: There was an error when mapping sample $samplename" >> ${workdir}/run_${timestamp}.log
 				exit
 			else
-				echo "$now | 		Coverage of $samplefile successfully calculated" >> ${workdir}/run_${timestamp}.log
+				echo "$now | 		Coverage of $samplename successfully calculated" >> ${workdir}/run_${timestamp}.log
 			fi
 		else
 			#It is SR
@@ -151,7 +153,7 @@ while read sample; do
 				echo "$now | 			ERROR: There was an error when mapping sample $samplename" >> ${workdir}/run_${timestamp}.log
 				exit
 			else
-				echo "$now |      Coverage of $samplefile successfully calculated" >> ${workdir}/run_${timestamp}.log
+				echo "$now |      Coverage of $samplename successfully calculated" >> ${workdir}/run_${timestamp}.log
 			fi
 		fi
 done < ${sampledatafile}
