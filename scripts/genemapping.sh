@@ -12,7 +12,11 @@ if [ ! -f ${workdir}/GenePrediction/assembly.genes.fna.fai ]; then
 	samtools faidx ${workdir}/GenePrediction/assembly.genes.fna
 	bwa index ${workdir}/GenePrediction/assembly.genes.fna
 	now=$(date +"%Y-%m-%d %H:%M:%S")
+	if [ -f ${workdir}/GenePrediction/assembly.genes.fna.fai ]; then
 	echo "$now |        Gene catalogue succesfully indexed" >> ${workdir}/run_${timestamp}.log
+	else
+	echo "$now |        There was an error while indexing the gene catalogue" >> ${workdir}/run_${timestamp}.log
+	fi
 else
 	now=$(date +"%Y-%m-%d %H:%M:%S")
 	echo "$now |        Gene catalogue is already indexed" >> ${workdir}/run_${timestamp}.log
