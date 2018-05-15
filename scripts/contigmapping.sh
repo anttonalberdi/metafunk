@@ -7,8 +7,15 @@ mkdir -p ${workdir}/ContigMapping
 
 #Cut-up assembly
 if [[ $cutcontigs == "yes" ]]; then
+  if [ ! -f ${workdir}/CoAssembly/Megahit/final.contigs.cut.filt.fa ]; then
+    now=$(date +"%Y-%m-%d %H:%M:%S")
+    echo "$now |        Cutting up assembly file" >> ${workdir}/run_${timestamp}.log
   python ${metafunkdirectory}/scripts/cutcontigs.py -c ${chunksize} -o 0 -m ${workdir}/CoAssembly/Megahit/final.contigs.fa > ${workdir}/CoAssembly/Megahit/final.contigs.cut.fa
   python ${metafunkdirectory}/scripts/filtercontiglength.py -m ${mincontigsize} ${workdir}/CoAssembly/Megahit/final.contigs.cut.fa > ${workdir}/CoAssembly/Megahit/final.contigs.cut.filt.fa
+  fi
+  now=$(date +"%Y-%m-%d %H:%M:%S")
+  echo "$now |        Assembly file is already cut up" >> ${workdir}/run_${timestamp}.log
+
 fi
 
 #Index contigs
