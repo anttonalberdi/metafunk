@@ -164,3 +164,9 @@ while read sample; do
 			fi
 		fi
 done < ${sampledatafile}
+
+#Collate coverages
+now=$(date +"%Y-%m-%d %H:%M:%S")
+mkdir -p ${workdir}/GeneTables
+echo "$now |      Collating coverage files" >> ${workdir}/run_${timestamp}.log
+perl ${metafunkdirectory}/scripts/collatecoverages.pl ${workdir}/ContigMapping/ > ${workdir}/GeneTables/ContigCoverageTable.csv
