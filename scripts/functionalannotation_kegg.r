@@ -35,7 +35,7 @@ KEGG.table <- fread(paste(workingdirectory,"/GeneAnnotationKEGG/assembly.genes.K
 colnames(KEGG.table) <- c("Gene","KEGG","pident","length","mismatch","gapopen","qstart","qend","sstart","send","evalue","bitscore")
 
 #Merge Diamond result file and annotation
-KEGG.merged <- merge(KEGG.table[,c("Gene","KEGG","evalue","pident")],KEGG.entry.KO.path,by="KEGG",all.x=TRUE)
+KEGG.merged <- merge(KEGG.table[,c("Gene","KEGG","evalue","pident")],KEGG.entry.KO.path,by="KEGG",all.x=TRUE,allow.cartesian=TRUE)
 KEGG.merged.sorted <- KEGG.merged[order(KEGG.merged$Gene),c("Gene","KEGG","KO","Pathway","evalue","pident")]
 
 #Output annotated table
