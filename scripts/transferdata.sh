@@ -36,7 +36,7 @@ while read sample; do
       if [[ $samplefile2 == *.fastq.gz || $samplefile2 == *.fq.gz ]]; then
       cp ${datadir}/${samplefile2} ${workdir}/RawData/${samplename}_2.fastq.gz
       pigz -d -p ${threads} ${workdir}/RawData/${samplename}_2.fastq.gz
-      elif [[ $samplefile1 == *.fastq || $samplefile1 == *.fq ]]; then
+      elif [[ $samplefile2 == *.fastq || $samplefile2 == *.fq ]]; then
       cp ${datadir}/${samplefile2} ${workdir}/RawData/${samplename}_2.fastq
       else
       echo "$now |    ERROR: The extension of file $samplefile2 is not recognised" >> ${workdir}/run_${timestamp}.log
