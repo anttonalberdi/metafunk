@@ -35,6 +35,11 @@ while read sample; do
     #Print statistics
     now=$(date +"%Y-%m-%d %H:%M:%S")
     echo "$now | 		From sample $samplename, $difference1 (PE1) and $difference2 (PE2) reads (${percentage1}% and ${percentage2}%) were removed due to low quality" >> ${workdir}/run_${timestamp}.log
+    #Compress source files
+    now=$(date +"%Y-%m-%d %H:%M:%S")
+    echo "$now | 		Compressing files Rawdata/${samplename}_1.fastq and Rawdata/${samplename}_2.fastq" >> ${workdir}/run_${timestamp}.log
+    pigz -p ${threads} ${workdir}/RawData/${samplename}_1.fastq
+    pigz -p ${threads} ${workdir}/RawData/${samplename}_2.fastq
   else
     #It is SR
     echo "$now | 	Quality filtering sample $samplename" >> ${workdir}/run_${timestamp}.log
@@ -51,6 +56,10 @@ while read sample; do
     #Print statistics
     now=$(date +"%Y-%m-%d %H:%M:%S")
     echo "$now | 		From sample $samplename, $difference reads (${percentage}%) were removed due to low quality" >> ${workdir}/run_${timestamp}.log
+    #Compress source file
+    now=$(date +"%Y-%m-%d %H:%M:%S")
+    echo "$now | 		Compressing file Rawdata/${samplename}.fastq" >> ${workdir}/run_${timestamp}.log
+    pigz -p ${threads} ${workdir}/RawData/${samplename}.fastq
   fi
 
 done < ${sampledatafile}
