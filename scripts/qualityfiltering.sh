@@ -42,7 +42,7 @@ while read sample; do
     pigz -p ${threads} ${workdir}/RawData/${samplename}_2.fastq
   else
     #It is SR
-    echo "$now | 	Quality filtering sample $samplename" >> ${workdir}/run_${timestamp}.log
+    echo "$now |  Quality filtering sample $samplename" >> ${workdir}/run_${timestamp}.log
     #Perform quality filtering and rename output files
     AdapterRemoval --file1 ${workdir}/RawData/${samplename}.fastq --basename ${workdir}/QualityFiltered/${samplename} --minquality ${minavgquality} --minlength ${minseqlength} --trimqualities --trimns --maxns 5 --qualitymax ${qualitymax} --threads ${threads}
     mv ${workdir}/QualityFiltered/${samplename}.truncated ${workdir}/QualityFiltered/${samplename}.fastq

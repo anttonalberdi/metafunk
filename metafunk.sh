@@ -146,6 +146,7 @@ sh ${metafunkdirectory}/scripts/checkdependencies.sh
 now=$(date +"%Y-%m-%d %H:%M:%S")
 if [[ $copydata == "yes" ]]; then
 samplenumber=$(cat sample.data.txt | wc -l)
+echo "$now | DATA TRANSFER" >> ${workdir}/run_${timestamp}.log
 echo "$now | Copying and uncompressing data files of $samplenumber samples" >> ${workdir}/run_${timestamp}.log
 export workdir; export sampledatafile; export settingsfile; export datadir; export threads; export metafunkdirectory; export timestamp
 sh ${metafunkdirectory}/scripts/transferdata.sh
@@ -159,7 +160,7 @@ fi
 
 now=$(date +"%Y-%m-%d %H:%M:%S")
 if [[ $qualityfiltering == "yes" ]]; then
-echo "$now | Performing quality filtering" >> ${workdir}/run_${timestamp}.log
+echo "$now | QUALITY FILTERING" >> ${workdir}/run_${timestamp}.log
 export workdir; export sampledatafile; export settingsfile; export datadir; export threads; export metafunkdirectory; export timestamp
 sh ${metafunkdirectory}/scripts/qualityfiltering.sh
 else
@@ -170,7 +171,9 @@ fi
 # Remove duplicates
 #########
 
+now=$(date +"%Y-%m-%d %H:%M:%S")
 if [[ $removeduplicates == "yes" ]]; then
+echo "$now | DUPLICATE REMOVAL" >> ${workdir}/run_${timestamp}.log
 export workdir; export sampledatafile; export settingsfile; export datadir; export threads; export metafunkdirectory; export timestamp
 sh ${metafunkdirectory}/scripts/removeduplicates.sh
 else
@@ -182,7 +185,9 @@ fi
 # Remove low complexity reads
 #########
 
+now=$(date +"%Y-%m-%d %H:%M:%S")
 if [[ $removelowcomplexity == "yes" ]]; then
+echo "$now | LOW COMPLEXITY FILTERING" >> ${workdir}/run_${timestamp}.log
 export workdir; export sampledatafile; export settingsfile; export datadir; export threads; export metafunkdirectory; export timestamp
 sh ${metafunkdirectory}/scripts/lowcomplexity.sh
 else
@@ -196,7 +201,7 @@ fi
 
 if [[ $removehostdna == "yes" ]]; then
 now=$(date +"%Y-%m-%d %H:%M:%S")
-echo "$now | Removing host DNA" >> ${workdir}/run_${timestamp}.log
+echo "$now | HOST DNA REMOVAL" >> ${workdir}/run_${timestamp}.log
 export workdir; export sampledatafile; export settingsfile; export datadir; export threads; export metafunkdirectory; export timestamp
 sh ${metafunkdirectory}/scripts/removehostdna.sh
 else
@@ -210,7 +215,7 @@ fi
 
 if [[ $removehumandna == "yes" ]]; then
 now=$(date +"%Y-%m-%d %H:%M:%S")
-echo "$now | Removing human DNA" >> ${workdir}/run_${timestamp}.log
+echo "$now | HUMAN DNA REMOVAL" >> ${workdir}/run_${timestamp}.log
 export workdir; export sampledatafile; export settingsfile; export datadir; export threads; export metafunkdirectory; export timestamp
 sh ${metafunkdirectory}/scripts/removehumandna.sh
 else
@@ -224,7 +229,7 @@ fi
 
 if [[ $coassembly == "yes" ]]; then
 now=$(date +"%Y-%m-%d %H:%M:%S")
-echo "$now | Co-assembling reads" >> ${workdir}/run_${timestamp}.log
+echo "$now | COASSEMBLY" >> ${workdir}/run_${timestamp}.log
 export workdir; export sampledatafile; export settingsfile; export datadir; export threads; export metafunkdirectory; export timestamp
 sh ${metafunkdirectory}/scripts/coassembly.sh
 else
@@ -237,6 +242,8 @@ fi
 #########
 
 if [[ $geneprediction == "yes" ]]; then
+now=$(date +"%Y-%m-%d %H:%M:%S")
+echo "$now | GENE PREDICTION" >> ${workdir}/run_${timestamp}.log
 export workdir; export sampledatafile; export settingsfile; export datadir; export threads; export metafunkdirectory; export timestamp
 sh ${metafunkdirectory}/scripts/geneprediction.sh
 else
@@ -248,6 +255,8 @@ fi
 # Map reads back to the genes and generate Coverage and Hit tables
 #########
 if [[ $genemapping == "yes" ]]; then
+now=$(date +"%Y-%m-%d %H:%M:%S")
+echo "$now | GENE MAPPING" >> ${workdir}/run_${timestamp}.log
 export workdir; export sampledatafile; export settingsfile; export datadir; export threads; export metafunkdirectory; export timestamp
 sh ${metafunkdirectory}/scripts/genemapping.sh
 else
