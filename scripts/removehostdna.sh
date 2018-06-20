@@ -38,6 +38,9 @@ if [[ $indexhostgenome == "yes" ]]; then
 		echo "$now | 		Genome ${genomefile} was succesfully indexed" >> ${workdir}/run_${timestamp}.log
 		fi
 	done < ${sampledatafile}
+else
+	now=$(date +"%Y-%m-%d %H:%M:%S")
+	echo "$now | 		Host genome(s) will not be indexed" >> ${workdir}/run_${timestamp}.log
 
 fi
 
