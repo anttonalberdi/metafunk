@@ -52,7 +52,7 @@ if [[ $modules == "4" || $modules =~ ",4," || $modules == 4,* || $modules == *,4
 fi
 if [[ $modules == "5" || $modules =~ ",5," || $modules == 5,* || $modules == *,5 ]];
   then removehostdna="yes"
-  else removeduplicates="no"
+  else removehostdna="no"
 fi
 if [[ $modules == "6" || $modules =~ ",6," || $modules == 6,* || $modules == *,6 ]];
   then removehumandna="yes"
