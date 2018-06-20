@@ -51,6 +51,11 @@ function lowcompjob() {
     #Print statistics
     now=$(date +"%Y-%m-%d %H:%M:%S")
     echo "$now | 		From sample $samplename, $difference1 (PE1) and $difference2 (PE2) reads (${percentage1}% and ${percentage2}%) were removed due to low complexity" >> ${workdir}/run_${timestamp}.log
+    #Compress source files
+    now=$(date +"%Y-%m-%d %H:%M:%S")
+    echo "$now | 		Compressing files ${sourcefolder}/${samplename}_1.fastq and ${sourcefolder}/${samplename}_2.fastq" >> ${workdir}/run_${timestamp}.log
+    pigz -p ${threads} ${workdir}/${sourcefolder}/${samplename}_1.fastq
+    pigz -p ${threads} ${workdir}/${sourcefolder}/${samplename}_2.fastq
   else
     #It is SR
     echo "$now | 		Removing low complexity reads from SR sample ${samplename}" >> ${workdir}/run_${timestamp}.log
@@ -65,6 +70,11 @@ function lowcompjob() {
     #Print statistics
     now=$(date +"%Y-%m-%d %H:%M:%S")
     echo "$now | 		From sample $samplename, $difference reads (${percentage}%) were removed due to low complexity" >> ${workdir}/run_${timestamp}.log
+    #Compress source file
+    now=$(date +"%Y-%m-%d %H:%M:%S")
+    echo "$now | 		Compressing file ${sourcefolder}/${samplename}.fastq" >> ${workdir}/run_${timestamp}.log
+    pigz -p ${threads} ${workdir}/${sourcefolder}/${samplename}.fastq
+
   fi
 }
 
