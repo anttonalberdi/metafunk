@@ -82,3 +82,6 @@ function lowcompjob() {
 #Export function lowcompjob
 export -f lowcompjob
 parallel -j ${threads} -k lowcompjob {} ${settingsfile} ${sourcefolder} <${sampledatafile}
+
+#Remove low complexity files
+rm ${workdir}/LowComplexFiltered/*_prinseq_bad_*
