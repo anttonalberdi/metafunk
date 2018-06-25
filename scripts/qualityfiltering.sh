@@ -63,3 +63,8 @@ while read sample; do
   fi
 
 done < ${sampledatafile}
+
+#Remove useless files
+rm ${workdir}/QualityFiltered/*.discarded
+rm ${workdir}/QualityFiltered/*.settings
+rm ${workdir}/QualityFiltered/*.singleton.truncated
