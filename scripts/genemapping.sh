@@ -94,6 +94,7 @@ while read sample; do
 			#Generate coverage table
 			samtools sort -T ${workdir}/GeneMapping/${samplename}.tmp.bam -o ${workdir}/GeneMapping/${samplename}.sorted.bam ${workdir}/GeneMapping/${samplename}.bam
 			samtools flagstat ${workdir}/GeneMapping/${samplename}.bam > ${workdir}/GeneMapping/${samplename}.flagstat
+			now=$(date +"%Y-%m-%d %H:%M:%S")
 				echo "$now | 		Calculating coverage for $samplename" >> ${workdir}/run_${timestamp}.log
 			bedtools genomecov -ibam ${workdir}/GeneMapping/${samplename}.sorted.bam -g ${workdir}/GenePrediction/assembly.genes.lengths > ${workdir}/GeneMapping/${samplename}.cov
 			awk -F"\t" '{l[$1]=l[$1]+($2 *$3);r[$1]=$4} END {for (i in l){print i","(l[i]/r[i])}}' ${workdir}/GeneMapping/${samplename}.cov > ${workdir}/GeneMapping/${samplename}.cov.csv
@@ -120,6 +121,7 @@ while read sample; do
 			#Generate coverage table
 			samtools sort -T ${workdir}/GeneMapping/${samplename}.tmp.bam -o ${workdir}/GeneMapping/${samplename}.sorted.bam ${workdir}/GeneMapping/${samplename}.bam
 			samtools flagstat ${workdir}/GeneMapping/${samplename}.bam > ${workdir}/GeneMapping/${samplename}.flagstat
+			now=$(date +"%Y-%m-%d %H:%M:%S")
 				echo "$now |      Calculating coverage for $samplename" >> ${workdir}/run_${timestamp}.log
 			bedtools genomecov -ibam ${workdir}/GeneMapping/${samplename}.sorted.bam -g ${workdir}/GenePrediction/assembly.genes.lengths > ${workdir}/GeneMapping/${samplename}.cov
 			awk -F"\t" '{l[$1]=l[$1]+($2 *$3);r[$1]=$4} END {for (i in l){print i","(l[i]/r[i])}}' ${workdir}/GeneMapping/${samplename}.cov > ${workdir}/GeneMapping/${samplename}.cov.csv
