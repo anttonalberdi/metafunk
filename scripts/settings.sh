@@ -44,6 +44,10 @@ module load anaconda2/4.0.0
 module load R/3.2.1
 #Diamond (https://github.com/bbuchfink/diamond)
 module load diamond/0.9.13
+#Metaphlan
+module load metaphlan/2.6.0
+#Bowtie
+module load bowtie2/2.3.2
 
 #######################################
 ############## Settings ###############
