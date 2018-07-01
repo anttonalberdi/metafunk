@@ -141,15 +141,22 @@ now=$(date +"%Y-%m-%d %H:%M:%S")
 mkdir -p ${workdir}/GeneTables
 echo "$now |      Collating coverage files" >> ${workdir}/run_${timestamp}.log
 perl ${metafunkdirectory}/scripts/collatecoverages.pl ${workdir}/GeneMapping/ > ${workdir}/GeneTables/GeneCoverageTable.csv
-
-#Generate hit table
-echo "$now | Generating hit table" >> ${workdir}/run_${timestamp}.log
-export WORKDIR="${workdir}"
-Rscript ${metafunkdirectory}/scripts/createhittable.r --no-save
-filesize=$(ls -l ${workdir}/GeneTables/HitTable.csv | awk '{print $5}')
-now=$(date +"%Y-%m-%d %H:%M:%S")
+filesize=$(ls -l ${workdir}/GeneTables/GeneCoverageTable.csv | awk '{print $5}')
 if [[ $filesize > 0 ]]; then
-echo "$now |        Hit table was successfully created" >> ${workdir}/run_${timestamp}.log
+echo "$now |        Coverage table was successfully created" >> ${workdir}/run_${timestamp}.log
+	#Generate hit table
+	echo "$now | Generating hit table" >> ${workdir}/run_${timestamp}.log
+	export WORKDIR="${workdir}"
+	Rscript ${metafunkdirectory}/scripts/createhittable.r --no-save
+	filesize=$(ls -l ${workdir}/GeneTables/HitTable.csv | awk '{print $5}')
+	now=$(date +"%Y-%m-%d %H:%M:%S")
+	if [[ $filesize > 0 ]]; then
+	echo "$now |        Hit table was successfully created" >> ${workdir}/run_${timestamp}.log
+	else
+	echo "$now |        There was an error while generating the hit table" >> ${workdir}/run_${timestamp}.log
+	fi
 else
-echo "$now |        There was an error while generating the hit table" >> ${workdir}/run_${timestamp}.log
+echo "$now |        There was an error while generating the coverage table. Probably the process ran out of memory." >> ${workdir}/run_${timestamp}.log
+echo "$now |        Hit table could not be generated" >> ${workdir}/run_${timestamp}.log
 fi
+
