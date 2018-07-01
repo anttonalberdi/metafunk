@@ -51,7 +51,7 @@ while read sample; do
        	now=$(date +"%Y-%m-%d %H:%M:%S")
     	echo "$now | 		Assigning taxonomy to ${samplename}" >> ${workdir}/run_${timestamp}.log
 	metaphlan2.py ${workdir}/${sourcefolder}/${query}.fastq --input_type fastq --nproc ${threads} -o ${workdir}/TaxonomicAnnotation/${query}.txt
-
+	fi
 done < ${sampledatafile}
 
 #Merge all output files
