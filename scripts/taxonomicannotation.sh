@@ -44,7 +44,7 @@ while read sample; do
     	#Run metaphlan
      	now=$(date +"%Y-%m-%d %H:%M:%S")
      	echo "$now | 		Assigning taxonomy to ${samplename}" >> ${workdir}/run_${timestamp}.log
-    	metaphlan2.py ${workdir}/${sourcefolder}/${query}_1.fastq,${workdir}/${sourcefolder}/${query}_2.fastq --input_type fastq --nproc ${threads} -o ${workdir}/TaxonomicAnnotation/${query}.txt
+    	metaphlan2.py ${workdir}/${sourcefolder}/${query}_1.fastq,${workdir}/${sourcefolder}/${query}_2.fastq --input_type fastq --nproc ${threads} --bowtie2out ${workdir}/TaxonomicAnnotation/${query}.bowtie2.bz2 -o ${workdir}/TaxonomicAnnotation/${query}.txt
 		else
 	#It is SR
     	#Run metaphlan
