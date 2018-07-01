@@ -42,11 +42,11 @@ while read sample; do
       fi
  
     #Run metaphlan
-    metaphlan2.py ${workdir}/${sourcefolder}/${query}_1.fastq,${workdir}/${sourcefolder}/${query}_2.fastq --input_type fastq --nproc ${threads}
+    metaphlan2.py ${workdir}/${sourcefolder}/${query}_1.fastq,${workdir}/${sourcefolder}/${query}_2.fastq --input_type fastq --nproc ${threads} -o ${workdir}/TaxonomicAnnotation/${query}.txt
 		else
 			#It is SR
     #Run metaphlan
-    metaphlan2.py ${workdir}/${sourcefolder}/${query}.fastq --input_type fastq --nproc ${threads}
+    metaphlan2.py ${workdir}/${sourcefolder}/${query}.fastq --input_type fastq --nproc ${threads} -o ${workdir}/TaxonomicAnnotation/${query}.txt
 
 done < ${sampledatafile}
 
