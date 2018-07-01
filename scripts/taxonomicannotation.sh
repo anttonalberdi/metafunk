@@ -41,12 +41,20 @@ while read sample; do
           sourcefolder="TaxonomicAnnotation"
       fi
  
-    #Run metaphlan
-    metaphlan2.py ${workdir}/${sourcefolder}/${query}_1.fastq,${workdir}/${sourcefolder}/${query}_2.fastq --input_type fastq --nproc ${threads} -o ${workdir}/TaxonomicAnnotation/${query}.txt
+    	#Run metaphlan
+     	now=$(date +"%Y-%m-%d %H:%M:%S")
+     	echo "$now | 		Assigning taxonomy to ${samplename}" >> ${workdir}/run_${timestamp}.log
+    	metaphlan2.py ${workdir}/${sourcefolder}/${query}_1.fastq,${workdir}/${sourcefolder}/${query}_2.fastq --input_type fastq --nproc ${threads} -o ${workdir}/TaxonomicAnnotation/${query}.txt
 		else
-			#It is SR
-    #Run metaphlan
-    metaphlan2.py ${workdir}/${sourcefolder}/${query}.fastq --input_type fastq --nproc ${threads} -o ${workdir}/TaxonomicAnnotation/${query}.txt
+	#It is SR
+    	#Run metaphlan
+       	now=$(date +"%Y-%m-%d %H:%M:%S")
+    	echo "$now | 		Assigning taxonomy to ${samplename}" >> ${workdir}/run_${timestamp}.log
+	metaphlan2.py ${workdir}/${sourcefolder}/${query}.fastq --input_type fastq --nproc ${threads} -o ${workdir}/TaxonomicAnnotation/${query}.txt
 
 done < ${sampledatafile}
 
+#Merge all output files
+now=$(date +"%Y-%m-%d %H:%M:%S")
+echo "$now | 		Merging all taxonomic profiles" >> ${workdir}/run_${timestamp}.log
+merge_metaphlan_tables.py ${workdir}/TaxonomicAnnotation/*.txt > ${workdir}/GeneTables/taxonomytable.txt
