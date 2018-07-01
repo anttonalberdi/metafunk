@@ -319,6 +319,18 @@ if [[ $genomeestimation == "yes" ]]; then
 fi
 
 #########
+# Perform taxonomic profiling
+#########
+now=$(date +"%Y-%m-%d %H:%M:%S")
+if [[ $taxonomic == "yes" ]]; then
+  echo "$now | Starting taxonomic profiling" >> ${workdir}/run_${timestamp}.log
+  export metafunkdirectory; export timestamp
+  sh ${metafunkdirectory}/scripts/taxonomicannotation.sh
+  else
+  echo "$now | Taxonomic profiling will not be conducted" >> ${workdir}/run_${timestamp}.log
+fi
+
+#########
 # Final message
 #########
 now=$(date +"%Y-%m-%d %H:%M:%S")
