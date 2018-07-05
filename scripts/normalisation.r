@@ -24,19 +24,27 @@ dgList <- DGEList(counts=hit.table, lib.size = colSums(hit.table), genes=rowname
 #Calculate and apply normalisation factors
 
 #Method TMM
+if (grepl("tmm", normalisationmethod) == TRUE){
 dgList.tmm <- calcNormFactors(dgList, method="TMM")
 tmm.nf <- dgList.tmm$samples$norm.factors
 hit.table.tmm <- round(sweep(hit.table, 2, tmm.nf, FUN="*"))
+}
 
 #Method RLE
+if (grepl("rle", normalisationmethod) == TRUE){
 dgList.RLE <- calcNormFactors(dgList, method="RLE")
 RLE.nf <- dgList.RLE$samples$norm.factors
 hit.table.RLE <- round(sweep(hit.table, 2, RLE.nf, FUN="*"))
+}
 
 #Method UQ - PROBABLY NOT WORKING!!
+if (grepl("uq", normalisationmethod) == TRUE){
 dgList.UQ <- calcNormFactors(dgList, method="upperquartile")
 UQ.nf <- dgList.UQ$samples$norm.factors
 hit.table.UQ <- round(sweep(hit.table, 2, UQ.nf, FUN="*"))
-
+}
+  
 #Method TSS
+if (grepl("tss", normalisationmethod) == TRUE){
 hit.table.tss <- round(sweep(hit.table, 2, totals, FUN="/") * normalisationscale,normalisationdecimals)
+}
