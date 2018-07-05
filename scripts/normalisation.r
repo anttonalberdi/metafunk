@@ -8,6 +8,8 @@ normalisationdecimals <- as.numeric(Sys.getenv("NORMALISATIONDECIMALS"))
 
 #Load files
 hit.table <- data.frame(fread(paste(workingdirectory,"/GeneTables/GeneHitTable.csv",sep=""),sep=",",header=TRUE),row.names=1)
+gene.lengths <- data.frame(fread(paste(workingdirectory,"/GenePrediction/assembly.genes.lengths",sep=""),sep="\t",header=FALSE))
+colnames(gene.lengths) <- c("gene","length")
 
 #Define groups
 sample.data <- read.table(sampledatafile,header=FALSE)
@@ -28,6 +30,10 @@ if (grepl("tmm", normalisationmethod) == TRUE){
 dgList.tmm <- calcNormFactors(dgList, method="TMM")
 tmm.nf <- dgList.tmm$samples$norm.factors
 hit.table.tmm <- round(sweep(hit.table, 2, tmm.nf, FUN="*"))
+gene.lengths.subset <- gene.lengths[rownames(hit.table.tmm),]
+coverage.table.tmm <- sweep(hit.table.tmm, 1, gene.lengths.subset, FUN="/")
+write.table(coverage.table.tmm,paste(paste(workingdirectory,"/GeneTables/GeneCoverageTable.tmm.csv",sep=""),row.names=TRUE, col.names=TRUE,sep=",",quote=FALSE)
+write.table(hit.table.tmm,paste(paste(workingdirectory,"/GeneTables/GeneHitTable.tmm.csv",sep=""),row.names=TRUE, col.names=TRUE,sep=",",quote=FALSE)
 }
 
 #Method RLE
