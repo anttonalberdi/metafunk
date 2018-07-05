@@ -132,6 +132,8 @@ echo "" >> ${workdir}/run_${timestamp}.log
 #########
 # Check if the number of columns is as expected in all rows
 cat ${sampledatafile} | awk -F ' ' -v NCOLS=4 'NF!=NCOLS{printf "Wrong number of columns at line %d\n", NR; exit}'
+# Check whether there are duplicate sample names
+awk 'x[$1]++ == 1 { print "ERROR!: Sample name" $1 " is duplicated"}' ${sampledatafile} >> ${workdir}/run_${timestamp}.log
 
 #########
 # Check dependencies
