@@ -10,10 +10,12 @@ hit.table <- data.frame(fread(paste(workingdirectory,"/GeneTables/GeneHitTable.c
 
 #Define groups
 sample.data <- read.table(sampledatafile,header=FALSE)
-groups <- sample.data[,4]
-
-#Select reference samples
-
+if (ncol(sample.data) > 3){
+samples <- colnames(hit.table)
+groups <- sample.data[sample.data[,1] %in% samples,4]
+}else{
+print("Group column does not exist.")
+}
 
 #Create DGEL list object
 dgList <- DGEList(counts=hit.table, lib.size = colSums(hit.table), genes=rownames(hit.table), group=groups, remove.zeros=TRUE)
