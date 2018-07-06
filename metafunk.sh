@@ -82,6 +82,10 @@ if [[ $modules == "12" || $modules =~ ",12," || $modules == 12,* || $modules == 
   then contigmapping="yes"
   else contigmapping="no"
 fi
+if [[ $modules == "15" || $modules =~ ",15," || $modules == 15,* || $modules == *,15 ]];
+  then normalisation="yes"
+  else normalisation="no"
+fi
 
 if [ -z "$modules" ]; then
   echo "No modules were specified."
@@ -266,17 +270,6 @@ echo "$now | Gene mapping will not be performed" >> ${workdir}/run_${timestamp}.
 fi
 
 #########
-# Normalise Coverage and Hit tables
-#########
-if [[ $tss == "yes" || $css == "yes" ]]; then
-  export metafunkdirectory; export timestamp
-  sh ${metafunkdirectory}/scripts/normalisetables.sh
-  else
-  now=$(date +"%Y-%m-%d %H:%M:%S")
-  echo "$now | Hit and coverage tables will not be normalised" >> ${workdir}/run_${timestamp}.log
-fi
-
-#########
 # Perform functional annotation
 #########
 now=$(date +"%Y-%m-%d %H:%M:%S")
@@ -330,6 +323,17 @@ if [[ $taxonomic == "yes" ]]; then
   sh ${metafunkdirectory}/scripts/taxonomicannotation.sh
   else
   echo "$now | Taxonomic profiling will not be conducted" >> ${workdir}/run_${timestamp}.log
+fi
+
+#########
+# Normalise Coverage and Hit tables
+#########
+if [[ $normalisation == "yes" ]]; then
+  export metafunkdirectory; export timestamp
+  sh ${metafunkdirectory}/scripts/normalisation.sh
+  else
+  now=$(date +"%Y-%m-%d %H:%M:%S")
+  echo "$now | Hit and coverage tables will not be normalised" >> ${workdir}/run_${timestamp}.log
 fi
 
 #########
