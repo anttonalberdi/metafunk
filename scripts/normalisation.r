@@ -39,8 +39,12 @@ write.table(hit.table.tmm,paste(paste(workingdirectory,"/GeneTables/GeneHitTable
 #Method RLE
 if (grepl("rle", normalisationmethod) == TRUE){
 dgList.RLE <- calcNormFactors(dgList, method="RLE")
-RLE.nf <- dgList.RLE$samples$norm.factors
-hit.table.RLE <- round(sweep(hit.table, 2, RLE.nf, FUN="*"))
+rle.nf <- dgList.RLE$samples$norm.factors
+hit.table.rle <- round(sweep(hit.table, 2, rle.nf, FUN="*"))
+gene.lengths.subset <- gene.lengths[rownames(hit.table.rle),]
+coverage.table.rle <- sweep(hit.table.rle, 1, gene.lengths.subset, FUN="/")
+write.table(coverage.table.rle,paste(paste(workingdirectory,"/GeneTables/GeneCoverageTable.rle.csv",sep=""),row.names=TRUE, col.names=TRUE,sep=",",quote=FALSE)
+write.table(hit.table.rle,paste(paste(workingdirectory,"/GeneTables/GeneHitTable.rle.csv",sep=""),row.names=TRUE, col.names=TRUE,sep=",",quote=FALSE)
 }
 
 #Method UQ - PROBABLY NOT WORKING!!
@@ -53,4 +57,9 @@ hit.table.UQ <- round(sweep(hit.table, 2, UQ.nf, FUN="*"))
 #Method TSS
 if (grepl("tss", normalisationmethod) == TRUE){
 hit.table.tss <- round(sweep(hit.table, 2, totals, FUN="/") * normalisationscale,normalisationdecimals)
+gene.lengths.subset <- gene.lengths[rownames(hit.table.tss),]
+coverage.table.tss <- sweep(hit.table.tss, 1, gene.lengths.subset, FUN="/")
+write.table(coverage.table.tss,paste(paste(workingdirectory,"/GeneTables/GeneCoverageTable.tss.csv",sep=""),row.names=TRUE, col.names=TRUE,sep=",",quote=FALSE)
+write.table(hit.table.tss,paste(paste(workingdirectory,"/GeneTables/GeneHitTable.tss.csv",sep=""),row.names=TRUE, col.names=TRUE,sep=",",quote=FALSE)
+
 }
