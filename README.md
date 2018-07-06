@@ -20,7 +20,7 @@ MetaFunk is suitable for Illumina and BGISeq single-read (SR) and paired-end (PE
 ### Metagenomic species profiling
 12. Contig mapping
 ### Statistical analyses and visualisation
-Nn. Gene table normalisation
+15. Gene table normalisation
 
 
 ## Quick start
