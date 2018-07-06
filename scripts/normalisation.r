@@ -33,7 +33,7 @@ hit.table.tmm <- round(sweep(hit.table, 2, tmm.nf, FUN="*"))
 gene.lengths.subset <- gene.lengths[rownames(hit.table.tmm),]
 coverage.table.tmm <- sweep(hit.table.tmm, 1, gene.lengths.subset, FUN="/")
 write.table(coverage.table.tmm,paste(paste(workingdirectory,"/GeneTables/GeneCoverageTable.tmm.csv",sep=""),row.names=TRUE, col.names=TRUE,sep=",",quote=FALSE)
-write.table(hit.table.tmm,paste(paste(workingdirectory,"/GeneTables/GeneHitTable.tmm.csv",sep=""),row.names=TRUE, col.names=TRUE,sep=",",quote=FALSE)
+write.table(hit.table.tmm,paste(workingdirectory,"/GeneTables/GeneHitTable.tmm.csv",sep=""),row.names=TRUE, col.names=TRUE,sep=",",quote=FALSE)
 }
 
 #Method RLE
@@ -44,7 +44,7 @@ hit.table.rle <- round(sweep(hit.table, 2, rle.nf, FUN="*"))
 gene.lengths.subset <- gene.lengths[rownames(hit.table.rle),]
 coverage.table.rle <- sweep(hit.table.rle, 1, gene.lengths.subset, FUN="/")
 write.table(coverage.table.rle,paste(paste(workingdirectory,"/GeneTables/GeneCoverageTable.rle.csv",sep=""),row.names=TRUE, col.names=TRUE,sep=",",quote=FALSE)
-write.table(hit.table.rle,paste(paste(workingdirectory,"/GeneTables/GeneHitTable.rle.csv",sep=""),row.names=TRUE, col.names=TRUE,sep=",",quote=FALSE)
+write.table(hit.table.rle,paste(workingdirectory,"/GeneTables/GeneHitTable.rle.csv",sep=""),row.names=TRUE, col.names=TRUE,sep=",",quote=FALSE)
 }
 
 #Method UQ - PROBABLY NOT WORKING!!
@@ -60,6 +60,6 @@ hit.table.tss <- round(sweep(hit.table, 2, totals, FUN="/") * normalisationscale
 gene.lengths.subset <- gene.lengths[rownames(hit.table.tss),]
 coverage.table.tss <- sweep(hit.table.tss, 1, gene.lengths.subset, FUN="/")
 write.table(coverage.table.tss,paste(paste(workingdirectory,"/GeneTables/GeneCoverageTable.tss.csv",sep=""),row.names=TRUE, col.names=TRUE,sep=",",quote=FALSE)
-write.table(hit.table.tss,paste(paste(workingdirectory,"/GeneTables/GeneHitTable.tss.csv",sep=""),row.names=TRUE, col.names=TRUE,sep=",",quote=FALSE)
+write.table(hit.table.tss,paste(workingdirectory,"/GeneTables/GeneHitTable.tss.csv",sep=""),row.names=TRUE, col.names=TRUE,sep=",",quote=FALSE)
 
 }
