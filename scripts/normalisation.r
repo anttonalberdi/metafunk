@@ -32,7 +32,7 @@ tmm.nf <- dgList.tmm$samples$norm.factors
 hit.table.tmm <- round(sweep(hit.table, 2, tmm.nf, FUN="*"))
 gene.lengths.subset <- gene.lengths[rownames(hit.table.tmm),]
 coverage.table.tmm <- sweep(hit.table.tmm, 1, gene.lengths.subset, FUN="/")
-write.table(coverage.table.tmm,paste(paste(workingdirectory,"/GeneTables/GeneCoverageTable.tmm.csv",sep=""),row.names=TRUE, col.names=TRUE,sep=",",quote=FALSE)
+write.table(coverage.table.tmm,paste(workingdirectory,"/GeneTables/GeneCoverageTable.tmm.csv",sep=""),row.names=TRUE, col.names=TRUE,sep=",",quote=FALSE)
 write.table(hit.table.tmm,paste(workingdirectory,"/GeneTables/GeneHitTable.tmm.csv",sep=""),row.names=TRUE, col.names=TRUE,sep=",",quote=FALSE)
 }
 
