@@ -3,8 +3,6 @@ library(edgeR)
 workingdirectory <- Sys.getenv("WORKDIR")
 sampledatafile <- Sys.getenv("SAMPLEDATAFILE")
 normalisationmethod <- Sys.getenv("NORMALISATIONMETHOD")
-normalisationscale <- as.numeric(Sys.getenv("NORMALISATIONSCALE"))
-normalisationdecimals <- as.numeric(Sys.getenv("NORMALISATIONDECIMALS"))
 
 #Load files
 hit.table <- data.frame(fread(paste(workingdirectory,"/GeneTables/GeneHitTable.csv",sep=""),sep=",",header=TRUE),row.names=1)
