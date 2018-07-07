@@ -64,7 +64,7 @@ seqdepths <- colSums(hit.table)
 y <- which.min(abs(seqdepths - mean(seqdepths))) 
 reference <- seqdepths[y]
 # 
-tss.nf <- round(seqdepths / reference, 5)
+tss.nf <- round(reference/seqdepths, 5)
 hit.table.tss <- round(sweep(hit.table, 2, tss.nf, FUN="*"))
 hit.table.tss <- hit.table.tss[order(row.names(hit.table.tss)),] 
 gene.lengths.subset <- gene.lengths[gene.lengths[,1] %in% rownames(hit.table.tss),]
