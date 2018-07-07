@@ -44,7 +44,7 @@ hit.table.rle <- round(sweep(hit.table, 2, rle.nf, FUN="*"))
 hit.table.rle <- hit.table.rle[order(row.names(hit.table.rle)),] 
 gene.lengths.subset <- gene.lengths[gene.lengths[,1] %in% rownames(hit.table.rle),]
 coverage.table.rle <- round(sweep(hit.table.rle, 1, gene.lengths.subset[,2], FUN="/"),6)
-write.table(coverage.table.rle,paste(paste(workingdirectory,"/GeneTables/GeneCoverageTable.rle.csv",sep=""),row.names=TRUE, col.names=TRUE,sep=",",quote=FALSE)
+write.table(coverage.table.rle,paste(workingdirectory,"/GeneTables/GeneCoverageTable.rle.csv",sep=""),row.names=TRUE, col.names=TRUE,sep=",",quote=FALSE)
 write.table(hit.table.rle,paste(workingdirectory,"/GeneTables/GeneHitTable.rle.csv",sep=""),row.names=TRUE, col.names=TRUE,sep=",",quote=FALSE)
 }
 
@@ -67,6 +67,6 @@ hit.table.tss <- round(sweep(hit.table, 2, tss.nf, FUN="*"))
 hit.table.tss <- hit.table.tss[order(row.names(hit.table.tss)),] 
 gene.lengths.subset <- gene.lengths[gene.lengths[,1] %in% rownames(hit.table.tss),]
 coverage.table.tss <- round(sweep(hit.table.tss, 1, gene.lengths.subset[,2], FUN="/"),6)
-write.table(coverage.table.tss,paste(paste(workingdirectory,"/GeneTables/GeneCoverageTable.tss.csv",sep=""),row.names=TRUE, col.names=TRUE,sep=",",quote=FALSE)
+write.table(coverage.table.tss,paste(workingdirectory,"/GeneTables/GeneCoverageTable.tss.csv",sep=""),row.names=TRUE, col.names=TRUE,sep=",",quote=FALSE)
 write.table(hit.table.tss,paste(workingdirectory,"/GeneTables/GeneHitTable.tss.csv",sep=""),row.names=TRUE, col.names=TRUE,sep=",",quote=FALSE)
 }
