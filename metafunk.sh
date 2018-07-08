@@ -86,6 +86,10 @@ if [[ $modules == "15" || $modules =~ ",15," || $modules == 15,* || $modules == 
   then normalisation="yes"
   else normalisation="no"
 fi
+if [[ $modules == "16" || $modules =~ ",16," || $modules == 16,* || $modules == *,16 ]];
+  then functionalcontrasting="yes"
+  else functionalcontrasting="no"
+fi
 
 if [ -z "$modules" ]; then
   echo "No modules were specified."
@@ -334,6 +338,17 @@ if [[ $normalisation == "yes" ]]; then
   else
   now=$(date +"%Y-%m-%d %H:%M:%S")
   echo "$now | Hit and coverage tables will not be normalised" >> ${workdir}/run_${timestamp}.log
+fi
+
+#########
+# Functional contrasting
+#########
+if [[ $functionalcontrasting == "yes" ]]; then
+  export metafunkdirectory; export timestamp
+  sh ${metafunkdirectory}/scripts/functionalcontrasting.sh
+  else
+  now=$(date +"%Y-%m-%d %H:%M:%S")
+  echo "$now | Functional contrasting will not be conducted" >> ${workdir}/run_${timestamp}.log
 fi
 
 #########
