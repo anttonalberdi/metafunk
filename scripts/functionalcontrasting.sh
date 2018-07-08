@@ -6,4 +6,5 @@ echo "$now | Contrasting KEGG functional profiles" >> ${workdir}/run_${timestamp
 export WORKDIR="${workdir}"
 export SAMPLEDATAFILE="${sampledatafile}"
 export NORMALISATIONMETHOD="${normalisationmethod}"
+export ANNOTATIONTHRESHOLD="${annotationthreshold}"
 Rscript ${metafunkdirectory}/scripts/functionalcontrasting_KEGG.r --no-save
