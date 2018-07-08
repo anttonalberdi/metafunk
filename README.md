@@ -21,7 +21,7 @@ MetaFunk is suitable for Illumina and BGISeq single-read (SR) and paired-end (PE
 12. Contig mapping
 ### Statistical analyses and visualisation
 15. Gene table normalisation
-
+16. Functional contrasting
 
 ## Quick start
 1. Clone or download metafunk to your working environment
