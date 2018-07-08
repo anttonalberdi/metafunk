@@ -6,7 +6,5 @@ source $settingsfile
   export WORKDIR="${workdir}"
   export SAMPLEDATAFILE="${sampledatafile}"
   export NORMALISATIONMETHOD="${normalisationmethod}"
-  export NORMALISATIONSCALE="${normalisationscale}"
-  export NORMALISATIONDECIMALS="${normalisationdecimals}"
   Rscript ${metafunkdirectory}/scripts/normalisation.r --no-save
 
