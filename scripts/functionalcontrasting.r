@@ -46,13 +46,49 @@ write.table(cov.Path.table.aggregated.metabolism,paste(workingdirectory,"/GeneTa
 
 ##### Run statistical analyses ######
 
+cov.Path.metabolism <- data.frame(fread(paste(workingdirectory,"/GeneTables/GeneCoverageTable.",method,".Path.metabolism.csv",sep=""),sep=",",header=TRUE,colClasses=list(character=c("Path"))),row.names=1)
+cov.KO <- data.frame(fread(paste(workingdirectory,"/GeneTables/GeneCoverageTable.",method,".KO.csv",sep=""),sep=",",header=TRUE,colClasses=list(character=c("KO"))),row.names=1)
+
 #Define number of groups
 sampledata <- read.table(sampledatafile,row.names=1)
-groupnumber <- length(unique(sampledata[,3]))
+groups <- sampledata[,3]
+groupnames <- unique(groups)
+groupnumber <- length(groupnames)
 
 if (groupnumber == 1){
 "It is not possible to contrast groups, as only one group has been defined"
 }
 if (groupnumber == 2){
+
+#Define groups
+group1 <- rownames(sampledata[sampledata[,3] == groupnames[1],])
+group2 <- rownames(sampledata[sampledata[,3] == groupnames[2],])
+  
+#Pathway level Wilcoxon
+    pathways <- rownames(cov.Path.metabolism)
+    pathway.table <- c()
+    for (path in pathways){
+    x <- as.numeric(cov.Path.metabolism[path,group1])
+    y <- as.numeric(cov.Path.metabolism[path,group2])
+    pvalue <- wilcox.test(x,y)$p.value
+    row <- cbind(path,pvalue)
+    pathway.table <- rbind(pathway.table,row)
+    }
+    write.table(pathway.table,paste(workingdirectory,"/FunctionalStats/KEGG.pathway.metabolism.",method,".wilcoxontest.csv",sep=""),sep=",",quote=FALSE,row.names=FALSE,col.names=TRUE)
+
+#KO level Wilcoxon
+    KOs <- rownames(cov.KO)
+    KO.table <- c()
+    for (KO in KOs){
+    x <- as.numeric(cov.KO[KO,group1])
+    y <- as.numeric(cov.KO[KO,group2])
+    pvalue <- wilcox.test(x,y)$p.value
+    row <- cbind(KO,pvalue)
+    KO.table <- rbind(KO.table,row)
+    }
+    write.table(pathway.table,paste(workingdirectory,"/FunctionalStats/KEGG.KO.",method,".wilcoxontest.csv",sep=""),sep=",",quote=FALSE,row.names=FALSE,col.names=TRUE)
+
+}
+if (groupnumber > 2){
 
 }
