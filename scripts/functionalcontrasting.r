@@ -4,6 +4,7 @@ workingdirectory <- Sys.getenv("WORKDIR")
 sampledatafile <- Sys.getenv("SAMPLEDATAFILE")
 normalisationmethod <- Sys.getenv("NORMALISATIONMETHOD")
 keggthreshold <- Sys.getenv("KEGGTHRESHOLD")
+timestamp <- Sys.getenv("TIMESTAMP")
 
 #Choose normalisation methods
 methods <- strsplit(normalisationmethod, ",")[[1]]
@@ -19,6 +20,8 @@ KOtoPath <- KOtoPath[complete.cases(KOtoPath), ]
 
 #Loop across normalisation methods
 for (method in methods){
+text=paste("      Aggregating KO and Path values for normalisation method: ",method,sep="")  
+write(text,file=paste(workingdirectory,"run_",timestamp,".log",sep=""),append=TRUE)
 cov.table <- fread(paste(workingdirectory,"/GeneTables/GeneCoverageTable.",method,".csv",sep=""),sep=",")
 colnames(cov.table)[1] <- "contig"
   
