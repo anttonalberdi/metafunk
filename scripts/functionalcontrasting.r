@@ -71,6 +71,19 @@ if (groupnumber == 2){
 #Define groups
 group1 <- rownames(sampledata[sampledata[,3] == groupnames[1],])
 group2 <- rownames(sampledata[sampledata[,3] == groupnames[2],])
+
+#Domain level Wilcoxon
+    domains <- rownames(cov.Domain.metabolism)
+    domain.table <- c()
+    for (domain in domains){
+    x <- as.numeric(cov.Domain.metabolism[domain,group1])
+    y <- as.numeric(cov.Domain.metabolism[domain,group2])
+    pvalue <- wilcox.test(x,y)$p.value
+    row <- cbind(domain,pvalue)
+    domain.table <- rbind(domain.table,row)
+    }
+    write.table(domain.table,paste(workingdirectory,"/FunctionalStats/KEGG.domain.metabolism.",method,".wilcoxontest.csv",sep=""),sep=",",quote=FALSE,row.names=FALSE,col.names=TRUE)
+
   
 #Pathway level Wilcoxon
     pathways <- rownames(cov.Path.metabolism)
