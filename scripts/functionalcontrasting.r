@@ -30,8 +30,7 @@ write.table(cov.KO.table.aggregated,paste(workingdirectory,"/GeneTables/GeneCove
 
 #Path aggregation
 cov.KO.Path.table <- merge(cov.KO.table,KOtoPath,by="KO",allow.cartesian=TRUE)
-cov.Path.table.aggregated <- aggregate(subset(cov.KO.Path.table, select = -c(KO,contig)),by=list(cov.KO.Path.table$Path),FUN=sum)#NOT WORKING!
+cov.Path.table.aggregated <- aggregate(subset(cov.KO.Path.table, select = -c(KO,contig,Path)),by=list(cov.KO.Path.table$Path),FUN=sum)
 colnames(cov.Path.table.aggregated)[1]<-"Path"
 write.table(cov.Path.table.aggregated,paste(workingdirectory,"/GeneTables/GeneCoverageTable.",method,".Path.csv",sep=""),sep=",",quote=FALSE,row.names=FALSE,col.names=TRUE)
-
 }
