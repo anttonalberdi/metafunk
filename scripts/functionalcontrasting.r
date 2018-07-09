@@ -1,5 +1,6 @@
 
 library(data.table)
+library(ggplot2)
 workingdirectory <- Sys.getenv("WORKDIR")
 metafunkdirectory <- Sys.getenv("METAFUNKDIR")
 sampledatafile <- Sys.getenv("SAMPLEDATAFILE")
@@ -114,7 +115,19 @@ group2 <- rownames(sampledata[sampledata[,3] == groupnames[2],])
 #Domain level Jitterplot
 domain.melt <- cbind(rep(domains,length(sampledata[,3])),melt(cov.Domain.metabolism))
 domain.melt2 <- merge(domain.melt,sample.group,by.x="variable",by.y="Sample")
-colnames(domain.melt) <- c("Domain","Sample","Value","Group")
+colnames(domain.melt2) <- c("Sample","Domain","Value","Group")
+
+my_col_scheme <- c("#e57373","#81c784")
+ggplot(domain.melt2, aes(x=Value, y=Domain, fill=Group, colour=Group, alpha=0.3)) + 
+  geom_jitter(height = 0.15) +
+	scale_colour_manual(values = my_col_scheme) +
+	scale_shape_manual(values=16) +
+  labs(x="Coverage", y="Metabolic domains") +
+	theme(panel.background = element_rect(fill = 'white', colour = 'grey'))
+ggsave(paste(workingdirectory,"/FunctionalStats/KEGG.Domain.",method,".jitter.pdf",sep=""), width = 20, height = 10, units  = "cm")
+
+  
+  
   
 }
 if (groupnumber > 2){
