@@ -9,6 +9,7 @@ awk -v threshold="${keggthreshold}" '$5 <= threshold {print $0}' ${workdir}/Gene
 
 #Run analysis in R
 export WORKDIR="${workdir}"
+export METAFUNKDIR="${metafunkdirectory}"
 export SAMPLEDATAFILE="${sampledatafile}"
 export NORMALISATIONMETHOD="${normalisationmethod}"
 export KEGGTHRESHOLD="${keggthreshold}"
