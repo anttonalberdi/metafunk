@@ -42,11 +42,19 @@ write.table(cov.Path.table.aggregated,paste(workingdirectory,"/GeneTables/GeneCo
 KEGG.metabolism <- data.frame(fread(paste(metafunkdirectory,"/files/KEGG.metabolism.csv",sep=""),header=TRUE,sep=",",colClasses="character"))
 cov.Path.table.aggregated.metabolism <- cov.Path.table.aggregated[cov.Path.table.aggregated$Path %in% KEGG.metabolism$Pathway,]
 write.table(cov.Path.table.aggregated.metabolism,paste(workingdirectory,"/GeneTables/GeneCoverageTable.",method,".Path.metabolism.csv",sep=""),sep=",",quote=FALSE,row.names=FALSE,col.names=TRUE)
+
+
+#Metabolic domain aggregation
+cov.Path.table.aggregated.metabolism.domain <- merge(cov.Path.table.aggregated.metabolism,KEGG.metabolism[,c(1,3)],by.x="Path",by.y="Pathway")
+cov.domain.table.aggregated <- aggregate(subset(cov.Path.table.aggregated.metabolism.domain, select = -c(Path,Class)),by=list(cov.Path.table.aggregated.metabolism.domain$Class),FUN=sum)
+colnames(cov.domain.table.aggregated)[1] <- "Domain"
+write.table(cov.domain.table.aggregated,paste(workingdirectory,"/GeneTables/GeneCoverageTable.",method,".Domain.metabolism.csv",sep=""),sep=",",quote=FALSE,row.names=FALSE,col.names=TRUE)
 }
 
 ##### Run statistical analyses ######
 
 cov.Path.metabolism <- data.frame(fread(paste(workingdirectory,"/GeneTables/GeneCoverageTable.",method,".Path.metabolism.csv",sep=""),sep=",",header=TRUE,colClasses=list(character=c("Path"))),row.names=1)
+cov.Domain.metabolism <- data.frame(fread(paste(workingdirectory,"/GeneTables/GeneCoverageTable.",method,".Domain.metabolism.csv",sep=""),sep=",",header=TRUE,colClasses=list(character=c("Domain"))),row.names=1)
 cov.KO <- data.frame(fread(paste(workingdirectory,"/GeneTables/GeneCoverageTable.",method,".KO.csv",sep=""),sep=",",header=TRUE,colClasses=list(character=c("KO"))),row.names=1)
 
 #Define number of groups
@@ -88,6 +96,11 @@ group2 <- rownames(sampledata[sampledata[,3] == groupnames[2],])
     }
     write.table(pathway.table,paste(workingdirectory,"/FunctionalStats/KEGG.KO.",method,".wilcoxontest.csv",sep=""),sep=",",quote=FALSE,row.names=FALSE,col.names=TRUE)
 
+#Pathway level Jitterplot
+domains=c("1.1","1.2","1.3","1.4","1.5","1.6","1.7","1.8","1.9","1.10","1.11")
+
+  
+  
 }
 if (groupnumber > 2){
 
