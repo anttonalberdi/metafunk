@@ -59,6 +59,8 @@ cov.KO <- data.frame(fread(paste(workingdirectory,"/GeneTables/GeneCoverageTable
 
 #Define number of groups
 sampledata <- read.table(sampledatafile,row.names=1)
+sample.group <- cbind(rownames(sampledata),sampledata[,3])
+colnames(sample.group) <- c("Sample","Group")
 groups <- sampledata[,3]
 groupnames <- unique(groups)
 groupnumber <- length(groupnames)
@@ -107,12 +109,12 @@ group2 <- rownames(sampledata[sampledata[,3] == groupnames[2],])
     row <- cbind(KO,pvalue)
     KO.table <- rbind(KO.table,row)
     }
-    write.table(pathway.table,paste(workingdirectory,"/FunctionalStats/KEGG.KO.",method,".wilcoxontest.csv",sep=""),sep=",",quote=FALSE,row.names=FALSE,col.names=TRUE)
+    write.table(KO.table,paste(workingdirectory,"/FunctionalStats/KEGG.KO.",method,".wilcoxontest.csv",sep=""),sep=",",quote=FALSE,row.names=FALSE,col.names=TRUE)
 
-#Pathway level Jitterplot
-domains=c("1.1","1.2","1.3","1.4","1.5","1.6","1.7","1.8","1.9","1.10","1.11")
-
-  
+#Domain level Jitterplot
+domain.melt <- cbind(rep(domains,length(sampledata[,3])),melt(cov.Domain.metabolism))
+domain.melt2 <- merge(domain.melt,sample.group,by.x="variable",by.y="Sample")
+colnames(domain.melt) <- c("Domain","Sample","Value","Group")
   
 }
 if (groupnumber > 2){
