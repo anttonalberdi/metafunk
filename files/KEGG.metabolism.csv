@@ -1,0 +1,165 @@
+Pathway,Pathway.des,Class,Class.des
+00010,Glycolysis / Gluconeogenesis,1.1,Carbohydrate metabolism
+00020,Citrate cycle (TCA cycle),1.1,Carbohydrate metabolism
+00030,Pentose phosphate pathway,1.1,Carbohydrate metabolism
+00040,Pentose and glucuronate interconversions,1.1,Carbohydrate metabolism
+00051,Fructose and mannose metabolism,1.1,Carbohydrate metabolism
+00052,Galactose metabolism,1.1,Carbohydrate metabolism
+00053,Ascorbate and aldarate metabolism,1.1,Carbohydrate metabolism
+00500,Starch and sucrose metabolism,1.1,Carbohydrate metabolism
+00520,Amino sugar and nucleotide sugar metabolism,1.1,Carbohydrate metabolism
+00620,Pyruvate metabolism,1.1,Carbohydrate metabolism
+00630,Glyoxylate and dicarboxylate metabolism,1.1,Carbohydrate metabolism
+00640,Propanoate metabolism,1.1,Carbohydrate metabolism
+00650,Butanoate metabolism,1.1,Carbohydrate metabolism
+00660,C5-Branched dibasic acid metabolism,1.1,Carbohydrate metabolism
+00562,Inositol phosphate metabolism,1.1,Carbohydrate metabolism
+00190,Oxidative phosphorylation,1.2,Energy metabolism
+00195,Photosynthesis,1.2,Energy metabolism
+00196,Photosynthesis - antenna proteins,1.2,Energy metabolism
+00710,Carbon fixation in photosynthetic organisms,1.2,Energy metabolism
+00720,Carbon fixation pathways in prokaryotes,1.2,Energy metabolism
+00680,Methane metabolism,1.2,Energy metabolism
+00910,Nitrogen metabolism,1.2,Energy metabolism
+00920,Sulfur metabolism,1.2,Energy metabolism
+00061,Fatty acid biosynthesis,1.3,Lipid metabolism
+00062,Fatty acid elongation,1.3,Lipid metabolism
+00071,Fatty acid degradation,1.3,Lipid metabolism
+00072,Synthesis and degradation of ketone bodies,1.3,Lipid metabolism
+00073,"Cutin, suberine and wax biosynthesis",1.3,Lipid metabolism
+00100,Steroid biosynthesis,1.3,Lipid metabolism
+00120,Primary bile acid biosynthesis,1.3,Lipid metabolism
+00121,Secondary bile acid biosynthesis,1.3,Lipid metabolism
+00140,Steroid hormone biosynthesis,1.3,Lipid metabolism
+00561,Glycerolipid metabolism,1.3,Lipid metabolism
+00564,Glycerophospholipid metabolism,1.3,Lipid metabolism
+00565,Ether lipid metabolism,1.3,Lipid metabolism
+00600,Sphingolipid metabolism,1.3,Lipid metabolism
+00590,Arachidonic acid metabolism,1.3,Lipid metabolism
+00591,Linoleic acid metabolism,1.3,Lipid metabolism
+00592,alpha-Linolenic acid metabolism,1.3,Lipid metabolism
+01040,Biosynthesis of unsaturated fatty acids,1.3,Lipid metabolism
+00230,Purine metabolism,1.4,Nucleotide metabolism
+00240,Pyrimidine metabolism,1.4,Nucleotide metabolism
+00250,"Alanine, aspartate and glutamate metabolism",1.5,Amino acid metabolism
+00260,"Glycine, serine and threonine metabolism",1.5,Amino acid metabolism
+00270,Cysteine and methionine metabolism,1.5,Amino acid metabolism
+00280,"Valine, leucine and isoleucine degradation",1.5,Amino acid metabolism
+00290,"Valine, leucine and isoleucine biosynthesis",1.5,Amino acid metabolism
+00300,Lysine biosynthesis,1.5,Amino acid metabolism
+00310,Lysine degradation,1.5,Amino acid metabolism
+00220,Arginine biosynthesis,1.5,Amino acid metabolism
+00330,Arginine and proline metabolism,1.5,Amino acid metabolism
+00340,Histidine metabolism,1.5,Amino acid metabolism
+00350,Tyrosine metabolism,1.5,Amino acid metabolism
+00360,Phenylalanine metabolism,1.5,Amino acid metabolism
+00380,Tryptophan metabolism,1.5,Amino acid metabolism
+00400,"Phenylalanine, tyrosine and tryptophan biosynthesis",1.5,Amino acid metabolism
+00410,beta-Alanine metabolism,1.6 ,Metabolism of other amino acids
+00430,Taurine and hypotaurine metabolism,1.6 ,Metabolism of other amino acids
+00440,Phosphonate and phosphinate metabolism,1.6 ,Metabolism of other amino acids
+00450,Selenocompound metabolism,1.6 ,Metabolism of other amino acids
+00460,Cyanoamino acid metabolism,1.6 ,Metabolism of other amino acids
+00471,D-Glutamine and D-glutamate metabolism,1.6 ,Metabolism of other amino acids
+00472,D-Arginine and D-ornithine metabolism,1.6 ,Metabolism of other amino acids
+00473,D-Alanine metabolism,1.6 ,Metabolism of other amino acids
+00480,Glutathione metabolism,1.6 ,Metabolism of other amino acids
+00510,N-Glycan biosynthesis,1.7,Glycan biosynthesis and metabolism
+00513,Various types of N-glycan biosynthesis,1.7,Glycan biosynthesis and metabolism
+00512,Mucin type O-glycan biosynthesis,1.7,Glycan biosynthesis and metabolism
+00515,Mannose type O-glycan biosynthesis,1.7,Glycan biosynthesis and metabolism
+00514,Other types of O-glycan biosynthesis,1.7,Glycan biosynthesis and metabolism
+00532,Glycosaminoglycan biosynthesis - chondroitin sulfate / dermatan sulfate,1.7,Glycan biosynthesis and metabolism
+00534,Glycosaminoglycan biosynthesis - heparan sulfate / heparin,1.7,Glycan biosynthesis and metabolism
+00533,Glycosaminoglycan biosynthesis - keratan sulfate,1.7,Glycan biosynthesis and metabolism
+00531,Glycosaminoglycan degradation,1.7,Glycan biosynthesis and metabolism
+00563,Glycosylphosphatidylinositol (GPI)-anchor biosynthesis,1.7,Glycan biosynthesis and metabolism
+00601,Glycosphingolipid biosynthesis - lacto and neolacto series,1.7,Glycan biosynthesis and metabolism
+00603,Glycosphingolipid biosynthesis - globo and isoglobo series,1.7,Glycan biosynthesis and metabolism
+00604,Glycosphingolipid biosynthesis - ganglio series,1.7,Glycan biosynthesis and metabolism
+00540,Lipopolysaccharide biosynthesis,1.7,Glycan biosynthesis and metabolism
+00550,Peptidoglycan biosynthesis,1.7,Glycan biosynthesis and metabolism
+00511,Other glycan degradation,1.7,Glycan biosynthesis and metabolism
+00730,Thiamine metabolism,1.8,Metabolism of cofactors and vitamins
+00740,Riboflavin metabolism,1.8,Metabolism of cofactors and vitamins
+00750,Vitamin B6 metabolism,1.8,Metabolism of cofactors and vitamins
+00760,Nicotinate and nicotinamide metabolism,1.8,Metabolism of cofactors and vitamins
+00770,Pantothenate and CoA biosynthesis,1.8,Metabolism of cofactors and vitamins
+00780,Biotin metabolism,1.8,Metabolism of cofactors and vitamins
+00785,Lipoic acid metabolism,1.8,Metabolism of cofactors and vitamins
+00790,Folate biosynthesis,1.8,Metabolism of cofactors and vitamins
+00670,One carbon pool by folate,1.8,Metabolism of cofactors and vitamins
+00830,Retinol metabolism,1.8,Metabolism of cofactors and vitamins
+00860,Porphyrin and chlorophyll metabolism,1.8,Metabolism of cofactors and vitamins
+00130,Ubiquinone and other terpenoid-quinone biosynthesis,1.8,Metabolism of cofactors and vitamins
+00900,Terpenoid backbone biosynthesis,1.9,Metabolism of terpenoids and polyketides
+00902,Monoterpenoid biosynthesis,1.9,Metabolism of terpenoids and polyketides
+00909,Sesquiterpenoid and triterpenoid biosynthesis,1.9,Metabolism of terpenoids and polyketides
+00904,Diterpenoid biosynthesis,1.9,Metabolism of terpenoids and polyketides
+00906,Carotenoid biosynthesis,1.9,Metabolism of terpenoids and polyketides
+00905,Brassinosteroid biosynthesis,1.9,Metabolism of terpenoids and polyketides
+00981,Insect hormone biosynthesis,1.9,Metabolism of terpenoids and polyketides
+00908,Zeatin biosynthesis,1.9,Metabolism of terpenoids and polyketides
+00903,Limonene and pinene degradation,1.9,Metabolism of terpenoids and polyketides
+00281,Geraniol degradation,1.9,Metabolism of terpenoids and polyketides
+01052,Type I polyketide structures,1.9,Metabolism of terpenoids and polyketides
+00522,"Biosynthesis of 12-, 14- and 16-membered macrolides",1.9,Metabolism of terpenoids and polyketides
+01051,Biosynthesis of ansamycins,1.9,Metabolism of terpenoids and polyketides
+01059,Biosynthesis of enediyne antibiotics,1.9,Metabolism of terpenoids and polyketides
+01056,Biosynthesis of type II polyketide backbone,1.9,Metabolism of terpenoids and polyketides
+01057,Biosynthesis of type II polyketide products,1.9,Metabolism of terpenoids and polyketides
+00253,Tetracycline biosynthesis,1.9,Metabolism of terpenoids and polyketides
+00523,Polyketide sugar unit biosynthesis,1.9,Metabolism of terpenoids and polyketides
+01054,Nonribosomal peptide structures,1.9,Metabolism of terpenoids and polyketides
+01053,Biosynthesis of siderophore group nonribosomal peptides,1.9,Metabolism of terpenoids and polyketides
+01055,Biosynthesis of vancomycin group antibiotics,1.9,Metabolism of terpenoids and polyketides
+00940,Phenylpropanoid biosynthesis,1.10,Biosynthesis of other secondary metabolites
+00945,"Stilbenoid, diarylheptanoid and gingerol biosynthesis",1.10,Biosynthesis of other secondary metabolites
+00941,Flavonoid biosynthesis,1.10,Biosynthesis of other secondary metabolites
+00944,Flavone and flavonol biosynthesis,1.10,Biosynthesis of other secondary metabolites
+00942,Anthocyanin biosynthesis,1.10,Biosynthesis of other secondary metabolites
+00943,Isoflavonoid biosynthesis,1.10,Biosynthesis of other secondary metabolites
+00901,Indole alkaloid biosynthesis,1.10,Biosynthesis of other secondary metabolites
+00403,Indole diterpene alkaloid biosynthesis,1.10,Biosynthesis of other secondary metabolites
+00950,Isoquinoline alkaloid biosynthesis,1.10,Biosynthesis of other secondary metabolites
+00960,"Tropane, piperidine and pyridine alkaloid biosynthesis",1.10,Biosynthesis of other secondary metabolites
+01058,Acridone alkaloid biosynthesis,1.10,Biosynthesis of other secondary metabolites
+00232,Caffeine metabolism,1.10,Biosynthesis of other secondary metabolites
+00965,Betalain biosynthesis,1.10,Biosynthesis of other secondary metabolites
+00966,Glucosinolate biosynthesis,1.10,Biosynthesis of other secondary metabolites
+00402,Benzoxazinoid biosynthesis,1.10,Biosynthesis of other secondary metabolites
+00311,Penicillin and cephalosporin biosynthesis,1.10,Biosynthesis of other secondary metabolites
+00332,Carbapenem biosynthesis,1.10,Biosynthesis of other secondary metabolites
+00261,Monobactam biosynthesis,1.10,Biosynthesis of other secondary metabolites
+00331,Clavulanic acid biosynthesis,1.10,Biosynthesis of other secondary metabolites
+00521,Streptomycin biosynthesis,1.10,Biosynthesis of other secondary metabolites
+00524,"Neomycin, kanamycin and gentamicin biosynthesis",1.10,Biosynthesis of other secondary metabolites
+00525,Acarbose and validamycin biosynthesis,1.10,Biosynthesis of other secondary metabolites
+00231,Puromycin biosynthesis,1.10,Biosynthesis of other secondary metabolites
+00401,Novobiocin biosynthesis,1.10,Biosynthesis of other secondary metabolites
+00404,Staurosporine biosynthesis,1.10,Biosynthesis of other secondary metabolites
+00405,Phenazine biosynthesis,1.10,Biosynthesis of other secondary metabolites
+00333,Prodigiosin biosynthesis,1.10,Biosynthesis of other secondary metabolites
+00254,Aflatoxin biosynthesis,1.10,Biosynthesis of other secondary metabolites
+00362,Benzoate degradation,1.11,Xenobiotics biodegradation and metabolism
+00627,Aminobenzoate degradation,1.11,Xenobiotics biodegradation and metabolism
+00364,Fluorobenzoate degradation,1.11,Xenobiotics biodegradation and metabolism
+00625,Chloroalkane and chloroalkene degradation,1.11,Xenobiotics biodegradation and metabolism
+00361,Chlorocyclohexane and chlorobenzene degradation,1.11,Xenobiotics biodegradation and metabolism
+00623,Toluene degradation,1.11,Xenobiotics biodegradation and metabolism
+00622,Xylene degradation,1.11,Xenobiotics biodegradation and metabolism
+00633,Nitrotoluene degradation,1.11,Xenobiotics biodegradation and metabolism
+00642,Ethylbenzene degradation,1.11,Xenobiotics biodegradation and metabolism
+00643,Styrene degradation,1.11,Xenobiotics biodegradation and metabolism
+00791,Atrazine degradation,1.11,Xenobiotics biodegradation and metabolism
+00930,Caprolactam degradation,1.11,Xenobiotics biodegradation and metabolism
+00351,DDT degradation,1.11,Xenobiotics biodegradation and metabolism
+00363,Bisphenol degradation,1.11,Xenobiotics biodegradation and metabolism
+00621,Dioxin degradation,1.11,Xenobiotics biodegradation and metabolism
+00626,Naphthalene degradation,1.11,Xenobiotics biodegradation and metabolism
+00624,Polycyclic aromatic hydrocarbon degradation,1.11,Xenobiotics biodegradation and metabolism
+00365,Furfural degradation,1.11,Xenobiotics biodegradation and metabolism
+00984,Steroid degradation,1.11,Xenobiotics biodegradation and metabolism
+00980,Metabolism of xenobiotics by cytochrome P450,1.11,Xenobiotics biodegradation and metabolism
+00982,Drug metabolism - cytochrome P450,1.11,Xenobiotics biodegradation and metabolism
+00983,Drug metabolism - other enzymes,1.11,Xenobiotics biodegradation and metabolism
