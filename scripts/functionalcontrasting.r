@@ -4,7 +4,7 @@ library(ggplot2)
 workingdirectory <- Sys.getenv("WORKDIR")
 metafunkdirectory <- Sys.getenv("METAFUNKDIR")
 sampledatafile <- Sys.getenv("SAMPLEDATAFILE")
-normalisationmethod <- Sys.getenv("NORMALISATIONMETHOD")
+method <- Sys.getenv("NORMALISATIONMETHOD")
 keggthreshold <- Sys.getenv("KEGGTHRESHOLD")
 timestamp <- Sys.getenv("TIMESTAMP")
 
@@ -128,8 +128,52 @@ ggsave(paste(workingdirectory,"/FunctionalStats/KEGG.Domain.",method,".jitter.pd
 
   
   
-  
 }
 if (groupnumber > 2){
+	
+#Domain level Kruskal
+    domains <- rownames(cov.Domain.metabolism)
+    domain.melt <- cbind(rep(domains,length(sampledata[,3])),rep(groups,each=length(domains)),melt(cov.Domain.metabolism))
+    colnames(domain.melt) <- c("Domain","Group","Sample","Value")
+    domain.melt$Group <- as.factor(domain.melt$Group)
+    domain.melt$Value <- as.numeric(domain.melt$Value)
+    domain.table <- c()
+    for (domain in domains){
+    	domain.subset <- domain.melt[domain.melt$Domain == domain,]
+	pvalue <- kruskal.test(Value ~ Group, data = domain.subset)$p.value
+   	row <- cbind(domain,pvalue)
+        domain.table <- rbind(domain.table,row)
+    }
+    write.table(domain.table,paste(workingdirectory,"/FunctionalStats/KEGG.domain.metabolism.",method,".kruskaltest.csv",sep=""),sep=",",quote=FALSE,row.names=FALSE,col.names=TRUE)
 
+#Pathway level Kruskal
+    pathways <- rownames(cov.Path.metabolism)
+    pathway.melt <- cbind(rep(pathways,length(sampledata[,3])),rep(groups,each=length(pathways)),melt(cov.Path.metabolism))
+    colnames(pathway.melt) <- c("Path","Group","Sample","Value")
+    pathway.table <- c()
+    for (path in pathways){
+    	pathway.subset <- pathway.melt[pathway.melt$Path == path,]
+	pvalue <- kruskal.test(Value ~ Group, data = pathway.subset)$p.value
+    	row <- cbind(path,pvalue)
+   	pathway.table <- rbind(pathway.table,row)
+    }
+    write.table(pathway.table,paste(workingdirectory,"/FunctionalStats/KEGG.pathway.metabolism.",method,".wilcoxontest.csv",sep=""),sep=",",quote=FALSE,row.names=FALSE,col.names=TRUE)
+	
+#KO level Kruskal
+    KOs <- rownames(cov.KO)
+    KO.melt <- cbind(rep(KOs,length(sampledata[,3])),rep(groups,each=length(KOs)),melt(cov.KO))
+    colnames(KO.melt) <- c("KO","Group","Sample","Value")
+    KO.table <- c()
+    for (KO in KOs){
+ 	KO.subset <- KO.melt[KO.melt$KO == KO,]
+	pvalue <- kruskal.test(Value ~ Group, data = KO.subset)$p.value
+    	row <- cbind(KO,pvalue)
+    	KO.table <- rbind(KO.table,row)
+    }
+    write.table(KO.table,paste(workingdirectory,"/FunctionalStats/KEGG.KO.",method,".wilcoxontest.csv",sep=""),sep=",",quote=FALSE,row.names=FALSE,col.names=TRUE)
+
+	
+	
+	
+	
 }
