@@ -60,8 +60,9 @@ cov.KO <- data.frame(fread(paste(workingdirectory,"/GeneTables/GeneCoverageTable
 
 #Define number of groups
 sampledata <- read.table(sampledatafile,row.names=1)
-sample.group <- cbind(rownames(sampledata),sampledata[,3])
+sample.group <- as.data.frame(cbind(rownames(sampledata),as.character(sampledata[,3])))
 colnames(sample.group) <- c("Sample","Group")
+sample.group$Group <- as.factor(sample.group$Group)
 groups <- sampledata[,3]
 groupnames <- unique(groups)
 groupnumber <- length(groupnames)
