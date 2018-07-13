@@ -17,4 +17,4 @@ export SAMPLEDATAFILE="${sampledatafile}"
 export NORMALISATIONMETHOD="${normalisationmethod}"
 export KEGGTHRESHOLD="${keggthreshold}"
 export TIMESTAMP="${timestamp}"
-Rscript ${metafunkdirectory}/scripts/functionalcontrasting_KEGG.r --no-save
+Rscript ${metafunkdirectory}/scripts/functionalcontrasting.r --no-save
