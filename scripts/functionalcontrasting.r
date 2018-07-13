@@ -1,6 +1,8 @@
 
 library(data.table)
 library(ggplot2)
+library(RColorBrewer)
+
 workingdirectory <- Sys.getenv("WORKDIR")
 metafunkdirectory <- Sys.getenv("METAFUNKDIR")
 sampledatafile <- Sys.getenv("SAMPLEDATAFILE")
@@ -67,6 +69,11 @@ groups <- sampledata[,3]
 groupnames <- unique(groups)
 groupnumber <- length(groupnames)
 
+#Define colours
+colours <- brewer.pal(groupnumber, "Spectral")
+
+##
+
 if (groupnumber == 1){
 "It is not possible to contrast groups, as only one group has been defined"
 }
@@ -126,18 +133,18 @@ ggplot(domain.melt2, aes(x=Value, y=Domain, fill=Group, colour=Group, alpha=0.3)
   labs(x="Coverage", y="Metabolic domains") +
 	theme(panel.background = element_rect(fill = 'white', colour = 'grey'))
 ggsave(paste(workingdirectory,"/FunctionalStats/KEGG.Domain.",method,".jitter.pdf",sep=""), width = 20, height = 10, units  = "cm")
-
-  
   
 }
 if (groupnumber > 2){
 	
-#Domain level Kruskal
-    domains <- rownames(cov.Domain.metabolism)
-    domain.melt <- cbind(rep(domains,length(sampledata[,3])),rep(groups,each=length(domains)),melt(cov.Domain.metabolism))
-    colnames(domain.melt) <- c("Domain","Group","Sample","Value")
-    domain.melt$Group <- as.factor(domain.melt$Group)
-    domain.melt$Value <- as.numeric(domain.melt$Value)
+#### Domain level ####
+domains <- rownames(cov.Domain.metabolism)
+domain.melt <- cbind(rep(domains,length(sampledata[,3])),rep(groups,each=length(domains)),melt(cov.Domain.metabolism))
+colnames(domain.melt) <- c("Domain","Group","Sample","Value")
+domain.melt$Group <- as.factor(domain.melt$Group)
+domain.melt$Value <- as.numeric(domain.melt$Value)
+	
+#Kruskal test
     domain.table <- c()
     for (domain in domains){
     	domain.subset <- domain.melt[domain.melt$Domain == domain,]
@@ -147,6 +154,15 @@ if (groupnumber > 2){
     }
     write.table(domain.table,paste(workingdirectory,"/FunctionalStats/KEGG.domain.metabolism.",method,".kruskaltest.csv",sep=""),sep=",",quote=FALSE,row.names=FALSE,col.names=TRUE)
 
+#Jitterplot
+ggplot(domain.melt, aes(x=Value, y=Domain, fill=Group, colour=Group, alpha=0.3)) + 
+  geom_jitter(height = 0.15) +
+	scale_colour_manual(values = colours) +
+	scale_shape_manual(values=16) +
+  labs(x="Coverage", y="Metabolic domains") +
+	theme(panel.background = element_rect(fill = 'white', colour = 'grey'))
+ggsave(paste(workingdirectory,"/FunctionalStats/KEGG.Domain.",method,".jitter.pdf",sep=""), width = 20, height = 10, units  = "cm")
+	
 #Pathway level Kruskal
     pathways <- rownames(cov.Path.metabolism)
     pathway.melt <- cbind(rep(pathways,length(sampledata[,3])),rep(groups,each=length(pathways)),melt(cov.Path.metabolism))
@@ -173,7 +189,8 @@ if (groupnumber > 2){
     }
     write.table(KO.table,paste(workingdirectory,"/FunctionalStats/KEGG.KO.",method,".wilcoxontest.csv",sep=""),sep=",",quote=FALSE,row.names=FALSE,col.names=TRUE)
 
-	
+
+
 	
 	
 	
