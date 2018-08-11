@@ -57,4 +57,4 @@ done < ${sampledatafile}
 #Merge all output files
 now=$(date +"%Y-%m-%d %H:%M:%S")
 echo "$now | 		Merging all taxonomic profiles" >> ${workdir}/run_${timestamp}.log
-merge_metaphlan_tables.py ${workdir}/TaxonomicAnnotation/*.txt > ${workdir}/GeneTables/taxonomytable.txt
+merge_metaphlan_tables.py ${workdir}/TaxonomicAnnotation/*.txt > ${workdir}/GeneTables/TaxonomyTable.txt
