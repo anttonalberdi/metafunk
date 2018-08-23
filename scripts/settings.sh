@@ -21,7 +21,7 @@ module load seqkit/0.7.1
 #Prinseq (http://prinseq.sourceforge.net/)
 module load prinseq-lite/0.20.4
 #Samtools (http://www.htslib.org/doc/samtools.html)
-module load samtools/1.4
+module load samtools/1.8
 #Bwa (http://bio-bwa.sourceforge.net/)
 module load bwa/0.7.15
 #SeqTK (https://github.com/lh3/seqtk)
