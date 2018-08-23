@@ -77,7 +77,7 @@ while read sample; do
 			#Map reads against the reference genome and retrieve unmapped reads
 			now=$(date +"%Y-%m-%d %H:%M:%S")
 			echo "$now | 			Removing host DNA from sample $samplename" >> ${workdir}/run_${timestamp}.log
-			bwa mem -t ${threads} -R '@RG\tID:ProjectName\tCN:AuthorName\tDS:Mappingt\tPL:Illumina1.9\tSM:Sample' ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile} ${workdir}/HostDNARemoved/${samplename}_1.fastq ${workdir}/HostDNARemoved/${samplename}_2.fastq | samtools view | grep -v -P '^@|NM:i:[0-2]\b' | samtools view -b - > ${workdir}/HostDNARemoved/${samplename}.bam
+			bwa mem -t ${threads} -R '@RG\tID:ProjectName\tCN:AuthorName\tDS:Mappingt\tPL:Illumina1.9\tSM:Sample' ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile} ${workdir}/HostDNARemoved/${samplename}_1.fastq ${workdir}/HostDNARemoved/${samplename}_2.fastq | samtools view | grep -v -P '^@|NM:i:[0-2]\b' | samtools view -T ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile} -b - > ${workdir}/HostDNARemoved/${samplename}.bam
 			#OLD: bwa mem -t ${threads} -R '@RG\tID:ProjectName\tCN:AuthorName\tDS:Mappingt\tPL:Illumina1.9\tSM:Sample' ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile} ${workdir}/HostDNARemoved/${samplename}_1.fastq ${workdir}/HostDNARemoved/${samplename}_2.fastq | samtools view -b -f12 - > ${workdir}/HostDNARemoved/${samplename}.bam
 			#Check if output file has been created; otherwise, print error message and kill the job
 			if [[ ! -s ${workdir}/HostDNARemoved/${samplename}.bam ]]; then
