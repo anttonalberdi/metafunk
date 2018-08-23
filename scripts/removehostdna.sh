@@ -78,7 +78,8 @@ while read sample; do
 			now=$(date +"%Y-%m-%d %H:%M:%S")
 			echo "$now | 			Removing host DNA from sample $samplename" >> ${workdir}/run_${timestamp}.log
 			bwa mem -t ${threads} -R '@RG\tID:ProjectName\tCN:AuthorName\tDS:Mappingt\tPL:Illumina1.9\tSM:Sample' ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile} ${workdir}/HostDNARemoved/${samplename}_1.fastq ${workdir}/HostDNARemoved/${samplename}_2.fastq | samtools view | perl -ne '@v = split; print if $v[5] =~ /S/ || !/NM:i:[0-2]/' | samtools view -b - > ${workdir}/HostDNARemoved/${samplename}.bam
-			#bwa mem -t ${threads} -R '@RG\tID:ProjectName\tCN:AuthorName\tDS:Mappingt\tPL:Illumina1.9\tSM:Sample' ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile} ${workdir}/HostDNARemoved/${samplename}_1.fastq ${workdir}/HostDNARemoved/${samplename}_2.fastq | samtools view -b -f12 - > ${workdir}/HostDNARemoved/${samplename}.bam
+			#Alternative: bwa mem -t ${threads} -R '@RG\tID:ProjectName\tCN:AuthorName\tDS:Mappingt\tPL:Illumina1.9\tSM:Sample' ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile} ${workdir}/HostDNARemoved/${samplename}_1.fastq ${workdir}/HostDNARemoved/${samplename}_2.fastq | samtools view | grep -P '^@|NH:i:[0-2]\b'| samtools view -b - > ${workdir}/HostDNARemoved/${samplename}.bam
+			#OLD: bwa mem -t ${threads} -R '@RG\tID:ProjectName\tCN:AuthorName\tDS:Mappingt\tPL:Illumina1.9\tSM:Sample' ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile} ${workdir}/HostDNARemoved/${samplename}_1.fastq ${workdir}/HostDNARemoved/${samplename}_2.fastq | samtools view -b -f12 - > ${workdir}/HostDNARemoved/${samplename}.bam
 			#Check if output file has been created; otherwise, print error message and kill the job
 			if [[ ! -s ${workdir}/HostDNARemoved/${samplename}.bam ]]; then
 				now=$(date +"%Y-%m-%d %H:%M:%S")
