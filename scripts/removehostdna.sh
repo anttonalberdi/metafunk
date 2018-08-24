@@ -109,7 +109,8 @@ while read sample; do
 			#Map reads against the reference genome and retrieve unmapped reads
 			now=$(date +"%Y-%m-%d %H:%M:%S")
 			echo "				Removing host DNA from sample $samplename" >> ${workdir}/run_${timestamp}.log
-			bwa mem -t ${threads} -R '@RG\tID:ProjectName\tCN:AuthorName\tDS:Mappingt\tPL:Illumina1.9\tSM:Sample' ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile} ${workdir}/${sourcefolder}/${samplename}.fastq | samtools view -b -f4 - > ${workdir}/HostDNARemoved/${samplename}.bam
+			bwa mem -t ${threads} -R '@RG\tID:ProjectName\tCN:AuthorName\tDS:Mappingt\tPL:Illumina1.9\tSM:Sample' ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile} ${workdir}/HostDNARemoved/${samplename}.fastq| samtools view | grep -v -P '^@|NM:i:[0-2]\b' | samtools view -T ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile} -b - > ${workdir}/HostDNARemoved/${samplename}.bam
+			#OLD: bwa mem -t ${threads} -R '@RG\tID:ProjectName\tCN:AuthorName\tDS:Mappingt\tPL:Illumina1.9\tSM:Sample' ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile} ${workdir}/${sourcefolder}/${samplename}.fastq | samtools view -b -f4 - > ${workdir}/HostDNARemoved/${samplename}.bam
 			if [[ ! -s ${workdir}/HostDNARemoved/${samplename}.bam ]]; then
 				now=$(date +"%Y-%m-%d %H:%M:%S")
 				echo "$now | 			ERROR: There was an error when mapping sample $samplename" >> ${workdir}/run_${timestamp}.log
