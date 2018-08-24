@@ -74,7 +74,7 @@ while read sample; do
 				exit
 			fi
 			#Convert BAM file to FASTQ
-			samtools fastq -1 ${workdir}/HumanDNARemoved/${samplename}_1.fastq -2 ${workdir}/HumanDNARemoved/${samplename}_2.fastq ${workdir}/HumanDNARemoved/${samplename}.bam
+			samtools fastq -s ${workdir}/HumanDNARemoved/${samplename}_singleton.fastq -1 ${workdir}/HumanDNARemoved/${samplename}_1.fastq -2 ${workdir}/HumanDNARemoved/${samplename}_2.fastq ${workdir}/HumanDNARemoved/${samplename}.bam
 			rm ${workdir}/HumanDNARemoved/${samplename}.bam
 			#Compute statistics
 	    before1=$(cat ${workdir}/${sourcefolder}/${samplename}_1.fastq | wc -l)
