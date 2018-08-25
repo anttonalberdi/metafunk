@@ -29,7 +29,7 @@ function indexgenome() {
 		gunzip ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile}*.gz
 		fi
 	fi
-	if [[ $genomepath == *fasta || $genomepath == *fa]]; then
+	if [[ $genomepath == *fasta || $genomepath == *fa ]]; then
 	genomefile=$(echo "${genomepath}"  | sed 's/.*\///')
 		if [ ! -f ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile}* ]; then
 		echo "$now |		Copying genome file $genomefile to the project directory" >> ${workdir}/run_${timestamp}.log
