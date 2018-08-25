@@ -46,6 +46,10 @@ function indexgenome() {
 		echo "$now | 		Genome ${genomefile} was succesfully indexed" >> ${workdir}/run_${timestamp}.log
 	fi
 
+	if [ ! -f ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile}* ]; then
+	now=$(date +"%Y-%m-%d %H:%M:%S")
+	echo "$now | 		ERROR! Genome ${genomefile} was not found or has unsupported extension" >> ${workdir}/run_${timestamp}.log
+	fi
 }
 
 export -f indexgenome
