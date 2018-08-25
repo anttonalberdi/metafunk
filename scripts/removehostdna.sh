@@ -19,20 +19,22 @@ function indexgenome() {
   source $settingsfile
 
 	genomepath=$(echo $sample | cut -d ' ' -f3)
-	genomefile=$(echo "${genomepath}"  | sed 's/.*\///')
-	if [ ! -f ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile} ]; then
-	echo "$now |		Copying genome file $genomefile to the project directory" >> ${workdir}/run_${timestamp}.log
-	cp ${genomepath}* ${workdir}/HostDNARemoved/ReferenceGenomes
-	now=$(date +"%Y-%m-%d %H:%M:%S")
-	echo "$now |		Genome file $genomefile was copied to the project directory" >> ${workdir}/run_${timestamp}.log
+	if [[ $genomepath == *fasta.gz || $genomepath == *fa.gz]]; then
+	genomefile=$(echo "${genomepath}"  | sed 's/.*\///' | sed 's/\.[^.]*$//')
+		if [ ! -f ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile}* ]; then
+		echo "$now |		Copying genome file $genomefile to the project directory" >> ${workdir}/run_${timestamp}.log
+		cp ${genomepath}* ${workdir}/HostDNARemoved/ReferenceGenomes/
+		now=$(date +"%Y-%m-%d %H:%M:%S")
+		echo "$now |		Decompressing ${genomefile}.gz" >> ${workdir}/run_${timestamp}.log
+		gunzip ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile}*.gz
+		fi
 	fi
-	now=$(date +"%Y-%m-%d %H:%M:%S")
-	if [[ $genomefile == *.gz ]]; then
-	now=$(date +"%Y-%m-%d %H:%M:%S")
-	echo "$now |		Decompressing genome file" >> ${workdir}/run_${timestamp}.log
-	gunzip ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile}
-	genomepath=$(echo $genomepath | sed 's/\.[^.]*$//')
-	genomefile=$(echo $genomefile | sed 's/\.[^.]*$//')
+	if [[ $genomepath == *fasta || $genomepath == *fa]]; then
+	genomefile=$(echo "${genomepath}"  | sed 's/.*\///')
+		if [ ! -f ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile}* ]; then
+		echo "$now |		Copying genome file $genomefile to the project directory" >> ${workdir}/run_${timestamp}.log
+		cp ${genomepath}* ${workdir}/HostDNARemoved/ReferenceGenomes/
+		fi
 	fi
 
 if [[ $indexhostgenome == "yes" ]]; then
@@ -55,7 +57,7 @@ fi
 }
 
 export -f indexgenome
-parallel -j ${threads} -k indexgenome {} ${settingsfile} ${sourcefolder} <${sampledatafile}
+parallel -j ${threads} --delay 2 -k indexgenome {} ${settingsfile} ${sourcefolder} <${sampledatafile}
 
 
 #Select source folder from which data will be retrieved
