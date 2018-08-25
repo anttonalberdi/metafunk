@@ -32,6 +32,7 @@ fi
 if [ ! -f ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile}* ]; then
 
 	if [[ $genomepath == *.fasta.gz || $genomepath == *.fa.gz ]]; then
+	now=$(date +"%Y-%m-%d %H:%M:%S")
 	echo "$now |		Copying genome file $genomefile to the project directory" >> ${workdir}/run_${timestamp}.log
 	cp ${genomepath}* ${workdir}/HostDNARemoved/ReferenceGenomes/
 	now=$(date +"%Y-%m-%d %H:%M:%S")
@@ -42,8 +43,9 @@ if [ ! -f ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile}* ]; then
 	cp ${genomepath}* ${workdir}/HostDNARemoved/ReferenceGenomes/
 	fi
 
-	now=$(date +"%Y-%m-%d %H:%M:%S")
+	
 	if [ ! -f ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile}.fai ]; then
+		now=$(date +"%Y-%m-%d %H:%M:%S")
 		echo "$now | 		Indexing ${genomefile} genome" >> ${workdir}/run_${timestamp}.log
 		samtools faidx ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile}
 		bwa index ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile}
