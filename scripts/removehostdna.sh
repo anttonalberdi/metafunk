@@ -80,7 +80,12 @@ while read sample; do
 		samplename=$(echo $sample | cut -d ' ' -f1)
 		sampleinfo=$(echo $sample | cut -d ' ' -f2)
 		genomepath=$(echo $sample | cut -d ' ' -f3)
-		genomefile=$(echo "$genomepath"  | sed 's/.*\///')
+	
+		if [[ $genomepath == *.fasta.gz || $genomepath == *.fa.gz ]]; then
+		genomefile=$(echo "${genomepath}"  | sed 's/.*\///' | sed 's/\.[^.]*$//')
+		else [[ $genomepath == *.fasta || $genomepath == *.fa ]]
+		genomefile=$(echo "${genomepath}"  | sed 's/.*\///')
+		fi
 
 		if [[ $sampleinfo =~ "/" ]]; then
 			#It is PE
