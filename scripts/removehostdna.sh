@@ -5,11 +5,18 @@ source $settingsfile
 mkdir -p ${workdir}/HostDNARemoved
 mkdir -p ${workdir}/HostDNARemoved/ReferenceGenomes
 
-#Copy host reference genome to project directory
+#Copy host reference genome to project directory and index
 now=$(date +"%Y-%m-%d %H:%M:%S")
 echo "$now | 		Copying host genome(s)" >>  ${workdir}/run_${timestamp}.log
 
-while read sample; do
+#Declare function
+function indexgenome() {
+
+  sample=${1}
+  settingsfile=${2}
+  sourcefolder=${3}
+
+  source $settingsfile
 
 	genomepath=$(echo $sample | cut -d ' ' -f3)
 	genomefile=$(echo "${genomepath}"  | sed 's/.*\///')
@@ -19,16 +26,17 @@ while read sample; do
 	now=$(date +"%Y-%m-%d %H:%M:%S")
 	echo "$now |		Genome file $genomefile was copied to the project directory" >> ${workdir}/run_${timestamp}.log
 	fi
-done < ${sampledatafile}
-
-#Index host reference genome
-if [[ $indexhostgenome == "yes" ]]; then
 	now=$(date +"%Y-%m-%d %H:%M:%S")
-	echo "$now | 		Indexing host genome(s)" >> ${workdir}/run_${timestamp}.log
+	if [[ $genomefile == *.fastq.gz || $genomefile == *.fq.gz ]]; then
+	now=$(date +"%Y-%m-%d %H:%M:%S")
+	echo "$now |		Decompressing genome file" >> ${workdir}/run_${timestamp}.log
+	gunzip ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile}
+	genomepath=$(echo $genomepath | sed 's/\.[^.]*$//')
+	genomefile=$(echo $genomefile | sed 's/\.[^.]*$//')
+	fi
 
-	while read sample; do
-		genomepath=$(echo $sample | cut -d ' ' -f3)
-		genomefile=$(echo "${genomepath}"  | sed 's/.*\///')
+if [[ $indexhostgenome == "yes" ]]; then
+
 		now=$(date +"%Y-%m-%d %H:%M:%S")
 		if [ ! -f ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile}.fai ]; then
 		echo "$now | 		Indexing ${genomefile} genome" >> ${workdir}/run_${timestamp}.log
@@ -37,12 +45,18 @@ if [[ $indexhostgenome == "yes" ]]; then
 		now=$(date +"%Y-%m-%d %H:%M:%S")
 		echo "$now | 		Genome ${genomefile} was succesfully indexed" >> ${workdir}/run_${timestamp}.log
 		fi
-	done < ${sampledatafile}
+
 else
 	now=$(date +"%Y-%m-%d %H:%M:%S")
-	echo "$now | 		Host genome(s) will not be indexed" >> ${workdir}/run_${timestamp}.log
+	echo "$now | 		Host genome ${genomefile} will not be indexed" >> ${workdir}/run_${timestamp}.log
 
 fi
+
+}
+
+export -f indexgenome
+parallel -j ${threads} -k indexgenome {} ${settingsfile} ${sourcefolder} <${sampledatafile}
+
 
 #Select source folder from which data will be retrieved
 if [[ "$(ls -A ${workdir}/LowComplexFiltered/)" ]]; then
