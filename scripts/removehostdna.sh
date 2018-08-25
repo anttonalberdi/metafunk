@@ -18,23 +18,24 @@ function indexgenome() {
 
   source $settingsfile
 
+if [ ! -f ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile}* ]; then
+
 	genomepath=$(echo $sample | cut -d ' ' -f3)
+	
 	if [[ $genomepath == *.fasta.gz || $genomepath == *.fa.gz ]]; then
 	genomefile=$(echo "${genomepath}"  | sed 's/.*\///' | sed 's/\.[^.]*$//')
-		if [ ! -f ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile}* ]; then
-		echo "$now |		Copying genome file $genomefile to the project directory" >> ${workdir}/run_${timestamp}.log
-		cp ${genomepath}* ${workdir}/HostDNARemoved/ReferenceGenomes/
-		now=$(date +"%Y-%m-%d %H:%M:%S")
-		echo "$now |		Decompressing ${genomefile}.gz" >> ${workdir}/run_${timestamp}.log
-		gunzip ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile}*.gz
-		fi
-	fi
-	if [[ $genomepath == *.fasta || $genomepath == *.fa ]]; then
+	echo "$now |		Copying genome file $genomefile to the project directory" >> ${workdir}/run_${timestamp}.log
+	cp ${genomepath}* ${workdir}/HostDNARemoved/ReferenceGenomes/
+	now=$(date +"%Y-%m-%d %H:%M:%S")
+	echo "$now |		Decompressing ${genomefile}.gz" >> ${workdir}/run_${timestamp}.log
+	gunzip ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile}*.gz
+	elif [[ $genomepath == *.fasta || $genomepath == *.fa ]]; then
 	genomefile=$(echo "${genomepath}"  | sed 's/.*\///')
-		if [ ! -f ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile}* ]; then
-		echo "$now |		Copying genome file $genomefile to the project directory" >> ${workdir}/run_${timestamp}.log
-		cp ${genomepath}* ${workdir}/HostDNARemoved/ReferenceGenomes/
-		fi
+	echo "$now |		Copying genome file $genomefile to the project directory" >> ${workdir}/run_${timestamp}.log
+	cp ${genomepath}* ${workdir}/HostDNARemoved/ReferenceGenomes/
+	else
+	now=$(date +"%Y-%m-%d %H:%M:%S")
+	echo "$now | 		ERROR! Genome ${genomefile} has an unsupported extension" >> ${workdir}/run_${timestamp}.log
 	fi
 
 	now=$(date +"%Y-%m-%d %H:%M:%S")
@@ -45,11 +46,7 @@ function indexgenome() {
 		now=$(date +"%Y-%m-%d %H:%M:%S")
 		echo "$now | 		Genome ${genomefile} was succesfully indexed" >> ${workdir}/run_${timestamp}.log
 	fi
-
-	if [ ! -f ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile}* ]; then
-	now=$(date +"%Y-%m-%d %H:%M:%S")
-	echo "$now | 		ERROR! Genome ${genomefile} was not found or has unsupported extension" >> ${workdir}/run_${timestamp}.log
-	fi
+fi
 }
 
 export -f indexgenome
