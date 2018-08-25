@@ -18,24 +18,28 @@ function indexgenome() {
 
   source $settingsfile
 
+genomepath=$(echo $sample | cut -d ' ' -f3)
+
+if [[ $genomepath == *.fasta.gz || $genomepath == *.fa.gz ]]; then
+	genomefile=$(echo "${genomepath}"  | sed 's/.*\///' | sed 's/\.[^.]*$//')
+elif [[ $genomepath == *.fasta || $genomepath == *.fa ]]; then
+	genomefile=$(echo "${genomepath}"  | sed 's/.*\///')
+else
+	now=$(date +"%Y-%m-%d %H:%M:%S")
+	echo "$now | 		ERROR! Genome ${genomefile} has an unsupported extension" >> ${workdir}/run_${timestamp}.log
+fi
+
 if [ ! -f ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile}* ]; then
 
-	genomepath=$(echo $sample | cut -d ' ' -f3)
-	
 	if [[ $genomepath == *.fasta.gz || $genomepath == *.fa.gz ]]; then
-	genomefile=$(echo "${genomepath}"  | sed 's/.*\///' | sed 's/\.[^.]*$//')
 	echo "$now |		Copying genome file $genomefile to the project directory" >> ${workdir}/run_${timestamp}.log
 	cp ${genomepath}* ${workdir}/HostDNARemoved/ReferenceGenomes/
 	now=$(date +"%Y-%m-%d %H:%M:%S")
 	echo "$now |		Decompressing ${genomefile}.gz" >> ${workdir}/run_${timestamp}.log
 	gunzip ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile}*.gz
-	elif [[ $genomepath == *.fasta || $genomepath == *.fa ]]; then
-	genomefile=$(echo "${genomepath}"  | sed 's/.*\///')
+	else [[ $genomepath == *.fasta || $genomepath == *.fa ]]; then
 	echo "$now |		Copying genome file $genomefile to the project directory" >> ${workdir}/run_${timestamp}.log
 	cp ${genomepath}* ${workdir}/HostDNARemoved/ReferenceGenomes/
-	else
-	now=$(date +"%Y-%m-%d %H:%M:%S")
-	echo "$now | 		ERROR! Genome ${genomefile} has an unsupported extension" >> ${workdir}/run_${timestamp}.log
 	fi
 
 	now=$(date +"%Y-%m-%d %H:%M:%S")
