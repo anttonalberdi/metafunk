@@ -37,28 +37,19 @@ function indexgenome() {
 		fi
 	fi
 
-if [[ $indexhostgenome == "yes" ]]; then
-
-		now=$(date +"%Y-%m-%d %H:%M:%S")
-		if [ ! -f ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile}.fai ]; then
+	now=$(date +"%Y-%m-%d %H:%M:%S")
+	if [ ! -f ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile}.fai ]; then
 		echo "$now | 		Indexing ${genomefile} genome" >> ${workdir}/run_${timestamp}.log
 		samtools faidx ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile}
 		bwa index ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile}
 		now=$(date +"%Y-%m-%d %H:%M:%S")
 		echo "$now | 		Genome ${genomefile} was succesfully indexed" >> ${workdir}/run_${timestamp}.log
-		fi
-
-else
-	now=$(date +"%Y-%m-%d %H:%M:%S")
-	echo "$now | 		Host genome ${genomefile} will not be indexed" >> ${workdir}/run_${timestamp}.log
-
-fi
+	fi
 
 }
 
 export -f indexgenome
 parallel -j ${threads} --delay 2 -k indexgenome {} ${settingsfile} ${sourcefolder} <${sampledatafile}
-
 
 #Select source folder from which data will be retrieved
 if [[ "$(ls -A ${workdir}/LowComplexFiltered/)" ]]; then
