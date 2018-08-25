@@ -54,7 +54,7 @@ fi
 }
 
 export -f indexgenome
-parallel -j ${threads} --delay 2 -k indexgenome {} ${settingsfile} ${sourcefolder} <${sampledatafile}
+parallel -j ${threads} --delay 1 -k indexgenome {} ${settingsfile} ${sourcefolder} <${sampledatafile}
 
 #Select source folder from which data will be retrieved
 if [[ "$(ls -A ${workdir}/LowComplexFiltered/)" ]]; then
