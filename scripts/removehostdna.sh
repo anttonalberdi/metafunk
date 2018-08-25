@@ -27,7 +27,7 @@ function indexgenome() {
 	echo "$now |		Genome file $genomefile was copied to the project directory" >> ${workdir}/run_${timestamp}.log
 	fi
 	now=$(date +"%Y-%m-%d %H:%M:%S")
-	if [[ $genomefile == *.fastq.gz || $genomefile == *.fq.gz ]]; then
+	if [[ $genomefile == *.gz ]]; then
 	now=$(date +"%Y-%m-%d %H:%M:%S")
 	echo "$now |		Decompressing genome file" >> ${workdir}/run_${timestamp}.log
 	gunzip ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile}
