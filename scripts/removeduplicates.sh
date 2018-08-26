@@ -31,8 +31,8 @@ now=$(date +"%Y-%m-%d %H:%M:%S")
 if [[ $sampleinfo =~ "/" ]]; then
   #It is PE
   echo "$now | 		Removing duplicates from sample $samplename" >> ${workdir}/run_${timestamp}.log
-  cat ${workdir}/${sourcefolder}/${samplename}_1.fastq | seqkit rmdup -s -d ${workdir}/DuplicatesRemoved/${samplename}_1.duplicates.fastq -o ${workdir}/DuplicatesRemoved/${samplename}_1.fastq
-  cat ${workdir}/${sourcefolder}/${samplename}_2.fastq | seqkit rmdup -s -d ${workdir}/DuplicatesRemoved/${samplename}_2.duplicates.fastq -o ${workdir}/DuplicatesRemoved/${samplename}_2.fastq
+  cat ${workdir}/${sourcefolder}/${samplename}_1.fastq | seqkit rmdup -s -d ${workdir}/DuplicatesRemoved/${samplename}_1.duplicates.fastq -o ${workdir}/DuplicatesRemoved/${samplename}_1.fastq 2>> ${workdir}/run_${timestamp}.log
+  cat ${workdir}/${sourcefolder}/${samplename}_2.fastq | seqkit rmdup -s -d ${workdir}/DuplicatesRemoved/${samplename}_2.duplicates.fastq -o ${workdir}/DuplicatesRemoved/${samplename}_2.fastq 2>> ${workdir}/run_${timestamp}.log
   #Get statistics
   before1_1=$(cat ${workdir}/${sourcefolder}/${samplename}_1.fastq | wc -l)
   before1_2=$((before1_1 / 4))
