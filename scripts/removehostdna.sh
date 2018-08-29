@@ -96,6 +96,7 @@ while read sample; do
 			#Remove unpaired reads
 			now=$(date +"%Y-%m-%d %H:%M:%S")
 			echo "$now | 			Repairing sample ${samplename}" >> ${workdir}/run_${timestamp}.log
+			#Repair paired-end reads using BBMap script repair.sh
 			repair.sh in=${workdir}/${sourcefolder}/${samplename}_1.fastq in2=${workdir}/${sourcefolder}/${samplename}_2.fastq out=${workdir}/HostDNARemoved/${samplename}_1.fastq out2=${workdir}/HostDNARemoved/${samplename}_2.fastq overwrite=t 
 			#Map reads against the reference genome and retrieve unmapped reads
 			now=$(date +"%Y-%m-%d %H:%M:%S")
