@@ -5,7 +5,7 @@ version="0.1"
 # Get options
 #########
 
-while getopts w:d:s:f:t:m:c option; do
+while getopts w:d:s:f:t:m:ch option; do
   case "${option}"
   in
   w) workdir=${OPTARG};;
@@ -15,6 +15,18 @@ while getopts w:d:s:f:t:m:c option; do
   t) threads=${OPTARG};;
   m) modules=${OPTARG};;
   c) compress="TRUE";;
+  h) echo "Metafunk pipeline (alpha version), by Antton Alberdi."
+     echo ""
+     echo "MANDATORY ARGUMENTS:"
+     echo "    -w"
+     echo "    -s"
+     echo "    -f"
+     echo "    -t"
+     echo "    -m"
+     echo "OPTIONAL ARGUMENTS:"
+     echo "    -c"
+     exit 0
+     ;;
   \?) echo "Invalid option: -$OPTARG"
   exit ;;
   :) echo "Option -$OPTARG requires an argument."
