@@ -54,6 +54,7 @@ if [ ! -f ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile}* ]; then
 		echo "$now | 		Genome ${genomefile} was succesfully indexed" >> ${workdir}/run_${timestamp}.log
 		else
 		echo "$now | 		There was an error while indexing the genome ${genomefile}" >> ${workdir}/run_${timestamp}.log
+		fi
 	fi
 fi
 }
