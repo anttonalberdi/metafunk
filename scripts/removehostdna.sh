@@ -50,7 +50,7 @@ if [ ! -f ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile} ] && [ ! -f $
 		samtools faidx ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile}
 		bwa index ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile}
 		now=$(date +"%Y-%m-%d %H:%M:%S")
-		if [ -f ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile}.amb && -f ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile}.ann && -f ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile}.bwt && -f ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile}.fai && -f ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile}.pac && -f ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile}.sa ]; then
+		if [ -f ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile}.amb ] && [ -f ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile}.ann ] && [ -f ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile}.bwt ] && [ -f ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile}.fai ] && [ -f ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile}.pac ] && [ -f ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile}.sa ]; then
 		echo "$now | 		Genome ${genomefile} was succesfully indexed" >> ${workdir}/run_${timestamp}.log
 		else
 		echo "$now | 		There was an error while indexing the genome ${genomefile}" >> ${workdir}/run_${timestamp}.log
