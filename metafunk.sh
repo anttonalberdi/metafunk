@@ -5,7 +5,7 @@ version="0.1"
 # Get options
 #########
 
-while getopts w:d:s:f:t:m: option; do
+while getopts w:d:s:f:t:m:c option; do
   case "${option}"
   in
   w) workdir=${OPTARG};;
@@ -14,6 +14,7 @@ while getopts w:d:s:f:t:m: option; do
   f) datadir=${OPTARG};;
   t) threads=${OPTARG};;
   m) modules=${OPTARG};;
+  c) compress="TRUE";;
   \?) echo "Invalid option: -$OPTARG"
   exit ;;
   :) echo "Option -$OPTARG requires an argument."
