@@ -6,21 +6,36 @@ mkdir -p ${workdir}/HumanDNARemoved
 mkdir -p ${workdir}/HumanDNARemoved/ReferenceGenome
 
 #Copy host reference genome to project directory
-humangenomefile=$(echo "${humangenomepath}" | sed 's/.*\///')
-if [ ! -f ${workdir}/HumanDNARemoved/ReferenceGenome/${humangenomefile} ]; then
+if [[ $humangenomepath == *.fasta.gz || $humangenomepath == *.fa.gz ]]; then
+	humangenomefile=$(echo "${humangenomepath}"  | sed 's/.*\///' | sed 's/\.[^.]*$//')
+elif [[ $humangenomepath == *.fasta || $humangenomepath == *.fa ]]; then
+	humangenomefile=$(echo "${humangenomepath}"  | sed 's/.*\///')
+else
 	now=$(date +"%Y-%m-%d %H:%M:%S")
-	echo "$now | 		Copying human genome" >>  ${workdir}/run_${timestamp}.log
+	echo "$now | 		ERROR! Genome ${humangenomefile} has an unsupported extension" >> ${workdir}/run_${timestamp}.log
+fi
+
+if [ ! -f ${workdir}/HumanDNARemoved/ReferenceGenome/${humangenomefile} ] && [ ! -f ${workdir}/HumanDNARemoved/ReferenceGenome/${humangenomefile}.gz ]; then
+	if [[ $humangenomepath == *.fasta.gz || $humangenomepath == *.fa.gz ]]; then
+	now=$(date +"%Y-%m-%d %H:%M:%S")
+	echo "$now | 		Copying human genome to project directory" >>  ${workdir}/run_${timestamp}.log
 	cp ${humangenomepath}* ${workdir}/HumanDNARemoved/ReferenceGenome
 	now=$(date +"%Y-%m-%d %H:%M:%S")
-	echo "$now |		Human genome file $humangenomefile was copied to the project directory" >> ${workdir}/run_${timestamp}.log
+	echo "$now |		Decompressing human genome" >> ${workdir}/run_${timestamp}.log
+	gunzip ${workdir}/HumanDNARemoved/ReferenceGenomes/${humangenomefile}*.gz
+	gunzip
+	else
+	now=$(date +"%Y-%m-%d %H:%M:%S")
+	echo "$now | 		Copying human genome to project directory" >>  ${workdir}/run_${timestamp}.log
+	cp ${humangenomepath}* ${workdir}/HumanDNARemoved/ReferenceGenome
+	fi
 else
 	now=$(date +"%Y-%m-%d %H:%M:%S")
 	echo "$now | 		Human genome ${genomefile} already exists in the project directory" >> ${workdir}/run_${timestamp}.log
 fi
 
 #Index human reference genome
-if [[ $indexhumangenome == "yes" ]]; then
-	if [ ! -f ${workdir}/HumanDNARemoved/ReferenceGenome/${humangenomefile}.fai ]; then
+	if [ ! -f ${workdir}/HumanDNARemoved/ReferenceGenome/${humangenomefile}.amb ] || [ ! -f ${workdir}/HumanDNARemoved/ReferenceGenome/${humangenomefile}.ann ] || [ ! -f ${workdir}/HumanDNARemoved/ReferenceGenome/${humangenomefile}.bwt ] || [ ! -f ${workdir}/HumanDNARemoved/ReferenceGenome/${humangenomefile}.fai ] || [ ! -f ${workdir}/HumanDNARemoved/ReferenceGenome/${humangenomefile}.pac ] || [ ! -f ${workdir}/HumanDNARemoved/ReferenceGenome/${humangenomefile}.sa ]; then
 		now=$(date +"%Y-%m-%d %H:%M:%S")
 		echo "$now | 		Indexing human genome" >> ${workdir}/run_${timestamp}.log
 		samtools faidx ${workdir}/HumanDNARemoved/ReferenceGenome/${genomefile}
@@ -29,7 +44,6 @@ if [[ $indexhumangenome == "yes" ]]; then
 	else
 		echo "$now | 		Human genome ${humangenomefile} is already indexed" >> ${workdir}/run_${timestamp}.log
 	fi
-fi
 
 #Select source folder from which data will be retrieved
 if [[ "$(ls -A ${workdir}/HostDNARemoved/)" ]]; then
