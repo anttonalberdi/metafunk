@@ -29,7 +29,7 @@ else
 	echo "$now | 		ERROR! Genome ${genomefile} has an unsupported extension" >> ${workdir}/run_${timestamp}.log
 fi
 
-if [ ! -f ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile}.fa || ! -f ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile}.fasta ]; then
+if [ ! -f ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile}.fa || ! -f ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile}.fasta  || ! -f ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile}.fa.gz  || ! -f ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile}.fasta.gz ]; then
 
 	if [[ $genomepath == *.fasta.gz || $genomepath == *.fa.gz ]]; then
 	now=$(date +"%Y-%m-%d %H:%M:%S")
