@@ -29,11 +29,11 @@ else
 	echo "$now | 		ERROR! Genome ${genomefile} has an unsupported extension" >> ${workdir}/run_${timestamp}.log
 fi
 
-if [ ! -f ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile}.fa || ! -f ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile}.fasta  || ! -f ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile}.fa.gz  || ! -f ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile}.fasta.gz ]; then
+if [ ! -f ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile}.fa ] || [ ! -f ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile}.fasta ] || [ ! -f ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile}.fa.gz ] || [ ! -f ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile}.fasta.gz ]; then
 
 	if [[ $genomepath == *.fasta.gz || $genomepath == *.fa.gz ]]; then
 	now=$(date +"%Y-%m-%d %H:%M:%S")
-	echo "$now |		Copying genome file $genomefile to the project directory" >> ${workdir}/run_${timestamp}.log
+	echo "$now |		Copying genome file ${genomefile} to the project directory" >> ${workdir}/run_${timestamp}.log
 	cp ${genomepath}* ${workdir}/HostDNARemoved/ReferenceGenomes/
 	now=$(date +"%Y-%m-%d %H:%M:%S")
 	echo "$now |		Decompressing ${genomefile}.gz" >> ${workdir}/run_${timestamp}.log
@@ -44,7 +44,7 @@ if [ ! -f ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile}.fa || ! -f ${
 	fi
 
 	
-	if [ ! -f ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile}.amb || ! -f ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile}.ann || ! -f ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile}.bwt || ! -f ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile}.fai || ! -f ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile}.pac || ! -f ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile}.sa ]; then
+	if [ ! -f ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile}.amb ] || [ ! -f ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile}.ann ] || [ ! -f ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile}.bwt ] || [ ! -f ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile}.fai ] || [ ! -f ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile}.pac ] || [ ! -f ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile}.sa ]; then
 		now=$(date +"%Y-%m-%d %H:%M:%S")
 		echo "$now | 		Indexing ${genomefile} genome" >> ${workdir}/run_${timestamp}.log
 		samtools faidx ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile}
