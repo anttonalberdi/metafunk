@@ -19,13 +19,14 @@ while getopts w:d:s:f:t:m:ch option; do
      echo "Metafunk pipeline (alpha version), by Antton Alberdi."
      echo ""
      echo "MANDATORY ARGUMENTS:"
-     echo "    -w"
-     echo "    -s"
-     echo "    -f"
-     echo "    -t"
-     echo "    -m"
+     echo "    -w   Working directory. Absolute path to the directory where the Metafunk pipeline will create and edit files. (e.g. /home/antton/wolf_project/")
+     echo "    -s   "
+     echo "    -f   "
+     echo "    -t   "
+     echo "    -m   "
      echo "OPTIONAL ARGUMENTS:"
      echo "    -c"
+     echo ""
      exit 0
      ;;
   \?) echo "Invalid option: -$OPTARG"
