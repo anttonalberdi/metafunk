@@ -33,8 +33,8 @@ function lowcompjob() {
   if [[ $sampleinfo =~ "/" ]]; then
     #It is PE
     echo "$now | 		Removing low complexity reads from PE sample ${samplename}" >> ${workdir}/run_${timestamp}.log
-    prinseq-lite.pl -lc_method "dust" -lc_threshold ${dustvalue} -fastq  ${workdir}/${sourcefolder}/${samplename}_1.fastq -out_good ${workdir}/LowComplexFiltered/${samplename}_1
-    prinseq-lite.pl -lc_method "dust" -lc_threshold ${dustvalue} -fastq  ${workdir}/${sourcefolder}/${samplename}_2.fastq -out_good ${workdir}/LowComplexFiltered/${samplename}_2
+    prinseq-lite.pl -lc_method "dust" -lc_threshold ${dustvalue} -fastq  ${workdir}/${sourcefolder}/${samplename}_1.fastq -out_good ${workdir}/LowComplexFiltered/${samplename}_1 -out_bad null
+    prinseq-lite.pl -lc_method "dust" -lc_threshold ${dustvalue} -fastq  ${workdir}/${sourcefolder}/${samplename}_2.fastq -out_good ${workdir}/LowComplexFiltered/${samplename}_2 -out_bad null
     #Compute statistics
     before1_1=$(cat ${workdir}/${sourcefolder}/${samplename}_1.fastq | wc -l)
     before1_2=$((before1_1 / 4))
@@ -59,7 +59,7 @@ function lowcompjob() {
   else
     #It is SR
     echo "$now | 		Removing low complexity reads from SR sample ${samplename}" >> ${workdir}/run_${timestamp}.log
-    prinseq-lite.pl -lc_method "dust" -lc_threshold ${dustvalue} -fastq  ${workdir}/${sourcefolder}/${samplename}.fastq -out_good ${workdir}/LowComplexFiltered/${samplename}
+    prinseq-lite.pl -lc_method "dust" -lc_threshold ${dustvalue} -fastq  ${workdir}/${sourcefolder}/${samplename}.fastq -out_good ${workdir}/LowComplexFiltered/${samplename} -out_bad null
     #Compute statistics
     before1=$(cat ${workdir}/${sourcefolder}/${samplename}.fastq | wc -l)
     before2=$((before1 / 4))
