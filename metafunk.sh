@@ -23,11 +23,11 @@ while getopts w:d:s:f:t:m:ch option; do
      echo "    -d   Sample data file. Absolute path to the file containing information about samples and files (e.g. /home/antton/wolf_project/sample.data.txt)"
      echo "    -s   Settings file Absolute path to the file containing additional settings (e.g. /home/antton/wolf_project/settings.sh)"
      echo "    -f   Raw data directory. Absolute path to the directory where the raw data files are located (e.g. /home/antton/raw_data/wolfs/)"
-     echo "    -t   Number of threads"
-     echo "    -m   Module(s) to run (see Metafunk wiki for details: https://github.com/anttonalberdi/metafunk/wiki)"
+     echo "    -t   Number of threads [int] (e.g. 8)"
+     echo "    -m   Module(s) to run separated with commas. See Metafunk wiki for details: https://github.com/anttonalberdi/metafunk/wiki (e.g. 1,2,3,4)"
      echo ""
      echo "OPTIONAL ARGUMENTS:"
-     echo "    -c   Compress files. If used, source data files will be compressed after accomplishing each step (module)"
+     echo "    -c   Compress files. If used (add "-c" to the command line), source data files will be compressed after accomplishing each step (module)"
      echo ""
      exit 0
      ;;
