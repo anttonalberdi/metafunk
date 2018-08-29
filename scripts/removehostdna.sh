@@ -38,7 +38,7 @@ if [ ! -f ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile} ] && [ ! -f $
 	now=$(date +"%Y-%m-%d %H:%M:%S")
 	echo "$now |		Decompressing ${genomefile}.gz" >> ${workdir}/run_${timestamp}.log
 	gunzip ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile}*.gz
-	else [[ $genomepath == *.fasta || $genomepath == *.fa ]]
+	else
 	echo "$now |		Copying genome file $genomefile to the project directory" >> ${workdir}/run_${timestamp}.log
 	cp ${genomepath}* ${workdir}/HostDNARemoved/ReferenceGenomes/
 	fi
