@@ -32,6 +32,13 @@ function lowcompjob() {
 
   if [[ $sampleinfo =~ "/" ]]; then
     #It is PE
+    	#Decompress if needed
+	if [[ -f ${workdir}/${sourcefolder}/${samplename}_1.fastq.gz ]]; then
+	gunzip ${workdir}/${sourcefolder}/${samplename}_1.fastq.gz
+	fi
+	if [[ -f ${workdir}/${sourcefolder}/${samplename}_2.fastq.gz ]]; then
+	gunzip ${workdir}/${sourcefolder}/${samplename}_2.fastq.gz
+	fi
     echo "$now | 		Removing low complexity reads from PE sample ${samplename}" >> ${workdir}/run_${timestamp}.log
     prinseq-lite.pl -lc_method "dust" -lc_threshold ${dustvalue} -fastq  ${workdir}/${sourcefolder}/${samplename}_1.fastq -out_good ${workdir}/LowComplexFiltered/${samplename}_1 -out_bad null
     prinseq-lite.pl -lc_method "dust" -lc_threshold ${dustvalue} -fastq  ${workdir}/${sourcefolder}/${samplename}_2.fastq -out_good ${workdir}/LowComplexFiltered/${samplename}_2 -out_bad null
@@ -60,6 +67,10 @@ function lowcompjob() {
     fi
   else
     #It is SR
+    	#Decompress if needed
+	if [[ -f ${workdir}/${sourcefolder}/${samplename}.fastq.gz ]]; then
+	gunzip ${workdir}/${sourcefolder}/${samplename}.fastq.gz
+	fi
     echo "$now | 		Removing low complexity reads from SR sample ${samplename}" >> ${workdir}/run_${timestamp}.log
     prinseq-lite.pl -lc_method "dust" -lc_threshold ${dustvalue} -fastq  ${workdir}/${sourcefolder}/${samplename}.fastq -out_good ${workdir}/LowComplexFiltered/${samplename} -out_bad null
     #Compute statistics
