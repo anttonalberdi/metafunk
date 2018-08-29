@@ -15,7 +15,8 @@ while getopts w:d:s:f:t:m:ch option; do
   t) threads=${OPTARG};;
   m) modules=${OPTARG};;
   c) compress="TRUE";;
-  h) echo "Metafunk pipeline (alpha version), by Antton Alberdi."
+  h) echo ""
+     echo "Metafunk pipeline (alpha version), by Antton Alberdi."
      echo ""
      echo "MANDATORY ARGUMENTS:"
      echo "    -w"
@@ -184,7 +185,7 @@ fi
 now=$(date +"%Y-%m-%d %H:%M:%S")
 if [[ $qualityfiltering == "yes" ]]; then
 echo "$now | QUALITY FILTERING" >> ${workdir}/run_${timestamp}.log
-export workdir; export sampledatafile; export settingsfile; export datadir; export threads; export metafunkdirectory; export timestamp
+export workdir; export sampledatafile; export settingsfile; export datadir; export threads; export metafunkdirectory; export timestamp; export compress
 sh ${metafunkdirectory}/scripts/qualityfiltering.sh
 else
 echo "$now | Quality filtering will not be performed" >> ${workdir}/run_${timestamp}.log
@@ -197,7 +198,7 @@ fi
 now=$(date +"%Y-%m-%d %H:%M:%S")
 if [[ $removeduplicates == "yes" ]]; then
 echo "$now | DUPLICATE REMOVAL" >> ${workdir}/run_${timestamp}.log
-export workdir; export sampledatafile; export settingsfile; export datadir; export threads; export metafunkdirectory; export timestamp
+export workdir; export sampledatafile; export settingsfile; export datadir; export threads; export metafunkdirectory; export timestamp; export compress
 sh ${metafunkdirectory}/scripts/removeduplicates.sh
 else
 now=$(date +"%Y-%m-%d %H:%M:%S")
@@ -211,7 +212,7 @@ fi
 now=$(date +"%Y-%m-%d %H:%M:%S")
 if [[ $removelowcomplexity == "yes" ]]; then
 echo "$now | LOW COMPLEXITY FILTERING" >> ${workdir}/run_${timestamp}.log
-export workdir; export sampledatafile; export settingsfile; export datadir; export threads; export metafunkdirectory; export timestamp
+export workdir; export sampledatafile; export settingsfile; export datadir; export threads; export metafunkdirectory; export timestamp; export compress
 sh ${metafunkdirectory}/scripts/lowcomplexity.sh
 else
 now=$(date +"%Y-%m-%d %H:%M:%S")
@@ -225,7 +226,7 @@ fi
 if [[ $removehostdna == "yes" ]]; then
 now=$(date +"%Y-%m-%d %H:%M:%S")
 echo "$now | HOST DNA REMOVAL" >> ${workdir}/run_${timestamp}.log
-export workdir; export sampledatafile; export settingsfile; export datadir; export threads; export metafunkdirectory; export timestamp
+export workdir; export sampledatafile; export settingsfile; export datadir; export threads; export metafunkdirectory; export timestamp; export compress
 sh ${metafunkdirectory}/scripts/removehostdna.sh
 else
 now=$(date +"%Y-%m-%d %H:%M:%S")
@@ -239,7 +240,7 @@ fi
 if [[ $removehumandna == "yes" ]]; then
 now=$(date +"%Y-%m-%d %H:%M:%S")
 echo "$now | HUMAN DNA REMOVAL" >> ${workdir}/run_${timestamp}.log
-export workdir; export sampledatafile; export settingsfile; export datadir; export threads; export metafunkdirectory; export timestamp
+export workdir; export sampledatafile; export settingsfile; export datadir; export threads; export metafunkdirectory; export timestamp; export compress
 sh ${metafunkdirectory}/scripts/removehumandna.sh
 else
 now=$(date +"%Y-%m-%d %H:%M:%S")
@@ -253,7 +254,7 @@ fi
 if [[ $coassembly == "yes" ]]; then
 now=$(date +"%Y-%m-%d %H:%M:%S")
 echo "$now | COASSEMBLY" >> ${workdir}/run_${timestamp}.log
-export workdir; export sampledatafile; export settingsfile; export datadir; export threads; export metafunkdirectory; export timestamp
+export workdir; export sampledatafile; export settingsfile; export datadir; export threads; export metafunkdirectory; export timestamp; export compress
 sh ${metafunkdirectory}/scripts/coassembly.sh
 else
 now=$(date +"%Y-%m-%d %H:%M:%S")
