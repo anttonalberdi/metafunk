@@ -11,7 +11,7 @@ keggthreshold <- Sys.getenv("KEGGTHRESHOLD")
 timestamp <- Sys.getenv("TIMESTAMP")
 
 #Choose normalisation methods
-methods <- strsplit(normalisationmethod, ",")[[1]]
+methods <- strsplit(method, ",")[[1]]
 
 #Load and prepare annotation file
 annot.table <- fread(paste(workingdirectory,"/GeneAnnotationKEGG/assembly.genes.KEGG.annotated.",keggthreshold,".txt",sep=""),sep="\t",header=FALSE,,colClasses=list(character=c("V4")))
