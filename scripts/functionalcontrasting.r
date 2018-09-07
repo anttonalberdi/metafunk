@@ -6,12 +6,12 @@ library(RColorBrewer)
 workingdirectory <- Sys.getenv("WORKDIR")
 metafunkdirectory <- Sys.getenv("METAFUNKDIR")
 sampledatafile <- Sys.getenv("SAMPLEDATAFILE")
-method <- Sys.getenv("NORMALISATIONMETHOD")
+normalisationmethod <- Sys.getenv("NORMALISATIONMETHOD")
 keggthreshold <- Sys.getenv("KEGGTHRESHOLD")
 timestamp <- Sys.getenv("TIMESTAMP")
 
 #Choose normalisation methods
-methods <- strsplit(method, ",")[[1]]
+methods <- strsplit(normalisationmethod, ",")[[1]]
 
 #Load and prepare annotation file
 annot.table <- fread(paste(workingdirectory,"/GeneAnnotationKEGG/assembly.genes.KEGG.annotated.",keggthreshold,".txt",sep=""),sep="\t",header=FALSE,,colClasses=list(character=c("V4")))
@@ -69,8 +69,6 @@ groups <- sampledata[,3]
 groupnames <- unique(groups)
 groupnumber <- length(groupnames)
 
-#Define colours
-colours <- brewer.pal(groupnumber, "Spectral")
 
 ##
 
@@ -79,6 +77,9 @@ if (groupnumber == 1){
 }
 if (groupnumber == 2){
 
+#Define colours
+colours <- c("#b7234a","#71c4a5")
+	
 #Define groups
 group1 <- rownames(sampledata[sampledata[,3] == groupnames[1],])
 group2 <- rownames(sampledata[sampledata[,3] == groupnames[2],])
@@ -136,7 +137,10 @@ ggsave(paste(workingdirectory,"/FunctionalStats/KEGG.Domain.",method,".jitter.pd
   
 }
 if (groupnumber > 2){
-	
+
+#Define colours
+colours <- brewer.pal(groupnumber, "Spectral")
+
 #### Domain level ####
 domains <- rownames(cov.Domain.metabolism)
 domain.melt <- cbind(rep(domains,length(sampledata[,3])),rep(groups,each=length(domains)),melt(cov.Domain.metabolism))
