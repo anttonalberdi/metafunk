@@ -8,6 +8,7 @@ metafunkdirectory <- Sys.getenv("METAFUNKDIR")
 sampledatafile <- Sys.getenv("SAMPLEDATAFILE")
 normalisationmethod <- Sys.getenv("NORMALISATIONMETHOD")
 keggthreshold <- Sys.getenv("KEGGTHRESHOLD")
+keggthreshold <- as.character(keggthreshold)
 timestamp <- Sys.getenv("TIMESTAMP")
 
 #Choose normalisation methods
