@@ -28,7 +28,7 @@ for (method in methods){
 text=paste("      Aggregating KO and Path values for normalisation method: ",method,sep="")  
 write(text,file=paste(workingdirectory,"/run_",timestamp,".log",sep=""),append=TRUE)
 cov.table <- data.frame(fread(paste(workingdirectory,"/GeneTables/GeneCoverageTable.",method,".csv",sep=""),sep=","),row.names=1)
-colnames(cov.table)[1] <- "contig"
+#colnames(cov.table)[1] <- "contig"
   
 #KO aggregation
 cov.KO.table <- merge(cov.table,KO.table,by="contig")
