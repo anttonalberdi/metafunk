@@ -15,6 +15,13 @@ while read sample; do
   if [[ $sampleinfo =~ "/" ]]; then
     #It is PE
     echo "$now |  Quality filtering sample $samplename" >> ${workdir}/run_${timestamp}.log
+    #Decompress if needed
+	  if [[ -f ${workdir}/RawData/${samplename}_1.fastq.gz ]]; then
+	  gunzip ${workdir}/RawData/${samplename}_1.fastq.gz
+	  fi
+    if [[ -f ${workdir}/RawData/${samplename}_2.fastq.gz ]]; then
+    gunzip ${workdir}/RawData/${samplename}_2.fastq.gz
+	  fi
     #Perform quality filtering and rename output files
     AdapterRemoval --file1 ${workdir}/RawData/${samplename}_1.fastq --file2 ${workdir}/RawData/${samplename}_2.fastq --basename ${workdir}/QualityFiltered/${samplename} --minquality ${minavgquality} --minlength ${minseqlength} --trimqualities --trimns --maxns 5 --qualitymax ${qualitymax} --threads ${threads}
     mv ${workdir}/QualityFiltered/${samplename}.pair1.truncated ${workdir}/QualityFiltered/${samplename}_1.fastq
