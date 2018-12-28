@@ -50,6 +50,10 @@ while read sample; do
   else
     #It is SR
     echo "$now |  Quality filtering sample $samplename" >> ${workdir}/run_${timestamp}.log
+    #Decompress if needed
+	if [[ -f ${workdir}/RawData/${samplename}.fastq.gz ]]; then
+	gunzip ${workdir}/RawData/${samplename}.fastq.gz
+	fi
     #Perform quality filtering and rename output files
     AdapterRemoval --file1 ${workdir}/RawData/${samplename}.fastq --basename ${workdir}/QualityFiltered/${samplename} --minquality ${minavgquality} --minlength ${minseqlength} --trimqualities --trimns --maxns 5 --qualitymax ${qualitymax} --threads ${threads}
     mv ${workdir}/QualityFiltered/${samplename}.truncated ${workdir}/QualityFiltered/${samplename}.fastq
