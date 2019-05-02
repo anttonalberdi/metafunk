@@ -21,13 +21,13 @@ function indexgenome() {
 
 genomepath=$(echo $sample | cut -d ' ' -f3)
 
-if [[ $genomepath == *.fasta.gz || $genomepath == *.fa.gz ]]; then
+if [[ $genomepath == *.fasta.gz || $genomepath == *.fa.gz || $genomepath == *.fna.gz ]]; then
 	genomefile=$(echo "${genomepath}"  | sed 's/.*\///' | sed 's/\.[^.]*$//')
-elif [[ $genomepath == *.fasta || $genomepath == *.fa ]]; then
+elif [[ $genomepath == *.fasta || $genomepath == *.fa || $genomepath == *.fna ]]; then
 	genomefile=$(echo "${genomepath}"  | sed 's/.*\///')
 else
 	now=$(date +"%Y-%m-%d %H:%M:%S")
-	echo "$now | 		ERROR! Genome ${genomefile} has an unsupported extension" >> ${workdir}/run_${timestamp}.log
+	echo "$now | 		ERROR! Genome ${genomepath} has an unsupported extension" >> ${workdir}/run_${timestamp}.log
 fi
 
 if [ ! -f ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile} ] && [ ! -f ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile}.gz ]; then
