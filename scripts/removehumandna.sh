@@ -6,9 +6,9 @@ mkdir -p ${workdir}/HumanDNARemoved
 mkdir -p ${workdir}/HumanDNARemoved/ReferenceGenome
 
 #Copy host reference genome to project directory
-if [[ $humangenomepath == *.fasta.gz || $humangenomepath == *.fa.gz ]]; then
+if [[ $humangenomepath == *.fasta.gz || $humangenomepath == *.fa.gz || $humangenomepath == *.fna.gz ]]; then
 	humangenomefile=$(echo "${humangenomepath}"  | sed 's/.*\///' | sed 's/\.[^.]*$//')
-elif [[ $humangenomepath == *.fasta || $humangenomepath == *.fa ]]; then
+elif [[ $humangenomepath == *.fasta || $humangenomepath == *.fa || $humangenomepath == *.fna ]]; then
 	humangenomefile=$(echo "${humangenomepath}"  | sed 's/.*\///')
 else
 	now=$(date +"%Y-%m-%d %H:%M:%S")
@@ -16,7 +16,7 @@ else
 fi
 
 if [ ! -f ${workdir}/HumanDNARemoved/ReferenceGenome/${humangenomefile} ] && [ ! -f ${workdir}/HumanDNARemoved/ReferenceGenome/${humangenomefile}.gz ]; then
-	if [[ $humangenomepath == *.fasta.gz || $humangenomepath == *.fa.gz ]]; then
+	if [[ $humangenomepath == *.fasta.gz || $humangenomepath == *.fa.gz || $humangenomepath == *.fna.gz ]]; then
 	now=$(date +"%Y-%m-%d %H:%M:%S")
 	echo "$now | 		Copying human genome to project directory" >>  ${workdir}/run_${timestamp}.log
 	cp ${humangenomepath}* ${workdir}/HumanDNARemoved/ReferenceGenome
@@ -121,7 +121,7 @@ while read sample; do
 			if [[ -f ${workdir}/${sourcefolder}/${samplename}.fastq.gz ]]; then
 			gunzip ${workdir}/${sourcefolder}/${samplename}.fastq.gz
 			fi
-			
+
 			#Map reads against the reference genome and retrieve unmapped reads
 			now=$(date +"%Y-%m-%d %H:%M:%S")
 			echo "				Removing human DNA from sample $samplename" >> ${workdir}/run_${timestamp}.log
@@ -145,7 +145,7 @@ while read sample; do
 			#Print statistics
 			now=$(date +"%Y-%m-%d %H:%M:%S")
 			echo "$now | 		From sample $samplename, $difference reads (${percentage}%) were mapped to the human genome" >> ${workdir}/run_${timestamp}.log
-	
+
 	if [[ compress == TRUE ]]; then
 	    now=$(date +"%Y-%m-%d %H:%M:%S")
 	    echo "$now | 		Compressing file ${sourcefolder}/${samplename}.fastq" >> ${workdir}/run_${timestamp}.log
