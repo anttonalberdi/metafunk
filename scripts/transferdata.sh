@@ -5,8 +5,7 @@ source $settingsfile
 
 mkdir -p ${workdir}/RawData
 
-#Loop across samples specified in sample.data.txt
-while read sample; do
+function transferdatajob() {
 
   #Obtain data from sample.data.txt columns
   samplename=$(echo $sample | cut -d ' ' -f1 )
@@ -120,7 +119,12 @@ while read sample; do
     echo "$now |    ERROR: The extension of file $samplefile is not recognised" >> ${workdir}/run_${timestamp}.log
     fi
   fi
-done < ${sampledatafile}
+}
+
+#Loop in parallel across samples specified in sample.data.txt
+#Export function lowcompjob
+export -f transferdatajob
+parallel -j ${threads} -k transferdatajob {} ${settingsfile} ${sourcefolder} <${sampledatafile}
 
 #Check if files were succesfully transferred
 if [ -z "$(ls -A ${workdir}/RawData/)" ]; then
