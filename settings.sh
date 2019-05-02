@@ -24,6 +24,8 @@ module load perl/5.24.0
 module load libgtextutils/0.7
 #Prinseq (http://prinseq.sourceforge.net/)
 module load prinseq-lite/0.20.4
+#OpenSSL
+module load openssl/1.0.0
 #Samtools (http://www.htslib.org/doc/samtools.html)
 module load samtools/1.4
 #Bwa (http://bio-bwa.sourceforge.net/)

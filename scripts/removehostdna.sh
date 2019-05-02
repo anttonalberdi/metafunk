@@ -162,6 +162,7 @@ while read sample; do
 			fi
 			#Convert BAM file to FASTQ
 			samtools fastq -0 ${workdir}/HostDNARemoved/${samplename}.fastq ${workdir}/HostDNARemoved/${samplename}.bam
+      samtools fastq -0 ${workdir}/HostDNA/${samplename}.fastq ${workdir}/HostDNA/${samplename}.bam
       #Remove mapping files
       if [$keep != "TRUE"]; then
         rm ${workdir}/HostDNARemoved/${samplename}.sam
