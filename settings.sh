@@ -18,6 +18,10 @@ module load pigz/2.3.4
 module load adapterremoval/2.2.2
 #SeqKit (https://github.com/shenwei356/seqkit)
 module load seqkit/0.7.1
+#Perl
+module load perl/5.24.0
+#libgtextutils
+module load libgtextutils/0.7
 #Prinseq (http://prinseq.sourceforge.net/)
 module load prinseq-lite/0.20.4
 #Samtools (http://www.htslib.org/doc/samtools.html)
