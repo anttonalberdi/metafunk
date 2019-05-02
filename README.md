@@ -54,6 +54,7 @@ example:
 *read wiki for further details
 
 ## Change log
+2019/05/02 | Initial data transfer parallelization. 
+2019/05/02 | Host DNA outputed to HostDNA directory. 
 2018/03/30 | The pipeline is ready until the co-assembly step for SR and PE, SF and MF datasets.
-
 2018/03/22 | The adventure has started. This is still a protoalpha version of the metafunk pipeline.
