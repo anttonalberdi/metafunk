@@ -28,6 +28,7 @@ elif [[ $genomepath == *.fasta || $genomepath == *.fa || $genomepath == *.fna ]]
 else
 	now=$(date +"%Y-%m-%d %H:%M:%S")
 	echo "$now | 		ERROR! Genome ${genomepath} has an unsupported extension" >> ${workdir}/run_${timestamp}.log
+  exit
 fi
 
 if [ ! -f ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile} ] && [ ! -f ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile}.gz ]; then
@@ -56,7 +57,8 @@ if [ ! -f ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile} ] && [ ! -f $
 		echo "$now | 		Genome ${genomefile} was succesfully indexed" >> ${workdir}/run_${timestamp}.log
 		else
 		echo "$now | 		There was an error while indexing the genome ${genomefile}" >> ${workdir}/run_${timestamp}.log
-		fi
+    exit
+    fi
 	fi
 fi
 }
