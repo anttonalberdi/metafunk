@@ -44,7 +44,7 @@ MetaFunk is suitable for Illumina and BGISeq single-read (SR) and paired-end (PE
 
 4. Run the following script:
 
-`sh /[path]/metafunk.sh -w [working directory] -d [/path/sample.data.txt] -s [/path/settings.sh] -f [data file directory] -t [number of threads] -m [module list] {optional arguments: -c }`
+`sh /[path]/metafunk.sh -w [working directory] -d [/path/sample.data.txt] -s [/path/settings.sh] -f [data file directory] -t [number of threads] -m [module list] {optional arguments: -c -k}`
 
 example:
 
@@ -54,6 +54,7 @@ example:
 *read wiki for further details
 
 ## Change log
+2019/05/02 | Initial data transfer parallelization. 
+2019/05/02 | Host DNA outputed to HostDNA directory. 
 2018/03/30 | The pipeline is ready until the co-assembly step for SR and PE, SF and MF datasets.
-
 2018/03/22 | The adventure has started. This is still a protoalpha version of the metafunk pipeline.
