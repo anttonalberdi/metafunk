@@ -33,7 +33,7 @@ fi
 
 if [ ! -f ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile} ] && [ ! -f ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile}.gz ]; then
 
-	if [[ $genomepath == *.fasta.gz || $genomepath == *.fa.gz ]]; then
+	if [[ $genomepath == *.fasta.gz || $genomepath == *.fa.gz || $genomepath == *.fna.gz]]; then
 	now=$(date +"%Y-%m-%d %H:%M:%S")
 	echo "$now |		Copying genome file ${genomefile} to the project directory" >> ${workdir}/run_${timestamp}.log
 	cp ${genomepath}* ${workdir}/HostDNARemoved/ReferenceGenomes/
