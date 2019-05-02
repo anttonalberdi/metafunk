@@ -15,6 +15,7 @@ while getopts w:d:s:f:t:m:ch option; do
   t) threads=${OPTARG};;
   m) modules=${OPTARG};;
   c) compress="TRUE";;
+  k) keep="TRUE";;
   h) echo ""
      echo "Metafunk pipeline (alpha version), by Antton Alberdi."
      echo ""
@@ -28,6 +29,7 @@ while getopts w:d:s:f:t:m:ch option; do
      echo ""
      echo "OPTIONAL ARGUMENTS:"
      echo "    -c   Compress files. If used (add "-c" to the command line), source data files will be compressed after accomplishing each step (module)"
+     echo "    -k   Keep intermediate files. If used (add "-k" to the command line), intermediate files not necessary for the following steps will NOT be removed"
      echo ""
      exit 0
      ;;

@@ -119,9 +119,11 @@ while read sample; do
 			samtools fastq -s ${workdir}/HostDNARemoved/${samplename}_singleton.fastq -1 ${workdir}/HostDNARemoved/${samplename}_1.fastq -2 ${workdir}/HostDNARemoved/${samplename}_2.fastq ${workdir}/HostDNARemoved/${samplename}.bam
       samtools fastq -s ${workdir}/HostDNA/${samplename}_singleton.fastq -1 ${workdir}/HostDNA/${samplename}_1.fastq -2 ${workdir}/HostDNA/${samplename}_2.fastq ${workdir}/HostDNA/${samplename}.bam
       #Remove mapping files
-      rm ${workdir}/HostDNARemoved/${samplename}.sam
-      rm ${workdir}/HostDNARemoved/${samplename}.bam
-      rm ${workdir}/HostDNA/${samplename}.bam
+      if [$keep != "TRUE"]; then
+        rm ${workdir}/HostDNARemoved/${samplename}.sam
+        rm ${workdir}/HostDNARemoved/${samplename}.bam
+        rm ${workdir}/HostDNA/${samplename}.bam
+      fi
 			#Compute statistics
 	    before1=$(cat ${workdir}/${sourcefolder}/${samplename}_1.fastq | wc -l)
 	    before2=$((before1 / 4))
@@ -133,10 +135,12 @@ while read sample; do
 			now=$(date +"%Y-%m-%d %H:%M:%S")
 	  	echo "$now | 			From sample $samplename, $difference PE reads (${percentage}%) were mapped to the host genome" >> ${workdir}/run_${timestamp}.log
 			#Compress source files
-		  #now=$(date +"%Y-%m-%d %H:%M:%S")
-		  #echo "$now | 		Compressing files ${sourcefolder}/${samplename}_1.fastq and ${sourcefolder}/${samplename}_2.fastq" >> ${workdir}/run_${timestamp}.log
-		  #pigz -p ${threads} ${workdir}/${sourcefolder}/${samplename}_1.fastq
-		  #pigz -p ${threads} ${workdir}/${sourcefolder}/${samplename}_2.fastq
+      if [$compress == "TRUE"]; then
+		  now=$(date +"%Y-%m-%d %H:%M:%S")
+		  echo "$now | 		Compressing files ${sourcefolder}/${samplename}_1.fastq and ${sourcefolder}/${samplename}_2.fastq" >> ${workdir}/run_${timestamp}.log
+		  pigz -p ${threads} ${workdir}/${sourcefolder}/${samplename}_1.fastq
+		  pigz -p ${threads} ${workdir}/${sourcefolder}/${samplename}_2.fastq
+      fi
 		else
 
 			#It is SR
@@ -157,9 +161,11 @@ while read sample; do
 			#Convert BAM file to FASTQ
 			samtools fastq -0 ${workdir}/HostDNARemoved/${samplename}.fastq ${workdir}/HostDNARemoved/${samplename}.bam
       #Remove mapping files
-      rm ${workdir}/HostDNARemoved/${samplename}.sam
-			rm ${workdir}/HostDNARemoved/${samplename}.bam
-      rm ${workdir}/HostDNA/${samplename}.bam
+      if [$keep != "TRUE"]; then
+        rm ${workdir}/HostDNARemoved/${samplename}.sam
+			  rm ${workdir}/HostDNARemoved/${samplename}.bam
+        rm ${workdir}/HostDNA/${samplename}.bam
+      fi
 			#Compute statistics
 			before1=$(cat ${workdir}/${sourcefolder}/${samplename}.fastq | wc -l)
 			before2=$((before1 / 4))
@@ -171,8 +177,10 @@ while read sample; do
 			now=$(date +"%Y-%m-%d %H:%M:%S")
 			echo "$now | 		From sample $samplename, $difference reads (${percentage}%) were mapped to the host genome" >> ${workdir}/run_${timestamp}.log
 			#Compress source file
-	    #now=$(date +"%Y-%m-%d %H:%M:%S")
-	    #echo "$now | 		Compressing file ${sourcefolder}/${samplename}.fastq" >> ${workdir}/run_${timestamp}.log
-	    #pigz -p ${threads} ${workdir}/${sourcefolder}/${samplename}.fastq
-		fi
+      if [$compress == "TRUE"]; then
+	    now=$(date +"%Y-%m-%d %H:%M:%S")
+	    echo "$now | 		Compressing file ${sourcefolder}/${samplename}.fastq" >> ${workdir}/run_${timestamp}.log
+	    pigz -p ${threads} ${workdir}/${sourcefolder}/${samplename}.fastq
+      fi
+    fi
 done < ${sampledatafile}
