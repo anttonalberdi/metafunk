@@ -19,9 +19,9 @@ soft_prinseq=prinseq-lite/0.20.4
 #OpenSSL
 soft_openssl=openssl/1.0.0
 #Samtools (http://www.htslib.org/doc/samtools.html)
-soft_samtools=samtools/1.4
+soft_samtools=samtools/1.9
 #Bwa (http://bio-bwa.sourceforge.net/)
-soft_bwa=bwa/0.7.15
+soft_bwa=bwa/0.7.10
 #SeqTK (https://github.com/lh3/seqtk)
 soft_jre=jre/1.8.0
 #BBMap (https://sourceforge.net/projects/bbmap/)
