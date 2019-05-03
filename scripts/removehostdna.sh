@@ -1,15 +1,6 @@
 #Source settings file
 source $settingsfile
 
-#Load necessary modules
-module load ${soft_pigz}
-module load ${soft_openssl}
-module load ${soft_samtools}
-module load ${soft_bwa}
-module load ${soft_jre}
-module load ${soft_bbmap}
-module load ${soft_parallel}
-
 #Create LowComplexFiltered directory
 mkdir -p ${workdir}/HostDNARemoved
 mkdir -p ${workdir}/HostDNARemoved/ReferenceGenomes
@@ -110,11 +101,11 @@ while read sample; do
 			now=$(date +"%Y-%m-%d %H:%M:%S")
 			echo "$now | 			Repairing sample ${samplename}" >> ${workdir}/run_${timestamp}.log
 			#Repair paired-end reads using BBMap script repair.sh
-			repair.sh in=${workdir}/${sourcefolder}/${samplename}_1.fastq in2=${workdir}/${sourcefolder}/${samplename}_2.fastq out=${workdir}/HostDNARemoved/${samplename}_1.fastq out2=${workdir}/HostDNARemoved/${samplename}_2.fastq overwrite=t
+			repair.sh in=${workdir}/${sourcefolder}/${samplename}_1.fastq in2=${workdir}/${sourcefolder}/${samplename}_2.fastq out=${workdir}/HostDNARemoved/${samplename}_1.source.fastq out2=${workdir}/HostDNARemoved/${samplename}_2.source.fastq overwrite=t
 			#Map reads against the reference genome and retrieve unmapped reads
 			now=$(date +"%Y-%m-%d %H:%M:%S")
 			echo "$now | 			Removing host DNA from sample $samplename" >> ${workdir}/run_${timestamp}.log
-			bwa mem -t ${threads} -R '@RG\tID:ProjectName\tCN:AuthorName\tDS:Mappingt\tPL:Illumina1.9\tSM:Sample' ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile} ${workdir}/HostDNARemoved/${samplename}_1.fastq ${workdir}/HostDNARemoved/${samplename}_2.fastq > ${workdir}/HostDNARemoved/${samplename}.sam
+			bwa mem -t ${threads} -R '@RG\tID:ProjectName\tCN:AuthorName\tDS:Mappingt\tPL:Illumina1.9\tSM:Sample' ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile} ${workdir}/HostDNARemoved/${samplename}_1.source.fastq ${workdir}/HostDNARemoved/${samplename}_2.source.fastq > ${workdir}/HostDNARemoved/${samplename}.sam
       #Not mapped to host genome
       samtools view ${workdir}/HostDNARemoved/${samplename}.sam | grep -v -P '^@|NM:i:[0-2]\b' | samtools view -T ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile} -b - > ${workdir}/HostDNARemoved/${samplename}.bam
       #Mapped to host genome
@@ -130,6 +121,8 @@ while read sample; do
 			samtools fastq -s ${workdir}/HostDNARemoved/${samplename}_singleton.fastq -1 ${workdir}/HostDNARemoved/${samplename}_1.fastq -2 ${workdir}/HostDNARemoved/${samplename}_2.fastq ${workdir}/HostDNARemoved/${samplename}.bam
       samtools fastq -s ${workdir}/HostDNA/${samplename}_singleton.fastq -1 ${workdir}/HostDNA/${samplename}_1.fastq -2 ${workdir}/HostDNA/${samplename}_2.fastq ${workdir}/HostDNA/${samplename}.bam
       #Remove mapping files
+      rm ${workdir}/HostDNARemoved/${samplename}_1.source.fastq
+      rm ${workdir}/HostDNARemoved/${samplename}_2.source.fastq
       if [[ $keep != "TRUE" ]]; then
         rm ${workdir}/HostDNARemoved/${samplename}.sam
         rm ${workdir}/HostDNARemoved/${samplename}.bam
@@ -196,12 +189,3 @@ while read sample; do
       fi
     fi
 done < ${sampledatafile}
-
-#Unload necessary modules
-module unload ${soft_pigz}
-module unload ${soft_openssl}
-module unload ${soft_samtools}
-module unload ${soft_bwa}
-module unload ${soft_jre}
-module unload ${soft_bbmap}
-module load ${soft_parallel}

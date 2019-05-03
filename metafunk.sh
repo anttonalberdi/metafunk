@@ -157,10 +157,27 @@ echo "" >> ${workdir}/run_${timestamp}.log
 #########
 # Check sample.data file
 #########
-# Check if the number of columns is as expected in all rows
-cat ${sampledatafile} | awk -F ' ' -v NCOLS=4 'NF!=NCOLS{printf "Wrong number of columns at line %d\n", NR; exit}'
-# Check whether there are duplicate sample names
-awk 'x[$1]++ == 1 { print "ERROR!: Sample name" $1 " is duplicated"}' ${sampledatafile} >> ${workdir}/run_${timestamp}.log
+
+#Check sample name uniqueness
+allsamples=$(cut -d' ' -f1 ${sampledatafile} | wc -l)
+uniquesamples=$(cut -d' ' -f1 ${sampledatafile} | uniq | wc -l)
+if [[ ${allsamples} != ${uniquesamples} ]]; then
+  echo "$now | ERROR! Sample names are duplicated" >> ${workdir}/run_${timestamp}.log
+exit
+fi
+
+#Check sample file uniqueness
+alldata=$(cut -d' ' -f2 ${sampledatafile} | wc -l)
+uniquedata=$(cut -d' ' -f2 ${sampledatafile} | uniq | wc -l)
+if [[ ${alldata} != ${uniquedata} ]]; then
+  echo "$now | ERROR! Sample files are duplicated" >> ${workdir}/run_${timestamp}.log
+exit
+fi
+
+#Check genome files
+if [ ! -f /tmp/foo.txt ]; then
+    echo "File not found!"
+fi
 
 #########
 # Check dependencies
@@ -174,13 +191,20 @@ sh ${metafunkdirectory}/scripts/checkdependencies.sh
 #########
 now=$(date +"%Y-%m-%d %H:%M:%S")
 if [[ $copydata == "yes" ]]; then
-samplenumber=$(cat sample.data.txt | wc -l)
-echo "$now | DATA TRANSFER" >> ${workdir}/run_${timestamp}.log
-echo "$now | Copying and uncompressing data files of $samplenumber samples" >> ${workdir}/run_${timestamp}.log
-export workdir; export sampledatafile; export settingsfile; export datadir; export threads; export metafunkdirectory; export timestamp
-sh ${metafunkdirectory}/scripts/transferdata.sh
+  samplenumber=$(cat ${sampledatafile} | wc -l)
+  echo "$now | DATA TRANSFER" >> ${workdir}/run_${timestamp}.log
+  echo "$now | Copying and uncompressing data files of $samplenumber samples" >> ${workdir}/run_${timestamp}.log
+  #Load necessary modules
+  module load ${soft_pigz}
+  module load ${soft_parallel}
+  #Launch script
+  export workdir; export sampledatafile; export settingsfile; export datadir; export threads; export metafunkdirectory; export timestamp
+  sh ${metafunkdirectory}/scripts/transferdata.sh
+  #Unload necessary modules
+  module unload ${soft_pigz}
+  module unload ${soft_parallel}
 else
-echo "$now | Data will not be copied and uncompressed" >> ${workdir}/run_${timestamp}.log
+  echo "$now | Data will not be copied and uncompressed" >> ${workdir}/run_${timestamp}.log
 fi
 
 #########
@@ -189,11 +213,18 @@ fi
 
 now=$(date +"%Y-%m-%d %H:%M:%S")
 if [[ $qualityfiltering == "yes" ]]; then
-echo "$now | QUALITY FILTERING" >> ${workdir}/run_${timestamp}.log
-export workdir; export sampledatafile; export settingsfile; export datadir; export threads; export metafunkdirectory; export timestamp; export compress
-sh ${metafunkdirectory}/scripts/qualityfiltering.sh
+  echo "$now | QUALITY FILTERING" >> ${workdir}/run_${timestamp}.log
+  #Load necessary modules
+  module load ${soft_pigz}
+  module load ${soft_adapterremoval}
+  #Launch script
+  export workdir; export sampledatafile; export settingsfile; export datadir; export threads; export metafunkdirectory; export timestamp; export compress
+  sh ${metafunkdirectory}/scripts/qualityfiltering.sh
+  #Unload necessary modules
+  module unload ${soft_pigz}
+  module unload ${soft_adapterremoval}
 else
-echo "$now | Quality filtering will not be performed" >> ${workdir}/run_${timestamp}.log
+  echo "$now | Quality filtering will not be performed" >> ${workdir}/run_${timestamp}.log
 fi
 
 #########
@@ -202,12 +233,20 @@ fi
 
 now=$(date +"%Y-%m-%d %H:%M:%S")
 if [[ $removeduplicates == "yes" ]]; then
-echo "$now | DUPLICATE REMOVAL" >> ${workdir}/run_${timestamp}.log
-export workdir; export sampledatafile; export settingsfile; export datadir; export threads; export metafunkdirectory; export timestamp; export compress
-sh ${metafunkdirectory}/scripts/removeduplicates.sh
+  echo "$now | DUPLICATE REMOVAL" >> ${workdir}/run_${timestamp}.log
+  #Load necessary modules
+  module load ${soft_pigz}
+  module load ${soft_parallel}
+  module load ${soft_seqkit}
+  #Launch script
+  export workdir; export sampledatafile; export settingsfile; export datadir; export threads; export metafunkdirectory; export timestamp; export compress
+  sh ${metafunkdirectory}/scripts/removeduplicates.sh
+  #Unload necessary modules
+  module unload ${soft_pigz}
+  module unload ${soft_parallel}
+  module unload ${soft_seqkit}
 else
-now=$(date +"%Y-%m-%d %H:%M:%S")
-echo "$now | Duplicates will not be removed" >> ${workdir}/run_${timestamp}.log
+  echo "$now | Duplicates will not be removed" >> ${workdir}/run_${timestamp}.log
 fi
 
 #########
@@ -216,26 +255,52 @@ fi
 
 now=$(date +"%Y-%m-%d %H:%M:%S")
 if [[ $removelowcomplexity == "yes" ]]; then
-echo "$now | LOW COMPLEXITY FILTERING" >> ${workdir}/run_${timestamp}.log
-export workdir; export sampledatafile; export settingsfile; export datadir; export threads; export metafunkdirectory; export timestamp; export compress
-sh ${metafunkdirectory}/scripts/lowcomplexity.sh
+  echo "$now | LOW COMPLEXITY FILTERING" >> ${workdir}/run_${timestamp}.log
+  #Load necessary modules
+  module load ${soft_pigz}
+  module load ${soft_parallel}
+  module load ${soft_perl}
+  module load ${soft_prinseq}
+  #Launch script
+  export workdir; export sampledatafile; export settingsfile; export datadir; export threads; export metafunkdirectory; export timestamp; export compress
+  sh ${metafunkdirectory}/scripts/lowcomplexity.sh
+  #Unload necessary modules
+  module unload ${soft_pigz}
+  module unload ${soft_parallel}
+  module unload ${soft_perl}
+  module unload ${soft_prinseq}
 else
-now=$(date +"%Y-%m-%d %H:%M:%S")
-echo "$now | Low complexity will not be filtered" >> ${workdir}/run_${timestamp}.log
+  echo "$now | Low complexity will not be filtered" >> ${workdir}/run_${timestamp}.log
 fi
 
 #########
 # Remove host DNA
 #########
 
+now=$(date +"%Y-%m-%d %H:%M:%S")
 if [[ $removehostdna == "yes" ]]; then
-now=$(date +"%Y-%m-%d %H:%M:%S")
-echo "$now | HOST DNA REMOVAL" >> ${workdir}/run_${timestamp}.log
-export workdir; export sampledatafile; export settingsfile; export datadir; export threads; export metafunkdirectory; export timestamp; export compress
-sh ${metafunkdirectory}/scripts/removehostdna.sh
+  echo "$now | HOST DNA REMOVAL" >> ${workdir}/run_${timestamp}.log
+  #Load necessary modules
+  module load ${soft_pigz}
+  module load ${soft_openssl}
+  module load ${soft_samtools}
+  module load ${soft_bwa}
+  module load ${soft_jre}
+  module load ${soft_bbmap}
+  module load ${soft_parallel}
+  #Launch script
+  export workdir; export sampledatafile; export settingsfile; export datadir; export threads; export metafunkdirectory; export timestamp; export compress
+  sh ${metafunkdirectory}/scripts/removehostdna.sh
+  #Unload necessary modules
+  module unload ${soft_pigz}
+  module unload ${soft_openssl}
+  module unload ${soft_samtools}
+  module unload ${soft_bwa}
+  module unload ${soft_jre}
+  module unload ${soft_bbmap}
+  module unload ${soft_parallel}
 else
-now=$(date +"%Y-%m-%d %H:%M:%S")
-echo "$now | Host DNA will not be removed" >> ${workdir}/run_${timestamp}.log
+  echo "$now | Host DNA will not be removed" >> ${workdir}/run_${timestamp}.log
 fi
 
 #########
@@ -245,39 +310,80 @@ fi
 if [[ $removehumandna == "yes" ]]; then
 now=$(date +"%Y-%m-%d %H:%M:%S")
 echo "$now | HUMAN DNA REMOVAL" >> ${workdir}/run_${timestamp}.log
-export workdir; export sampledatafile; export settingsfile; export datadir; export threads; export metafunkdirectory; export timestamp; export compress
-sh ${metafunkdirectory}/scripts/removehumandna.sh
+  #Load necessary modules
+  module load ${soft_pigz}
+  module load ${soft_parallel}
+  module load ${soft_openssl}
+  module load ${soft_samtools}
+  module load ${soft_bwa}
+  module load ${soft_jre}
+  module load ${soft_bbmap}
+  #Launch script
+  export workdir; export sampledatafile; export settingsfile; export datadir; export threads; export metafunkdirectory; export timestamp; export compress
+  sh ${metafunkdirectory}/scripts/removehumandna.sh
+  #Unload necessary modules
+  module unload ${soft_pigz}
+  module unload ${soft_parallel}
+  module unload ${soft_openssl}
+  module unload ${soft_samtools}
+  module unload ${soft_bwa}
+  module unload ${soft_jre}
+  module unload ${soft_bbmap}
 else
-now=$(date +"%Y-%m-%d %H:%M:%S")
-echo "$now | Human DNA will not be removed" >> ${workdir}/run_${timestamp}.log
+  now=$(date +"%Y-%m-%d %H:%M:%S")
+  echo "$now | Human DNA will not be removed" >> ${workdir}/run_${timestamp}.log
 fi
 
 #########
 # Perform co-assembly
 #########
 
+now=$(date +"%Y-%m-%d %H:%M:%S")
 if [[ $coassembly == "yes" ]]; then
-now=$(date +"%Y-%m-%d %H:%M:%S")
-echo "$now | COASSEMBLY" >> ${workdir}/run_${timestamp}.log
-export workdir; export sampledatafile; export settingsfile; export datadir; export threads; export metafunkdirectory; export timestamp; export compress
-sh ${metafunkdirectory}/scripts/coassembly.sh
+  echo "$now | COASSEMBLY" >> ${workdir}/run_${timestamp}.log
+  #Load necessary modules
+  module load ${soft_pigz}
+  module load ${soft_parallel}
+  module load ${soft_fastx}
+  module load ${soft_megahit}
+  module load ${soft_openssl}
+  module load ${soft_samtools}
+  module load ${soft_bwa}
+  #Launch script
+  export workdir; export sampledatafile; export settingsfile; export datadir; export threads; export metafunkdirectory; export timestamp; export compress
+  sh ${metafunkdirectory}/scripts/coassembly.sh
+  #Unload necessary modules
+  module unload ${soft_pigz}
+  module unload ${soft_parallel}
+  module unload ${soft_fastx}
+  module unload ${soft_megahit}
+  module unload ${soft_openssl}
+  module unload ${soft_samtools}
+  module unload ${soft_bwa}
 else
-now=$(date +"%Y-%m-%d %H:%M:%S")
-echo "$now | Reads will not be co-assembled" >> ${workdir}/run_${timestamp}.log
+  echo "$now | Reads will not be co-assembled" >> ${workdir}/run_${timestamp}.log
 fi
 
 #########
 # Predict genes
 #########
 
-if [[ $geneprediction == "yes" ]]; then
 now=$(date +"%Y-%m-%d %H:%M:%S")
-echo "$now | GENE PREDICTION" >> ${workdir}/run_${timestamp}.log
-export workdir; export sampledatafile; export settingsfile; export datadir; export threads; export metafunkdirectory; export timestamp
-sh ${metafunkdirectory}/scripts/geneprediction.sh
+  if [[ $geneprediction == "yes" ]]; then
+  echo "$now | GENE PREDICTION" >> ${workdir}/run_${timestamp}.log
+  #Load necessary modules
+  module load ${soft_pigz}
+  module load ${soft_parallel}
+  module load ${soft_prodigal}
+  #Launch script
+  export workdir; export sampledatafile; export settingsfile; export datadir; export threads; export metafunkdirectory; export timestamp
+  sh ${metafunkdirectory}/scripts/geneprediction.sh
+  #Unload necessary modules
+  module unload ${soft_pigz}
+  module unload ${soft_parallel}
+  module unload ${soft_prodigal}
 else
-now=$(date +"%Y-%m-%d %H:%M:%S")
-echo "$now | Gene prediction will not be performed" >> ${workdir}/run_${timestamp}.log
+  echo "$now | Gene prediction will not be performed" >> ${workdir}/run_${timestamp}.log
 fi
 
 #########
