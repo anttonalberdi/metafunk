@@ -395,6 +395,9 @@ now=$(date +"%Y-%m-%d %H:%M:%S")
   module load ${soft_pigz}
   module load ${soft_parallel}
   module load ${soft_prodigal}
+  dependencylist="pigz,parallel,prodigal"
+  export workdir; export dependencylist; export sampledatafile; export settingsfile; export datadir; export threads; export metafunkdirectory; export timestamp
+  sh ${metafunkdirectory}/scripts/checkdependencies.sh
   #Launch script
   export workdir; export sampledatafile; export settingsfile; export datadir; export threads; export metafunkdirectory; export timestamp
   sh ${metafunkdirectory}/scripts/geneprediction.sh
