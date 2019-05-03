@@ -70,8 +70,8 @@ if [[ $modules == "4" || $modules =~ ",4," || $modules == 4,* || $modules == *,4
   else removelowcomplexity="no"
 fi
 if [[ $modules == "5" || $modules =~ ",5," || $modules == 5,* || $modules == *,5 ]];
-  then removehostdna="yes"
-  else removehostdna="no"
+  then splithostdna="yes"
+  else splithostdna="no"
 fi
 if [[ $modules == "6" || $modules =~ ",6," || $modules == 6,* || $modules == *,6 ]];
   then removehumandna="yes"
@@ -297,7 +297,7 @@ fi
 #########
 
 now=$(date +"%Y-%m-%d %H:%M:%S")
-if [[ $removehostdna == "yes" ]]; then
+if [[ $splithostdna == "yes" ]]; then
   echo "$now | HOST DNA REMOVAL" >> ${workdir}/run_${timestamp}.log
   #Load necessary modules
   module load ${soft_pigz}
@@ -312,7 +312,7 @@ if [[ $removehostdna == "yes" ]]; then
   sh ${metafunkdirectory}/scripts/checkdependencies.sh
   #Launch script
   export workdir; export sampledatafile; export settingsfile; export datadir; export threads; export metafunkdirectory; export timestamp; export compress; export keep
-  sh ${metafunkdirectory}/scripts/removehostdna.sh
+  sh ${metafunkdirectory}/scripts/splithostdna.sh
   #Unload necessary modules
   module unload ${soft_pigz}
   module unload ${soft_parallel}

@@ -8,7 +8,7 @@ MetaFunk is suitable for Illumina and BGISeq single-read (SR) and paired-end (PE
 2. Quality filtering
 3. Duplicate removal
 4. Low complexity read removal
-5. Host DNA removal (for non-human samples)
+5. Host genomic / metagenomic DNA split (for host-associated non-human samples)
 6. Human DNA removal (contamination for non-human samples)
 ### Assembly, gene prediction and gene table generation
 7. Co-assembly
@@ -54,7 +54,7 @@ example:
 *read wiki for further details
 
 ## Change log
-2019/05/02 | Initial data transfer parallelization. 
-2019/05/02 | Host DNA outputed to HostDNA directory. 
+2019/05/02 | Initial data transfer parallelization.
+2019/05/02 | Host DNA outputed to HostDNA directory.
 2018/03/30 | The pipeline is ready until the co-assembly step for SR and PE, SF and MF datasets.
 2018/03/22 | The adventure has started. This is still a protoalpha version of the metafunk pipeline.
