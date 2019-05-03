@@ -1,8 +1,6 @@
 #Source dependencies
 source "${settingsfile}"
 
-echo "##### DEPENDENCIES ####" >> ${workdir}/run_${timestamp}.log
-
 if [[ $dependencylist =~ "pigz" ]]; then
 test=$(command -v pigz)
     if [[ ${#test} = 0 ]]; then
