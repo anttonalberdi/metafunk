@@ -150,7 +150,6 @@ while read sample; do
   echo "  $samplename SR SF" >> ${workdir}/run_${timestamp}.log
   fi
 done < ${sampledatafile}
-echo "###################" >> ${workdir}/run_${timestamp}.log
 echo "" >> ${workdir}/run_${timestamp}.log
 
 #########
@@ -183,12 +182,14 @@ if [[ ! -f ${genomepath} ]];then
 fi
 done < ${sampledatafile}
 
-#########
-# Check dependencies
-#########
+############
+############
+# PIPELINE #
+############
+############
 
-export workdir; export sampledatafile; export settingsfile; export datadir; export threads; export metafunkdirectory; export timestamp
-sh ${metafunkdirectory}/scripts/checkdependencies.sh
+echo "##### ANALYSIS PIPELINE BEGINS ####" >> ${workdir}/run_${timestamp}.log
+echo "" >> ${workdir}/run_${timestamp}.log
 
 #########
 # Transfer data to project directory
