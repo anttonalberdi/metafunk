@@ -157,13 +157,14 @@ echo "" >> ${workdir}/run_${timestamp}.log
 #########
 # Check sample.data file
 #########
+now=$(date +"%Y-%m-%d %H:%M:%S")
 
 #Check sample name uniqueness
 allsamples=$(cut -d' ' -f1 ${sampledatafile} | wc -l)
 uniquesamples=$(cut -d' ' -f1 ${sampledatafile} | uniq | wc -l)
 if [[ ${allsamples} != ${uniquesamples} ]]; then
   echo "$now | ERROR! Sample names are duplicated" >> ${workdir}/run_${timestamp}.log
-exit
+  exit
 fi
 
 #Check sample file uniqueness
@@ -171,7 +172,7 @@ alldata=$(cut -d' ' -f2 ${sampledatafile} | wc -l)
 uniquedata=$(cut -d' ' -f2 ${sampledatafile} | uniq | wc -l)
 if [[ ${alldata} != ${uniquedata} ]]; then
   echo "$now | ERROR! Sample files are duplicated" >> ${workdir}/run_${timestamp}.log
-exit
+  exit
 fi
 
 #Check genome files
@@ -192,9 +193,12 @@ if [[ $copydata == "yes" ]]; then
   samplenumber=$(cat ${sampledatafile} | wc -l)
   echo "$now | DATA TRANSFER" >> ${workdir}/run_${timestamp}.log
   echo "$now | Copying and uncompressing data files of $samplenumber samples" >> ${workdir}/run_${timestamp}.log
-  #Load necessary modules
+  #Load necessary modules and check they work
   module load ${soft_pigz}
   module load ${soft_parallel}
+  dependencylist="pigz,parallel"
+  export workdir; export dependencylist; export sampledatafile; export settingsfile; export datadir; export threads; export metafunkdirectory; export timestamp
+  sh ${metafunkdirectory}/scripts/checkdependencies.sh
   #Launch script
   export workdir; export sampledatafile; export settingsfile; export datadir; export threads; export metafunkdirectory; export timestamp
   sh ${metafunkdirectory}/scripts/transferdata.sh
