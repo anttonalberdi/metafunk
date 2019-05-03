@@ -19,12 +19,28 @@ test=$(command -v seqkit)
     fi
 fi
 
+if [[ $dependencylist =~ "perl" ]]; then
+test=$(command -v perl)
+    if [[ ${#test} = 0 ]]; then
+    echo "  ERROR: The required software Perl is NOT installed" >> ${workdir}/run_${timestamp}.log
+    exit
+    fi
+fi
+
 if [[ $dependencylist =~ "prinseq" ]]; then
 test=$(command -v prinseq-lite.pl)
     if [[ ${#test} = 0 ]]; then
     echo "  ERROR: The required software Prinseq is NOT installed" >> ${workdir}/run_${timestamp}.log
     exit
     fi
+fi
+
+if [[ $dependencylist =~ "jre" ]]; then
+  test=$(command -v java)
+  if [[ ${#test} = 0 ]]; then
+  echo "  ERROR: The required software JRE (Java) is NOT installed" >> ${workdir}/run_${timestamp}.log
+  stop
+  fi
 fi
 
 if [[ $dependencylist =~ "bbmap" ]]; then
@@ -85,7 +101,7 @@ fi
 
 if [[ $dependencylist =~ "anaconda" ]]; then
 test=$(command -v anaconda)
-    if [[ ${#test} > 0 ]]; then
+    if [[ ${#test} = 0 ]]; then
     echo "  ERROR: The required software Anaconda is NOT installed" >> ${workdir}/run_${timestamp}.log
     exit
     fi
@@ -93,7 +109,7 @@ fi
 
 if [[ $dependencylist =~ "r" ]]; then
 test=$(command -v R)
-    if [[ ${#test} > 0 ]]; then
+    if [[ ${#test} = 0 ]]; then
     echo "  ERROR: The required software R is NOT installed" >> ${workdir}/run_${timestamp}.log
     exit
     fi
@@ -101,7 +117,7 @@ fi
 
 if [[ $dependencylist =~ "diamond" ]]; then
 test=$(command -v diamond)
-    if [[ ${#test} > 0 ]]; then
+    if [[ ${#test} = 0 ]]; then
     echo "  ERROR: The required software Diamond is NOT installed" >> ${workdir}/run_${timestamp}.log
     exit
     fi

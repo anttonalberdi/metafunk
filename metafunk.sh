@@ -219,6 +219,9 @@ if [[ $qualityfiltering == "yes" ]]; then
   #Load necessary modules
   module load ${soft_pigz}
   module load ${soft_adapterremoval}
+  dependencylist="pigz,adapterremoval"
+  export workdir; export dependencylist; export sampledatafile; export settingsfile; export datadir; export threads; export metafunkdirectory; export timestamp
+  sh ${metafunkdirectory}/scripts/checkdependencies.sh
   #Launch script
   export workdir; export sampledatafile; export settingsfile; export datadir; export threads; export metafunkdirectory; export timestamp; export compress
   sh ${metafunkdirectory}/scripts/qualityfiltering.sh
@@ -240,6 +243,9 @@ if [[ $removeduplicates == "yes" ]]; then
   module load ${soft_pigz}
   module load ${soft_parallel}
   module load ${soft_seqkit}
+  dependencylist="pigz,parallel,seqkit"
+  export workdir; export dependencylist; export sampledatafile; export settingsfile; export datadir; export threads; export metafunkdirectory; export timestamp
+  sh ${metafunkdirectory}/scripts/checkdependencies.sh
   #Launch script
   export workdir; export sampledatafile; export settingsfile; export datadir; export threads; export metafunkdirectory; export timestamp; export compress
   sh ${metafunkdirectory}/scripts/removeduplicates.sh
@@ -263,6 +269,9 @@ if [[ $removelowcomplexity == "yes" ]]; then
   module load ${soft_parallel}
   module load ${soft_perl}
   module load ${soft_prinseq}
+  dependencylist="pigz,parallel,perl,prinseq"
+  export workdir; export dependencylist; export sampledatafile; export settingsfile; export datadir; export threads; export metafunkdirectory; export timestamp
+  sh ${metafunkdirectory}/scripts/checkdependencies.sh
   #Launch script
   export workdir; export sampledatafile; export settingsfile; export datadir; export threads; export metafunkdirectory; export timestamp; export compress
   sh ${metafunkdirectory}/scripts/lowcomplexity.sh
@@ -284,23 +293,26 @@ if [[ $removehostdna == "yes" ]]; then
   echo "$now | HOST DNA REMOVAL" >> ${workdir}/run_${timestamp}.log
   #Load necessary modules
   module load ${soft_pigz}
+  module load ${soft_parallel}
   module load ${soft_openssl}
   module load ${soft_samtools}
   module load ${soft_bwa}
   module load ${soft_jre}
   module load ${soft_bbmap}
-  module load ${soft_parallel}
+  dependencylist="pigz,parallel,openssl,samtools,bwa,jre,bbmap"
+  export workdir; export dependencylist; export sampledatafile; export settingsfile; export datadir; export threads; export metafunkdirectory; export timestamp
+  sh ${metafunkdirectory}/scripts/checkdependencies.sh
   #Launch script
   export workdir; export sampledatafile; export settingsfile; export datadir; export threads; export metafunkdirectory; export timestamp; export compress
   sh ${metafunkdirectory}/scripts/removehostdna.sh
   #Unload necessary modules
   module unload ${soft_pigz}
+  module unload ${soft_parallel}
   module unload ${soft_openssl}
   module unload ${soft_samtools}
   module unload ${soft_bwa}
   module unload ${soft_jre}
   module unload ${soft_bbmap}
-  module unload ${soft_parallel}
 else
   echo "$now | Host DNA will not be removed" >> ${workdir}/run_${timestamp}.log
 fi
@@ -320,6 +332,9 @@ echo "$now | HUMAN DNA REMOVAL" >> ${workdir}/run_${timestamp}.log
   module load ${soft_bwa}
   module load ${soft_jre}
   module load ${soft_bbmap}
+  dependencylist="pigz,parallel,openssl,samtools,bwa,jre,bbmap"
+  export workdir; export dependencylist; export sampledatafile; export settingsfile; export datadir; export threads; export metafunkdirectory; export timestamp
+  sh ${metafunkdirectory}/scripts/checkdependencies.sh
   #Launch script
   export workdir; export sampledatafile; export settingsfile; export datadir; export threads; export metafunkdirectory; export timestamp; export compress
   sh ${metafunkdirectory}/scripts/removehumandna.sh
@@ -351,6 +366,9 @@ if [[ $coassembly == "yes" ]]; then
   module load ${soft_openssl}
   module load ${soft_samtools}
   module load ${soft_bwa}
+  dependencylist="pigz,parallel,fastx,megahit,openssl,samtools,bwa"
+  export workdir; export dependencylist; export sampledatafile; export settingsfile; export datadir; export threads; export metafunkdirectory; export timestamp
+  sh ${metafunkdirectory}/scripts/checkdependencies.sh
   #Launch script
   export workdir; export sampledatafile; export settingsfile; export datadir; export threads; export metafunkdirectory; export timestamp; export compress
   sh ${metafunkdirectory}/scripts/coassembly.sh
