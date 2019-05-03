@@ -8,6 +8,7 @@ module load ${soft_samtools}
 module load ${soft_bwa}
 module load ${soft_jre}
 module load ${soft_bbmap}
+module load ${soft_parallel}
 
 #Create LowComplexFiltered directory
 mkdir -p ${workdir}/HostDNARemoved
@@ -188,7 +189,7 @@ while read sample; do
 			now=$(date +"%Y-%m-%d %H:%M:%S")
 			echo "$now | 		From sample $samplename, $difference reads (${percentage}%) were mapped to the host genome" >> ${workdir}/run_${timestamp}.log
 			#Compress source file
-      if [[ $compress == "TRUE" ]; then
+      if [[ $compress == "TRUE" ]]; then
 	    now=$(date +"%Y-%m-%d %H:%M:%S")
 	    echo "$now | 		Compressing file ${sourcefolder}/${samplename}.fastq" >> ${workdir}/run_${timestamp}.log
 	    pigz -p ${threads} ${workdir}/${sourcefolder}/${samplename}.fastq
@@ -203,3 +204,4 @@ module unload ${soft_samtools}
 module unload ${soft_bwa}
 module unload ${soft_jre}
 module unload ${soft_bbmap}
+module load ${soft_parallel}
