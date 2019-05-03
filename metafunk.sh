@@ -135,7 +135,6 @@ echo "Sample data file: $sampledatafile" >> ${workdir}/run_${timestamp}.log
 echo "Settings file: $settingsfile" >> ${workdir}/run_${timestamp}.log
 echo "Data directory: $datadir" >> ${workdir}/run_${timestamp}.log
 echo "Number of threads: $threads" >> ${workdir}/run_${timestamp}.log
-echo "Sequencing platform: $platform" >> ${workdir}/run_${timestamp}.log
 echo " " >> ${workdir}/run_${timestamp}.log
 echo "##### SAMPLES ####" >> ${workdir}/run_${timestamp}.log
 while read sample; do
@@ -180,6 +179,7 @@ while read line; do
 genomepath=$(echo ${line} | cut -d' ' -f3)
 if [[ ! -f ${genomepath} ]];then
   echo "$now | ERROR! Genome ${genomepath} could not be located"
+  exit
 fi
 done < ${sampledatafile}
 
