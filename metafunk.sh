@@ -176,7 +176,12 @@ if [[ ${alldata} != ${uniquedata} ]]; then
 fi
 
 #Check genome files
-
+while read line; do
+genomepath=$(echo ${line} | cut -d' ' -f3)
+if [[ ! -f ${genomepath} ]];then
+  echo "$now | ERROR! Genome ${genomepath} could not be located"
+fi
+done < ${sampledatafile}
 
 #########
 # Check dependencies
