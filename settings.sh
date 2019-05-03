@@ -93,6 +93,3 @@ eggnogmembers="/home/projects/pr_46704/people/antalb/databases/eggnog/NOG.member
 cutcontigs="yes"
 chunksize="10000"
 mincontigsize="1000"
-
-##### Source load message
-echo "Settings file successfully loaded"
