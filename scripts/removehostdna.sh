@@ -117,8 +117,8 @@ while read sample; do
 				exit
 			fi
 			#Convert BAM file to FASTQ
-			samtools fastq -s ${workdir}/HostDNARemoved/${samplename}_singleton.fastq -1 ${workdir}/HostDNARemoved/${samplename}_1.fastq -2 ${workdir}/HostDNARemoved/${samplename}_2.fastq --threads ${threads} ${workdir}/HostDNARemoved/${samplename}.bam
-      samtools fastq -s ${workdir}/HostDNA/${samplename}_singleton.fastq -1 ${workdir}/HostDNA/${samplename}_1.fastq -2 ${workdir}/HostDNA/${samplename}_2.fastq --threads ${threads} ${workdir}/HostDNA/${samplename}.bam
+			samtools fastq -s ${workdir}/HostDNARemoved/${samplename}_singleton.fastq -1 ${workdir}/HostDNARemoved/${samplename}_1.fastq -2 ${workdir}/HostDNARemoved/${samplename}_2.fastq ${workdir}/HostDNARemoved/${samplename}.bam
+      samtools fastq -s ${workdir}/HostDNA/${samplename}_singleton.fastq -1 ${workdir}/HostDNA/${samplename}_1.fastq -2 ${workdir}/HostDNA/${samplename}_2.fastq ${workdir}/HostDNA/${samplename}.bam
       #Remove mapping files
       #rm ${workdir}/HostDNARemoved/${samplename}_1.source.fastq
       #rm ${workdir}/HostDNARemoved/${samplename}_2.source.fastq
