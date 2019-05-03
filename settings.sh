@@ -1,55 +1,47 @@
 #######################################
-######### Project information #########
-#######################################
-
-#Data type - Platform (Illumina, BGI)
-platform="Illumina"
-
-#######################################
 ######## Software dependencies ########
 #######################################
-# Software loading commands
 
 #Parallel (https://www.gnu.org/software/parallel/)
-module load parallel/20170822
+soft_parallel=parallel/20170822
 #Pigz (https://github.com/madler/pigz)
-module load pigz/2.3.4
+soft_pigz=pigz/2.3.4
 #AdapterRemoval (https://github.com/MikkelSchubert/adapterremoval)
-module load adapterremoval/2.2.2
+soft_adapterremoval=adapterremoval/2.2.2
 #SeqKit (https://github.com/shenwei356/seqkit)
-module load seqkit/0.7.1
+soft_seqkit=seqkit/0.7.1
 #Perl
-module load perl/5.24.0
+soft_perl=perl/5.24.0
 #libgtextutils
-module load libgtextutils/0.7
+soft_libgtext=libgtextutils/0.7
 #Prinseq (http://prinseq.sourceforge.net/)
-module load prinseq-lite/0.20.4
+soft_prinseq=prinseq-lite/0.20.4
 #OpenSSL
-module load openssl/1.0.0
+soft_openssl=openssl/1.0.0
 #Samtools (http://www.htslib.org/doc/samtools.html)
-module load samtools/1.4
+soft_samtools=samtools/1.4
 #Bwa (http://bio-bwa.sourceforge.net/)
-module load bwa/0.7.15
+soft_bwa=bwa/0.7.15
 #SeqTK (https://github.com/lh3/seqtk)
-module load jre/1.8.0
+soft_jre=jre/1.8.0
 #BBMap (https://sourceforge.net/projects/bbmap/)
-module load bbmap/36.49
+soft_bbmap=bbmap/36.49
 #SeqTK (https://github.com/lh3/seqtk)
-module load seqtk/1.0-r82-dirty
+soft_seqtk=seqtk/1.0-r82-dirty
 #FastX-Toolkit (http://hannonlab.cshl.edu/fastx_toolkit/)
-module load fastx_toolkit/0.0.14
+soft_fastx=fastx_toolkit/0.0.14
 #Megahit (https://github.com/voutcn/megahit)
-module load megahit/1.1.1
+soft_megahit=megahit/1.1.1
 #Prodigal (https://github.com/hyattpd/Prodigal)
-module load prodigal/2.6.3
+soft_prodigal=prodigal/2.6.3
 #BedTools (http://bedtools.readthedocs.io/en/latest/)
-module load bedtools/2.26.0
+soft_bedtools=bedtools/2.26.0
 #Anaconda (https://conda.io/docs/)
-module load anaconda2/4.0.0
+soft_anaconda=anaconda2/4.0.0
 #R (https://www.r-project.org/)
-module load R/3.2.1
+soft_r=R/3.2.1
 #Diamond (https://github.com/bbuchfink/diamond)
-module load diamond/0.9.13
+soft_diamond=diamond/0.9.13
 
 #######################################
 ############## Settings ###############
@@ -67,7 +59,7 @@ dustvalue="7"
 indexhostgenome="yes"
 
 ##### Human DNA removal settings
-humangenomepath="/home/projects/pr_46704/people/antalb/databases/Homo_sapiens.fasta" #absolute path to fasta file
+humangenomepath="/home/projects/ku-cbd/people/antalb/cat_ext/GCF_000001405.38_GRCh38.p12_genomic.fna" #absolute path to fasta file
 indexhumangenome="no"
 
 ##### Coassembly settings

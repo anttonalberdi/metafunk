@@ -1,6 +1,14 @@
 #Source settings file
 source $settingsfile
 
+#Load necessary modules
+module load ${soft_pigz}
+module load ${soft_openssl}
+module load ${soft_samtools}
+module load ${soft_bwa}
+module load ${soft_jre}
+module load ${soft_bbmap}
+
 #Create LowComplexFiltered directory
 mkdir -p ${workdir}/HostDNARemoved
 mkdir -p ${workdir}/HostDNARemoved/ReferenceGenomes
@@ -121,7 +129,7 @@ while read sample; do
 			samtools fastq -s ${workdir}/HostDNARemoved/${samplename}_singleton.fastq -1 ${workdir}/HostDNARemoved/${samplename}_1.fastq -2 ${workdir}/HostDNARemoved/${samplename}_2.fastq ${workdir}/HostDNARemoved/${samplename}.bam
       samtools fastq -s ${workdir}/HostDNA/${samplename}_singleton.fastq -1 ${workdir}/HostDNA/${samplename}_1.fastq -2 ${workdir}/HostDNA/${samplename}_2.fastq ${workdir}/HostDNA/${samplename}.bam
       #Remove mapping files
-      if [$keep != "TRUE"]; then
+      if [[ $keep != "TRUE" ]]; then
         rm ${workdir}/HostDNARemoved/${samplename}.sam
         rm ${workdir}/HostDNARemoved/${samplename}.bam
         rm ${workdir}/HostDNA/${samplename}.bam
@@ -137,7 +145,7 @@ while read sample; do
 			now=$(date +"%Y-%m-%d %H:%M:%S")
 	  	echo "$now | 			From sample $samplename, $difference PE reads (${percentage}%) were mapped to the host genome" >> ${workdir}/run_${timestamp}.log
 			#Compress source files
-      if [$compress == "TRUE"]; then
+      if [[ $compress == "TRUE" ]]; then
 		  now=$(date +"%Y-%m-%d %H:%M:%S")
 		  echo "$now | 		Compressing files ${sourcefolder}/${samplename}_1.fastq and ${sourcefolder}/${samplename}_2.fastq" >> ${workdir}/run_${timestamp}.log
 		  pigz -p ${threads} ${workdir}/${sourcefolder}/${samplename}_1.fastq
@@ -164,7 +172,7 @@ while read sample; do
 			samtools fastq -0 ${workdir}/HostDNARemoved/${samplename}.fastq ${workdir}/HostDNARemoved/${samplename}.bam
       samtools fastq -0 ${workdir}/HostDNA/${samplename}.fastq ${workdir}/HostDNA/${samplename}.bam
       #Remove mapping files
-      if [$keep != "TRUE"]; then
+      if [[ $keep != "TRUE" ]]; then
         rm ${workdir}/HostDNARemoved/${samplename}.sam
 			  rm ${workdir}/HostDNARemoved/${samplename}.bam
         rm ${workdir}/HostDNA/${samplename}.bam
@@ -180,10 +188,18 @@ while read sample; do
 			now=$(date +"%Y-%m-%d %H:%M:%S")
 			echo "$now | 		From sample $samplename, $difference reads (${percentage}%) were mapped to the host genome" >> ${workdir}/run_${timestamp}.log
 			#Compress source file
-      if [$compress == "TRUE"]; then
+      if [[ $compress == "TRUE" ]; then
 	    now=$(date +"%Y-%m-%d %H:%M:%S")
 	    echo "$now | 		Compressing file ${sourcefolder}/${samplename}.fastq" >> ${workdir}/run_${timestamp}.log
 	    pigz -p ${threads} ${workdir}/${sourcefolder}/${samplename}.fastq
       fi
     fi
 done < ${sampledatafile}
+
+#Unload necessary modules
+module unload ${soft_pigz}
+module unload ${soft_openssl}
+module unload ${soft_samtools}
+module unload ${soft_bwa}
+module unload ${soft_jre}
+module unload ${soft_bbmap}
