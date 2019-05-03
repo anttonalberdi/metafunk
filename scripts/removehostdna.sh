@@ -123,6 +123,7 @@ while read sample; do
       rm ${workdir}/HostDNARemoved/${samplename}_1.source.fastq
       rm ${workdir}/HostDNARemoved/${samplename}_2.source.fastq
       if [[ $keep != "TRUE" ]]; then
+        echo "different"
         rm ${workdir}/HostDNARemoved/${samplename}.sam
         rm ${workdir}/HostDNARemoved/${samplename}.bam
         rm ${workdir}/HostDNA/${samplename}.bam
