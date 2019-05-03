@@ -311,7 +311,7 @@ if [[ $removehostdna == "yes" ]]; then
   export workdir; export dependencylist; export sampledatafile; export settingsfile; export datadir; export threads; export metafunkdirectory; export timestamp
   sh ${metafunkdirectory}/scripts/checkdependencies.sh
   #Launch script
-  export workdir; export sampledatafile; export settingsfile; export datadir; export threads; export metafunkdirectory; export timestamp; export compress
+  export workdir; export sampledatafile; export settingsfile; export datadir; export threads; export metafunkdirectory; export timestamp; export compress; export keep
   sh ${metafunkdirectory}/scripts/removehostdna.sh
   #Unload necessary modules
   module unload ${soft_pigz}
