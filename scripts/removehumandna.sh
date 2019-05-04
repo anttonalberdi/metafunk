@@ -46,6 +46,7 @@ fi
 		echo "$now | 		Human genome ${humangenomefile} was succesfully indexed" >> ${workdir}/run_${timestamp}.log
 		else
 		echo "$now | 		There was an error when indexing the human genome ${humangenomefile}" >> ${workdir}/run_${timestamp}.log
+		exit
 		fi
 	else
 		echo "$now | 		Human genome ${humangenomefile} is already indexed" >> ${workdir}/run_${timestamp}.log
