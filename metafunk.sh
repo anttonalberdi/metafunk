@@ -40,6 +40,14 @@ while getopts w:d:s:f:t:m:ckh option; do
   esac
 done
 
+if [ -z "$compress" ]; then
+compress="FALSE"
+fi
+
+if [ -z "$keep" ]; then
+keep="FALSE"
+fi
+
 #Get timestamp
 timestamp=$(date +"%Y%m%d_%H%M%S")
 
@@ -135,8 +143,8 @@ echo "Sample data file: $sampledatafile" >> ${workdir}/run_${timestamp}.log
 echo "Settings file: $settingsfile" >> ${workdir}/run_${timestamp}.log
 echo "Data directory: $datadir" >> ${workdir}/run_${timestamp}.log
 echo "Number of threads: $threads" >> ${workdir}/run_${timestamp}.log
-echo "Compress used files: $compress" >> ${workdir}/run_${timestamp}.log
-echo "Keep intermediate files: $keep" >> ${workdir}/run_${timestamp}.log
+echo "Compress used files (-c): $compress" >> ${workdir}/run_${timestamp}.log
+echo "Keep intermediate files (-k): $keep" >> ${workdir}/run_${timestamp}.log
 echo " " >> ${workdir}/run_${timestamp}.log
 echo "##### SAMPLES ####" >> ${workdir}/run_${timestamp}.log
 while read sample; do
