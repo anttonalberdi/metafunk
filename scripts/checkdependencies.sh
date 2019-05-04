@@ -105,7 +105,7 @@ test=$(command -v anaconda)
     fi
 fi
 
-if [[ $dependencylist =~ "r" ]]; then
+if [[ $dependencylist =~ "r_env" ]]; then
 test=$(command -v R)
     if [[ ${#test} = 0 ]]; then
     echo "  ERROR: The required software R is NOT installed" >> ${workdir}/run_${timestamp}.log
