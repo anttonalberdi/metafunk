@@ -40,7 +40,13 @@ fi
 		echo "$now | 		Indexing human genome" >> ${workdir}/run_${timestamp}.log
 		samtools faidx ${workdir}/HumanDNARemoved/ReferenceGenome/${humangenomefile}
 		bwa index ${workdir}/HumanDNARemoved/ReferenceGenome/${humangenomefile}
+
+		now=$(date +"%Y-%m-%d %H:%M:%S")
+		if [ -f ${workdir}/HumanDNARemoved/ReferenceGenome/${humangenomefile}.amb ] && [ -f ${workdir}/HumanDNARemoved/ReferenceGenome/${humangenomefile}.ann ] && [ -f ${workdir}/HumanDNARemoved/ReferenceGenome/${humangenomefile}.bwt ] && [ -f ${workdir}/HumanDNARemoved/ReferenceGenome/${humangenomefile}.fai ] && [ -f ${workdir}/HumanDNARemoved/ReferenceGenome/${humangenomefile}.pac ] && [ -f ${workdir}/HumanDNARemoved/ReferenceGenome/${humangenomefile}.sa ]; then
 		echo "$now | 		Human genome ${humangenomefile} was succesfully indexed" >> ${workdir}/run_${timestamp}.log
+		else
+		echo "$now | 		There was an error when indexing the human genome ${humangenomefile}" >> ${workdir}/run_${timestamp}.log
+		fi
 	else
 		echo "$now | 		Human genome ${humangenomefile} is already indexed" >> ${workdir}/run_${timestamp}.log
 	fi
