@@ -38,6 +38,10 @@ soft_prodigal=prodigal/2.6.3
 soft_bedtools=bedtools/2.26.0
 #Anaconda (https://conda.io/docs/)
 soft_anaconda=anaconda2/4.0.0
+#RAXML
+soft_raxml=raxml/8.2.9
+#Metaphlan
+soft_metaphlan=metaphlan/2.6.0
 #R (https://www.r-project.org/)
 soft_r=R/3.2.1
 #Diamond (https://github.com/bbuchfink/diamond)

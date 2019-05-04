@@ -522,8 +522,30 @@ fi
 now=$(date +"%Y-%m-%d %H:%M:%S")
 if [[ $taxonomic == "yes" ]]; then
   echo "$now | Starting taxonomic profiling" >> ${workdir}/run_${timestamp}.log
+  #Load necessary modules
+  module load ${soft_pigz}
+  module load ${soft_parallel}
+  module load ${soft_prodigal}
+  module load ${soft_jre}
+  module load ${soft_bbmap}
+  module load ${soft_raxml}
+  module load ${soft_anaconda}
+  module load ${soft_metaphlan}
+  dependencylist="pigz,parallel,prodigal"
+  export workdir; export dependencylist; export sampledatafile; export settingsfile; export datadir; export threads; export metafunkdirectory; export timestamp
+  sh ${metafunkdirectory}/scripts/checkdependencies.sh
+  #Launch script
   export metafunkdirectory; export timestamp
   sh ${metafunkdirectory}/scripts/taxonomicannotation.sh
+  #Load necessary modules
+  module unload ${soft_pigz}
+  module unload ${soft_parallel}
+  module unload ${soft_prodigal}
+  module unload ${soft_jre}
+  module unload ${soft_bbmap}
+  module unload ${soft_raxml}
+  module unload ${soft_anaconda}
+  module unload ${soft_metaphlan}
   else
   echo "$now | Taxonomic profiling will not be conducted" >> ${workdir}/run_${timestamp}.log
 fi
