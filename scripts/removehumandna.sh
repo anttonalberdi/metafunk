@@ -38,8 +38,8 @@ fi
 	if [ ! -f ${workdir}/HumanDNARemoved/ReferenceGenome/${humangenomefile}.amb ] || [ ! -f ${workdir}/HumanDNARemoved/ReferenceGenome/${humangenomefile}.ann ] || [ ! -f ${workdir}/HumanDNARemoved/ReferenceGenome/${humangenomefile}.bwt ] || [ ! -f ${workdir}/HumanDNARemoved/ReferenceGenome/${humangenomefile}.fai ] || [ ! -f ${workdir}/HumanDNARemoved/ReferenceGenome/${humangenomefile}.pac ] || [ ! -f ${workdir}/HumanDNARemoved/ReferenceGenome/${humangenomefile}.sa ]; then
 		now=$(date +"%Y-%m-%d %H:%M:%S")
 		echo "$now | 		Indexing human genome" >> ${workdir}/run_${timestamp}.log
-		samtools faidx ${workdir}/HumanDNARemoved/ReferenceGenome/${genomefile}
-		bwa index ${workdir}/HumanDNARemoved/ReferenceGenome/${genomefile}
+		samtools faidx ${workdir}/HumanDNARemoved/ReferenceGenome/${humangenomefile}
+		bwa index ${workdir}/HumanDNARemoved/ReferenceGenome/${humangenomefile}
 		echo "$now | 		Human genome ${humangenomefile} was succesfully indexed" >> ${workdir}/run_${timestamp}.log
 	else
 		echo "$now | 		Human genome ${humangenomefile} is already indexed" >> ${workdir}/run_${timestamp}.log
