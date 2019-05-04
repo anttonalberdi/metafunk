@@ -38,6 +38,8 @@ soft_prodigal=prodigal/2.6.3
 soft_bedtools=bedtools/2.26.0
 #Anaconda (https://conda.io/docs/)
 soft_anaconda=anaconda2/4.0.0
+#bowtie2
+soft_bowtie=bowtie2/2.2.4
 #RAXML
 soft_raxml=raxml/8.2.9
 #Metaphlan

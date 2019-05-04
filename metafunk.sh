@@ -529,6 +529,7 @@ if [[ $taxonomic == "yes" ]]; then
   module load ${soft_jre}
   module load ${soft_bbmap}
   module load ${soft_raxml}
+  module load ${soft_bowtie}
   module load ${soft_anaconda}
   module load ${soft_metaphlan}
   dependencylist="pigz,parallel,prodigal"
@@ -544,6 +545,7 @@ if [[ $taxonomic == "yes" ]]; then
   module unload ${soft_jre}
   module unload ${soft_bbmap}
   module unload ${soft_raxml}
+  module unload ${soft_bowtie}
   module unload ${soft_anaconda}
   module unload ${soft_metaphlan}
   else
