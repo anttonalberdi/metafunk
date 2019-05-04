@@ -175,7 +175,40 @@ if [[ ${alldata} != ${uniquedata} ]]; then
   exit
 fi
 
-#Check genome files
+#Check sample files exist
+while read sample; do
+  sampleinfo=$(echo $sample | cut -d ' ' -f2 )
+  if [[ $sampleinfo =~ "/" && ! $sampleinfo =~ ";" ]]; then
+    samplefile1="${datadir}/"
+    samplefile1+=$(echo $sampleinfo | cut -d ' ' -f2 | cut -d '/' -f1)
+    if [[ ! -f "${samplefile1}" ]];then
+      echo "$now | ERROR! Data file ${samplefile1} could not be located"
+      exit
+    fi
+    samplefile2="${datadir}/"
+    samplefile2+=$(echo $sampleinfo | cut -d ' ' -f2 | cut -d '/' -f2 )
+    if [[ ! -f "${samplefile1}" ]];then
+      echo "$now | ERROR! Data file ${samplefile2} could not be located"
+      exit
+    fi
+  elif [[ $sampleinfo =~ "/" && $sampleinfo =~ ";" ]]; then
+    #Multifile check to be added
+    #echo "  $samplename PE MF" >> ${workdir}/run_${timestamp}.log
+  elif [[ ! $sampleinfo =~ "/" && $sampleinfo =~ ";" ]]; then
+    #Multifile check to be added
+    #echo "  $samplename SR MF" >> ${workdir}/run_${timestamp}.log
+  else
+    samplefile="${datadir}/"
+    samplefile+=$(echo $sample | cut -d ' ' -f2 )
+    if [[ ! -f "${samplefile}" ]];then
+      echo "$now | ERROR! Data file ${samplefile} could not be located"
+      exit
+    fi
+  fi
+done < ${sampledatafile}
+
+
+#Check genome files exist
 while read line; do
 genomepath=$(echo ${line} | cut -d' ' -f3)
 if [[ ! -f ${genomepath} ]];then
