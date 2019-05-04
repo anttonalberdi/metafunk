@@ -7,6 +7,10 @@ mkdir -p ${workdir}/RawData
 
 function transferdatajob() {
 
+  sample=${1}
+  settingsfile=${2}
+  datadir=${3}
+
   #Obtain data from sample.data.txt columns
   samplename=$(echo $sample | cut -d ' ' -f1 )
   sampleinfo=$(echo $sample | cut -d ' ' -f2 )
@@ -124,7 +128,7 @@ function transferdatajob() {
 #Loop in parallel across samples specified in sample.data.txt
 #Export function lowcompjob
 export -f transferdatajob
-parallel -j ${threads} -k transferdatajob {} ${settingsfile} ${sourcefolder} <${sampledatafile}
+parallel -j ${threads} -k transferdatajob {} ${settingsfile} ${datadir} <${sampledatafile}
 
 #Check if files were succesfully transferred
 if [ -z "$(ls -A ${workdir}/RawData/)" ]; then
