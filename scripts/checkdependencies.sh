@@ -83,7 +83,7 @@ fi
 
 if [[ $dependencylist =~ "megahit" ]]; then
 test=$(command -v prodigal)
-    if [[ ${#test} = 0 ]]; the
+    if [[ ${#test} = 0 ]]; then
     echo "  ERROR: The required software Prodigal is NOT installed" >> ${workdir}/run_${timestamp}.log
     exit
     fi
