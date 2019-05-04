@@ -191,10 +191,10 @@ while read sample; do
       echo "$now | ERROR! Data file ${samplefile2} could not be located"
       exit
     fi
-  elif [[ $sampleinfo =~ "/" && $sampleinfo =~ ";" ]]; then
+  #elif [[ $sampleinfo =~ "/" && $sampleinfo =~ ";" ]]; then
     #Multifile check to be added
     #echo "  $samplename PE MF" >> ${workdir}/run_${timestamp}.log
-  elif [[ ! $sampleinfo =~ "/" && $sampleinfo =~ ";" ]]; then
+  #elif [[ ! $sampleinfo =~ "/" && $sampleinfo =~ ";" ]]; then
     #Multifile check to be added
     #echo "  $samplename SR MF" >> ${workdir}/run_${timestamp}.log
   else
