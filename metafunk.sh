@@ -410,6 +410,7 @@ if [[ $coassembly == "yes" ]]; then
   #Load necessary modules
   module load ${soft_pigz}
   module load ${soft_parallel}
+  module load ${soft_libgtext}
   module load ${soft_fastx}
   module load ${soft_megahit}
   module load ${soft_openssl}
@@ -424,6 +425,7 @@ if [[ $coassembly == "yes" ]]; then
   #Unload necessary modules
   module unload ${soft_pigz}
   module unload ${soft_parallel}
+  module unload ${soft_libgtext}
   module unload ${soft_fastx}
   module unload ${soft_megahit}
   module unload ${soft_openssl}
