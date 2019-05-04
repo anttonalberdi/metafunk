@@ -104,7 +104,7 @@ while read sample; do
 			repair.sh in=${workdir}/${sourcefolder}/${samplename}_1.fastq in2=${workdir}/${sourcefolder}/${samplename}_2.fastq out=${workdir}/HostDNARemoved/${samplename}_1.fastq out2=${workdir}/HostDNARemoved/${samplename}_2.fastq overwrite=t
 			#Map reads against the reference genome and retrieve unmapped reads
 			now=$(date +"%Y-%m-%d %H:%M:%S")
-			echo "$now | 			Removing host DNA from sample $samplename" >> ${workdir}/run_${timestamp}.log
+			echo "$now | 			Spliting host and metagenomic DNA from sample $samplename" >> ${workdir}/run_${timestamp}.log
       #Not mapped to host genome
       bwa mem -t ${threads} -R '@RG\tID:ProjectName\tCN:AuthorName\tDS:Mappingt\tPL:Illumina1.9\tSM:Sample' ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile} ${workdir}/HostDNARemoved/${samplename}_1.fastq ${workdir}/HostDNARemoved/${samplename}_2.fastq | samtools view | grep -v -P '^@|NM:i:[0-2]\b' | samtools view -T ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile} -b - > ${workdir}/HostDNARemoved/${samplename}.bam
       #Mapped to host genome
@@ -148,7 +148,7 @@ while read sample; do
 			#It is SR
 			#Map reads against the reference genome and retrieve unmapped reads
 			now=$(date +"%Y-%m-%d %H:%M:%S")
-			echo "				Removing host DNA from sample $samplename" >> ${workdir}/run_${timestamp}.log
+			echo "				Splitting host and metagenomic DNA from sample $samplename" >> ${workdir}/run_${timestamp}.log
       #Not mapped to host genome
       bwa mem -t ${threads} -R '@RG\tID:ProjectName\tCN:AuthorName\tDS:Mappingt\tPL:Illumina1.9\tSM:Sample' ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile} ${workdir}/HostDNARemoved/${samplename}.fastq | samtools view | grep -v -P '^@|NM:i:[0-2]\b' | samtools view -T ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile} -b - > ${workdir}/HostDNARemoved/${samplename}.bam
       #Mapped to host genome
