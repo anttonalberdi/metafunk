@@ -474,6 +474,8 @@ if [[ $genemapping == "yes" ]]; then
   module load ${soft_bwa}
   module load ${soft_jre}
   module load ${soft_bbmap}
+  module load ${soft_anaconda}
+  module load ${soft_bedtools}
   dependencylist="pigz,parallel,openssl,samtools,bwa,jre,bbmap"
   export workdir; export dependencylist; export sampledatafile; export settingsfile; export datadir; export threads; export metafunkdirectory; export timestamp
   sh ${metafunkdirectory}/scripts/checkdependencies.sh
@@ -488,6 +490,8 @@ if [[ $genemapping == "yes" ]]; then
   module unload ${soft_bwa}
   module unload ${soft_jre}
   module unload ${soft_bbmap}
+  module unload ${soft_anaconda}
+  module unload ${soft_bedtools}
 else
   echo "$now | Gene mapping will not be performed" >> ${workdir}/run_${timestamp}.log
 fi
