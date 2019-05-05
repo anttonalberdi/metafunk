@@ -464,12 +464,32 @@ fi
 # Map reads back to the genes and generate Coverage and Hit tables
 #########
 if [[ $genemapping == "yes" ]]; then
-now=$(date +"%Y-%m-%d %H:%M:%S")
-echo "$now | GENE MAPPING" >> ${workdir}/run_${timestamp}.log
-export workdir; export sampledatafile; export settingsfile; export datadir; export threads; export metafunkdirectory; export timestamp
-sh ${metafunkdirectory}/scripts/genemapping.sh
+  now=$(date +"%Y-%m-%d %H:%M:%S")
+  echo "$now | GENE MAPPING" >> ${workdir}/run_${timestamp}.log
+  #Load necessary modules
+  module load ${soft_pigz}
+  module load ${soft_parallel}
+  module load ${soft_openssl}
+  module load ${soft_samtools}
+  module load ${soft_bwa}
+  module load ${soft_jre}
+  module load ${soft_bbmap}
+  dependencylist="pigz,parallel,openssl,samtools,bwa,jre,bbmap"
+  export workdir; export dependencylist; export sampledatafile; export settingsfile; export datadir; export threads; export metafunkdirectory; export timestamp
+  sh ${metafunkdirectory}/scripts/checkdependencies.sh
+  #Launch script
+  export workdir; export sampledatafile; export settingsfile; export datadir; export threads; export metafunkdirectory; export timestamp
+  sh ${metafunkdirectory}/scripts/genemapping.sh
+  #Unload necessary modules
+  module unload ${soft_pigz}
+  module unload ${soft_parallel}
+  module unload ${soft_openssl}
+  module unload ${soft_samtools}
+  module unload ${soft_bwa}
+  module unload ${soft_jre}
+  module unload ${soft_bbmap}
 else
-echo "$now | Gene mapping will not be performed" >> ${workdir}/run_${timestamp}.log
+  echo "$now | Gene mapping will not be performed" >> ${workdir}/run_${timestamp}.log
 fi
 
 #########
