@@ -78,9 +78,9 @@ normalisationdecimals="2" #increase for smaller scales (e.g. 0-1)
 
 ##### Functional annotation KEGG
 kegg="yes"
-keggdatabase="/home/projects/pr_46704/people/antalb/databases/KEGG_species_prokaryotes_metafunk.pep" #absolute path to fasta (.fasta, .fa, .pep) or diamond (.dmnd) file
-genes_ko="/home/projects/pr_46704/people/antalb/databases/keggs_database/genes_ko.list"
-genes_path="/home/projects/pr_46704/people/antalb/databases/keggs_database/genes_pathway.list"
+keggdatabase="/home/projects/ku-cbd/people/antalb/databases/KEGG_species_prokaryotes_metafunk.pep" #absolute path to fasta (.fasta, .fa, .pep) or diamond (.dmnd) file
+genes_ko="/home/projects/ku-cbd/people/antalb/databases/keggs_database/genes_ko.list"
+genes_path="/home/projects/ku-cbd/people/antalb/databases/keggs_database/genes_pathway.list"
 keggevalue="0.0000000001"
 
 ##### Functional annotation EggNog

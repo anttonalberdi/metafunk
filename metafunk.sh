@@ -501,6 +501,13 @@ fi
 #########
 now=$(date +"%Y-%m-%d %H:%M:%S")
 if [[ $functional == "yes" ]]; then
+  #Load necessary modules
+  module load ${soft_diamond}
+  module load ${soft_r}
+  dependencylist="diamond,r_env"
+  export workdir; export dependencylist; export sampledatafile; export settingsfile; export datadir; export threads; export metafunkdirectory; export timestamp
+  sh ${metafunkdirectory}/scripts/checkdependencies.sh
+  #Launch script
   if [[ $kegg == "yes" ]]; then
     echo "$now | Starting KEGG functional annotation" >> ${workdir}/run_${timestamp}.log
     export metafunkdirectory; export timestamp; export settingsfile
@@ -508,7 +515,6 @@ if [[ $functional == "yes" ]]; then
     else
     echo "$now | KEGG functional annotation will not be performed" >> ${workdir}/run_${timestamp}.log
   fi
-
   now=$(date +"%Y-%m-%d %H:%M:%S")
   if [[ $eggnog == "yes" ]]; then
     echo "$now | Starting EggNog functional annotation" >> ${workdir}/run_${timestamp}.log
@@ -517,6 +523,9 @@ if [[ $functional == "yes" ]]; then
     else
     echo "$now | EggNog functional annotation will not be performed" >> ${workdir}/run_${timestamp}.log
   fi
+  #Unload necessary modules
+  module unload ${soft_diamond}
+  module unload ${soft_r}
 fi
 
 #########
