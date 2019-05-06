@@ -25,12 +25,16 @@ sourcefolder="RawData"
 repair="no"
 fi
 
-while read sample; do
+function metaphlanjob() {
+
+	sample=${1}
+	settingsfile=${2}
+	sourcefolder=${3}
 
 		#Obtain data from sample.data.txt columns and get file name
 		samplename=$(echo $sample | cut -d ' ' -f1)
 		sampleinfo=$(echo $sample | cut -d ' ' -f2)
-    
+
     if [[ $sampleinfo =~ "/" ]]; then
 		#It is PE
       #Repair ends if necessary
@@ -40,7 +44,7 @@ while read sample; do
           repair.sh in=${workdir}/${sourcefolder}/${samplename}_1.fastq in2=${workdir}/${sourcefolder}/${samplename}_2.fastq out=${workdir}/GeneMapping/${samplename}_1.fastq out2=${workdir}/GeneMapping/${samplename}_2.fastq
           sourcefolder="TaxonomicAnnotation"
       fi
- 
+
     	#Run metaphlan
      	now=$(date +"%Y-%m-%d %H:%M:%S")
      	echo "$now | 		Assigning taxonomy to ${samplename}" >> ${workdir}/run_${timestamp}.log
@@ -52,7 +56,12 @@ while read sample; do
     	echo "$now | 		Assigning taxonomy to ${samplename}" >> ${workdir}/run_${timestamp}.log
 	metaphlan2.py ${workdir}/${sourcefolder}/${samplename}.fastq --input_type fastq --nproc ${threads} -o ${workdir}/TaxonomicAnnotation/${query}.txt
 	fi
-done < ${sampledatafile}
+}
+
+#Loop in parallel across samples specified in sample.data.txt
+#Export function lowcompjob
+export -f metaphlanjob
+parallel -j ${threads} -k metaphlanjob {} ${settingsfile} ${sourcefolder} <${sampledatafile}
 
 #Merge all output files
 now=$(date +"%Y-%m-%d %H:%M:%S")
