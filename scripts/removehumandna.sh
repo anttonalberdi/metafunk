@@ -132,7 +132,7 @@ while read sample; do
 			#Map reads against the reference genome and retrieve unmapped reads
 			now=$(date +"%Y-%m-%d %H:%M:%S")
 			echo "				Removing human DNA from sample $samplename" >> ${workdir}/run_${timestamp}.log
-			bwa mem -t ${threads} -R '@RG\tID:ProjectName\tCN:AuthorName\tDS:Mappingt\tPL:Illumina1.9\tSM:Sample' ${workdir}/HumanDNARemoved/ReferenceGenome/${humangenomefile} ${workdir}/HumanDNARemoved/${samplename}.fastq | samtools view | grep -v -P '^@|NM:i:[0-2]\b' | samtools view -T ${workdir}/HumanDNARemoved/ReferenceGenome/${humangenomefile} -b - > ${workdir}/HumanDNARemoved/${samplename}.bam
+			bwa mem -t ${threads} -R '@RG\tID:ProjectName\tCN:AuthorName\tDS:Mappingt\tPL:Illumina1.9\tSM:Sample' ${workdir}/HumanDNARemoved/ReferenceGenome/${humangenomefile} ${workdir}/${sourcefolder}/${samplename}.fastq | samtools view | grep -v -P '^@|NM:i:[0-2]\b' | samtools view -T ${workdir}/HumanDNARemoved/ReferenceGenome/${humangenomefile} -b - > ${workdir}/HumanDNARemoved/${samplename}.bam
 			#OLD: bwa mem -t ${threads} -R '@RG\tID:ProjectName\tCN:AuthorName\tDS:Mappingt\tPL:Illumina1.9\tSM:Sample' ${workdir}/HumanDNARemoved/ReferenceGenome/${humangenomefile} ${workdir}/${sourcefolder}/${samplename}.fastq | samtools view -b -f4 - > ${workdir}/HumanDNARemoved/${samplename}.bam
 			if [[ ! -s ${workdir}/HumanDNARemoved/${samplename}.bam ]]; then
 				now=$(date +"%Y-%m-%d %H:%M:%S")
