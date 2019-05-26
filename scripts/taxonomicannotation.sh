@@ -54,7 +54,7 @@ function metaphlanjob() {
     	#Run metaphlan
        	now=$(date +"%Y-%m-%d %H:%M:%S")
     	echo "$now | 		Assigning taxonomy to ${samplename}" >> ${workdir}/run_${timestamp}.log
-	metaphlan2.py ${workdir}/${sourcefolder}/${samplename}.fastq --input_type fastq --nproc ${threads} -o ${workdir}/TaxonomicAnnotation/${query}.txt
+	metaphlan2.py ${workdir}/${sourcefolder}/${samplename}.fastq --input_type fastq --nproc ${threads} -o ${workdir}/TaxonomicAnnotation/${samplename}.txt
 	fi
 }
 
