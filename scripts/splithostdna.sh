@@ -108,9 +108,9 @@ while read sample; do
             #Mapping
       bwa mem -t ${threads} -R '@RG\tID:ProjectName\tCN:AuthorName\tDS:Mappingt\tPL:Illumina1.9\tSM:Sample' ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile} ${workdir}/HostDNARemoved/${samplename}_1.fastq ${workdir}/HostDNARemoved/${samplename}_2.fastq |  samtools view -T ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile} -b - > ${workdir}/HostDNARemoved/${samplename}.map.bam
       #Not mapped to host genome
-      samtools view -f 12 -q20 -T ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile} -b ${workdir}/HostDNARemoved/${samplename}.map.bam > ${workdir}/HostDNARemoved/${samplename}.bam
+      samtools view -f 12 -T ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile} -b ${workdir}/HostDNARemoved/${samplename}.map.bam > ${workdir}/HostDNARemoved/${samplename}.bam
       #Mapped to host genome
-      samtools view -F 12 -q20 -T ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile} -b ${workdir}/HostDNARemoved/${samplename}.map.bam > ${workdir}/HostDNA/${samplename}.bam
+      samtools view -F 12 -q30 -T ${workdir}/HostDNARemoved/ReferenceGenomes/${genomefile} -b ${workdir}/HostDNARemoved/${samplename}.map.bam > ${workdir}/HostDNA/${samplename}.bam
 
       
       #Not mapped to host genome
