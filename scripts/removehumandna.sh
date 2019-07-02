@@ -86,14 +86,10 @@ while read sample; do
 			if [[ -f ${workdir}/${sourcefolder}/${samplename}_2.fastq.gz ]]; then
 			gunzip ${workdir}/${sourcefolder}/${samplename}_2.fastq.gz
 			fi
-			#Repair paired-end reads using BBMap script repair.sh
-			now=$(date +"%Y-%m-%d %H:%M:%S")
-			echo "$now | 			Repairing sample ${samplename}" >> ${workdir}/run_${timestamp}.log
-			repair.sh in=${workdir}/${sourcefolder}/${samplename}_1.fastq in2=${workdir}/${sourcefolder}/${samplename}_2.fastq out=${workdir}/HumanDNARemoved/${samplename}_1.fastq out2=${workdir}/HumanDNARemoved/${samplename}_2.fastq
 			#Map reads against the reference genome and retrieve unmapped reads
 			now=$(date +"%Y-%m-%d %H:%M:%S")
 			echo "$now | 			Removing human DNA from sample $samplename" >> ${workdir}/run_${timestamp}.log
-			bwa mem -t ${threads} -R '@RG\tID:ProjectName\tCN:AuthorName\tDS:Mappingt\tPL:Illumina1.9\tSM:Sample' ${workdir}/HumanDNARemoved/ReferenceGenome/${humangenomefile} ${workdir}/HumanDNARemoved/${samplename}_1.fastq ${workdir}/HumanDNARemoved/${samplename}_2.fastq | samtools view -f12 -T ${workdir}/HumanDNARemoved/ReferenceGenome/${humangenomefile} -b - > ${workdir}/HumanDNARemoved/${samplename}.bam
+			bwa mem -t ${threads} -R '@RG\tID:ProjectName\tCN:AuthorName\tDS:Mappingt\tPL:Illumina1.9\tSM:Sample' ${workdir}/HumanDNARemoved/ReferenceGenome/${humangenomefile} ${workdir}/${sourcefolder}/${samplename}_1.fastq ${workdir}/${sourcefolder}/${samplename}_2.fastq | samtools view -f12 -T ${workdir}/HumanDNARemoved/ReferenceGenome/${humangenomefile} -b - > ${workdir}/HumanDNARemoved/${samplename}.bam
 			#Check if output file has been created; otherwise, print error message and kill the job
 			if [[ ! -s ${workdir}/HumanDNARemoved/${samplename}.bam ]]; then
 				now=$(date +"%Y-%m-%d %H:%M:%S")

@@ -292,6 +292,7 @@ if [[ $removeduplicates == "yes" ]]; then
   module load ${soft_pigz}
   module load ${soft_parallel}
   module load ${soft_seqkit}
+  module load ${soft_bbmap}
   dependencylist="pigz,parallel,seqkit"
   export workdir; export dependencylist; export sampledatafile; export settingsfile; export datadir; export threads; export metafunkdirectory; export timestamp
   sh ${metafunkdirectory}/scripts/checkdependencies.sh
@@ -302,6 +303,7 @@ if [[ $removeduplicates == "yes" ]]; then
   module unload ${soft_pigz}
   module unload ${soft_parallel}
   module unload ${soft_seqkit}
+  module unload ${soft_bbmap}
 else
   echo "$now | Duplicates will not be removed" >> ${workdir}/run_${timestamp}.log
 fi

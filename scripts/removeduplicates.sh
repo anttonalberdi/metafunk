@@ -33,22 +33,18 @@ if [[ $sampleinfo =~ "/" ]]; then
   echo "$now | 		Removing duplicates from sample $samplename" >> ${workdir}/run_${timestamp}.log
   cat ${workdir}/${sourcefolder}/${samplename}_1.fastq | seqkit rmdup -s -d ${workdir}/DuplicatesRemoved/${samplename}_1.duplicates.fastq -o ${workdir}/DuplicatesRemoved/${samplename}_1.fastq 2>> ${workdir}/run_${timestamp}.log
   cat ${workdir}/${sourcefolder}/${samplename}_2.fastq | seqkit rmdup -s -d ${workdir}/DuplicatesRemoved/${samplename}_2.duplicates.fastq -o ${workdir}/DuplicatesRemoved/${samplename}_2.fastq 2>> ${workdir}/run_${timestamp}.log
+  #Repair paired-end reads using BBMap script repair.sh
+  repair.sh in=${workdir}/DuplicatesRemoved/${samplename}_1.fastq in2=${workdir}/${sourcefolder}/${samplename}_2.fastq out=${workdir}/DuplicatesRemoved/${samplename}_1.fastq out2=${workdir}/DuplicatesRemoved/${samplename}_2.fastq overwrite=t
   #Get statistics
   before1_1=$(cat ${workdir}/${sourcefolder}/${samplename}_1.fastq | wc -l)
   before1_2=$((before1_1 / 4))
-  before2_1=$(cat ${workdir}/${sourcefolder}/${samplename}_2.fastq | wc -l)
-  before2_2=$((before2_1 / 4))
   after1_1=$(cat ${workdir}/DuplicatesRemoved/${samplename}_1.fastq | wc -l)
   after1_2=$((after1_1 / 4))
-  after2_1=$(cat ${workdir}/DuplicatesRemoved/${samplename}_2.fastq | wc -l)
-  after2_2=$((after2_1 / 4))
   difference1=$((before1_2 - after1_2))
-  difference2=$((before2_2 - after2_2))
   percentage1=$((100-(after1_2 * 100 / before1_2 )))
-  percentage2=$((100-(after2_2 * 100 / before2_2 )))
   #Print statistics
   now=$(date +"%Y-%m-%d %H:%M:%S")
-  echo "$now | 		From sample $samplename, $difference1 (PE1) and $difference2 (PE2) duplicated reads (${percentage1}% and ${percentage2}%) were removed " >> ${workdir}/run_${timestamp}.log
+  echo "$now | 		From sample $samplename, $difference1 duplicated reads (${percentage1}%) were removed " >> ${workdir}/run_${timestamp}.log
   #Compress source files
   now=$(date +"%Y-%m-%d %H:%M:%S")
   echo "$now | 		Compressing files ${sourcefolder}/${samplename}_1.fastq and ${sourcefolder}/${samplename}_2.fastq" >> ${workdir}/run_${timestamp}.log
