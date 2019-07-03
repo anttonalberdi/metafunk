@@ -51,7 +51,7 @@ if [[ $sampleinfo =~ "/" ]]; then
   percentage1=$((100-(after1_2 * 100 / before1_2 )))
   #Print statistics
   now=$(date +"%Y-%m-%d %H:%M:%S")
-  echo "$now | 		From sample $samplename, $difference1 duplicated reads (${percentage1}%) were removed " >> ${workdir}/run_${timestamp}.log
+  echo "$now | 		From sample $samplename, $difference1 duplicated reads out of $before1_2 (${percentage1}%) were removed " >> ${workdir}/run_${timestamp}.log
   #Compress source files
   now=$(date +"%Y-%m-%d %H:%M:%S")
   echo "$now | 		Compressing files ${sourcefolder}/${samplename}_1.fastq and ${sourcefolder}/${samplename}_2.fastq" >> ${workdir}/run_${timestamp}.log
