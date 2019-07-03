@@ -38,8 +38,8 @@ if [[ $sampleinfo =~ "/" ]]; then
   gunzip ${workdir}/${sourcefolder}/${samplename}_2.fastq.gz
   fi
   echo "$now | 		Removing duplicates from sample $samplename" >> ${workdir}/run_${timestamp}.log
-  cat ${workdir}/${sourcefolder}/${samplename}_1.fastq | seqkit rmdup -s -d ${workdir}/DuplicatesRemoved/${samplename}_1.duplicates.fastq -o ${workdir}/DuplicatesRemoved/${samplename}_1.fastq 2>> ${workdir}/run_${timestamp}.log
-  cat ${workdir}/${sourcefolder}/${samplename}_2.fastq | seqkit rmdup -s -d ${workdir}/DuplicatesRemoved/${samplename}_2.duplicates.fastq -o ${workdir}/DuplicatesRemoved/${samplename}_2.fastq 2>> ${workdir}/run_${timestamp}.log
+  cat ${workdir}/${sourcefolder}/${samplename}_1.fastq | seqkit rmdup -s -d ${workdir}/DuplicatesRemoved/${samplename}_1.duplicates.fastq -o ${workdir}/DuplicatesRemoved/${samplename}_1.fastq #2>> ${workdir}/run_${timestamp}.log
+  cat ${workdir}/${sourcefolder}/${samplename}_2.fastq | seqkit rmdup -s -d ${workdir}/DuplicatesRemoved/${samplename}_2.duplicates.fastq -o ${workdir}/DuplicatesRemoved/${samplename}_2.fastq #2>> ${workdir}/run_${timestamp}.log
   #Repair paired-end reads using BBMap script repair.sh
   repair.sh in=${workdir}/DuplicatesRemoved/${samplename}_1.fastq in2=${workdir}/${sourcefolder}/${samplename}_2.fastq out=${workdir}/DuplicatesRemoved/${samplename}_1.fastq out2=${workdir}/DuplicatesRemoved/${samplename}_2.fastq overwrite=t
   #Get statistics
