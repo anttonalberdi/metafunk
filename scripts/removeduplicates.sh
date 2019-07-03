@@ -30,6 +30,13 @@ now=$(date +"%Y-%m-%d %H:%M:%S")
 
 if [[ $sampleinfo =~ "/" ]]; then
   #It is PE
+  #Decompress if needed
+  if [[ -f ${workdir}/${sourcefolder}/${samplename}_1.fastq.gz ]]; then
+  gunzip ${workdir}/${sourcefolder}/${samplename}_1.fastq.gz
+  fi
+  if [[ -f ${workdir}/${sourcefolder}/${samplename}_2.fastq.gz ]]; then
+  gunzip ${workdir}/${sourcefolder}/${samplename}_2.fastq.gz
+  fi
   echo "$now | 		Removing duplicates from sample $samplename" >> ${workdir}/run_${timestamp}.log
   cat ${workdir}/${sourcefolder}/${samplename}_1.fastq | seqkit rmdup -s -d ${workdir}/DuplicatesRemoved/${samplename}_1.duplicates.fastq -o ${workdir}/DuplicatesRemoved/${samplename}_1.fastq 2>> ${workdir}/run_${timestamp}.log
   cat ${workdir}/${sourcefolder}/${samplename}_2.fastq | seqkit rmdup -s -d ${workdir}/DuplicatesRemoved/${samplename}_2.duplicates.fastq -o ${workdir}/DuplicatesRemoved/${samplename}_2.fastq 2>> ${workdir}/run_${timestamp}.log
@@ -52,6 +59,10 @@ if [[ $sampleinfo =~ "/" ]]; then
   pigz -p ${threads} ${workdir}/${sourcefolder}/${samplename}_2.fastq
 else
   #It is SR
+  #Decompress if needed
+  if [[ -f ${workdir}/${sourcefolder}/${samplename}.fastq.gz ]]; then
+  gunzip ${workdir}/${sourcefolder}/${samplename}.fastq.gz
+  fi
   echo "$now | 		Removing duplicates from sample $samplename" >> ${workdir}/run_${timestamp}.log
   cat ${workdir}/${sourcefolder}/${samplename}.fastq | seqkit rmdup -s -o ${workdir}/DuplicatesRemoved/${samplename}.fastq
   #Get statistics

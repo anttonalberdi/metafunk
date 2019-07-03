@@ -97,9 +97,13 @@ while read sample; do
 
 		if [[ $sampleinfo =~ "/" ]]; then
 			#It is PE
-			#Remove unpaired reads
-			now=$(date +"%Y-%m-%d %H:%M:%S")
-			echo "$now | 			Repairing sample ${samplename}" >> ${workdir}/run_${timestamp}.log
+      #Decompress if needed
+      if [[ -f ${workdir}/${sourcefolder}/${samplename}_1.fastq.gz ]]; then
+      gunzip ${workdir}/${sourcefolder}/${samplename}_1.fastq.gz
+      fi
+      if [[ -f ${workdir}/${sourcefolder}/${samplename}_2.fastq.gz ]]; then
+      gunzip ${workdir}/${sourcefolder}/${samplename}_2.fastq.gz
+      fi
 			#Map reads against the reference genome and retrieve unmapped reads
 			now=$(date +"%Y-%m-%d %H:%M:%S")
 			echo "$now | 			Spliting host and metagenomic DNA from sample $samplename" >> ${workdir}/run_${timestamp}.log
@@ -143,6 +147,10 @@ while read sample; do
 		else
 
 			#It is SR
+      #Decompress if needed
+      if [[ -f ${workdir}/${sourcefolder}/${samplename}.fastq.gz ]]; then
+      gunzip ${workdir}/${sourcefolder}/${samplename}.fastq.gz
+      fi
 			#Map reads against the reference genome and retrieve unmapped reads
 			now=$(date +"%Y-%m-%d %H:%M:%S")
 			echo "				Splitting host and metagenomic DNA from sample $samplename" >> ${workdir}/run_${timestamp}.log
